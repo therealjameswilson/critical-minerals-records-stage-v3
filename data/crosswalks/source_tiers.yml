@@ -32,7 +32,7 @@ State:
   official_usg: true
 Other USG:
   tier: 2
-  label: "Other official U.S. government source or campaign scaffold"
+  label: "Other official U.S. government source or evidence-review scaffold"
   official_usg: true
 Partner Government:
   tier: 3

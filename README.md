@@ -2,12 +2,14 @@
 
 An FSO-facing historical-data and briefing tool for U.S. critical-minerals
 diplomacy. It adapts the Records Toolkit Template into a standalone site that
-helps users discover, filter, draft, clear, and export historically grounded
-critical-minerals content.
+helps users discover trusted records, visualize change across time and geography,
+filter evidence, draft analytical notes, clear findings, and export source-backed
+critical-minerals briefing material.
 
-Primary use cases include meeting prep, reporting, public diplomacy,
+Primary use cases include meeting prep, reporting, access analysis,
 investment-climate work, historical context, talking points, evidence packs,
-and follow-up to the 2026 Critical Minerals Ministerial.
+global supply-chain mapping, and follow-up to the 2026 Critical Minerals
+Ministerial.
 
 ## Provenance
 
@@ -23,8 +25,8 @@ The project turns structured metadata records into two artifacts:
 
 - `events_cache.json`: full metadata cache grouped by calendar day.
 - `records-stage.html`: standalone browser UI with embedded compact metadata,
-  critical-minerals filters, draft generation, clearance status, image search,
-  snapshots, and Word export.
+  global evidence visualization, critical-minerals filters, analytical-note
+  generation, clearance status, image search, snapshots, and Word export.
 
 The app is metadata-only by design. Do not put full FRUS, NARA, report, cable,
 or article body text into the cache. Use titles, dates, summaries, subjects,
@@ -55,7 +57,7 @@ Critical-minerals fields live under `event["extra"]`:
 - `source_type: FRUS | NARA | Census | USGS | DOE | DLA | Federal Register | State | Other USG`
 - `evidence_type: historical_record | archival_record | trade_data | policy_document | statistical_release | ministerial_document`
 - `supply_chain_stage: mining | processing | refining | recycling | trade | stockpiling | diplomacy | finance | permitting | infrastructure`
-- `fso_use_case: meeting_prep | reporting | public_diplomacy | investment_climate | historical_context | talking_points`
+- `fso_use_case: meeting_prep | reporting | access_analysis | investment_climate | historical_context | talking_points | supply_chain_mapping`
 - `hs_codes: list[str]`
 - `record_id`
 - `retrieved_at`
@@ -127,13 +129,14 @@ branding, and build/download steps.
 ## Records Stage
 
 Open `records-stage.html` directly after a build, or serve the repo with a
-simple local HTTP server. Use the evidence browser to filter by mineral,
-country, source type, evidence type, supply-chain stage, FSO use case, agency,
-year/date, and subject. Select records to draft meeting-prep cards, talking
-points, public-diplomacy posts, evidence-pack notes, or questions for
-counterparts.
+simple local HTTP server. Use the Global Supply-Chain Change View to see
+metadata coverage by country, source type, year, and supply-chain stage. Use the
+evidence browser to filter by mineral, country, source type, evidence type,
+supply-chain stage, FSO use case, agency, year/date, and subject. Select records
+to draft meeting-prep cards, talking points, evidence-pack notes, change over
+time observations, or questions for counterparts.
 
-Briefing mode is described in `docs/critical-minerals-briefing-mode.md`.
+Analytical modes are described in `docs/critical-minerals-briefing-mode.md`.
 
 ## NARA API Keys
 

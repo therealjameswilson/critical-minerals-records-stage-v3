@@ -33,13 +33,14 @@ STRONG_EVIDENCE_TYPES = {
 FSO_USE_CASES = {
     "meeting_prep",
     "reporting",
-    "public_diplomacy",
     "investment_climate",
     "historical_context",
     "talking_points",
     "ministerial_follow_up",
     "evidence_pack",
     "questions_for_counterparts",
+    "access_analysis",
+    "supply_chain_mapping",
 }
 
 CRITICAL_TERMS = (

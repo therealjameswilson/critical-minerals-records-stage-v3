@@ -1,25 +1,30 @@
-# Briefing Mode
+# Analytical Modes
 
-Critical Minerals Records Stage preserves the original Records Stage drafting,
-clearance, snapshot, image-search, and Word export workflow, but reframes it
-for FSO and policy-staff outputs.
+Critical Minerals Records Stage preserves the original Records Stage clearance,
+snapshot, image-search, and Word export workflow, but reframes it for FSO and
+policy-staff analysis of U.S. access to critical minerals and supply chains.
 
-Supported briefing modes:
+Supported analytical modes:
 
-- Meeting prep brief
+- Change across time
+- Global access map
+- Trusted evidence stack
+- Trade-flow proxy review
 - Historical sensitivity brief
-- Public diplomacy thread
 - Ministerial follow-up tracker
+- Meeting prep brief
 - Evidence pack
 - Talking points
 - Questions for host-government counterparts
 
 Recommended workflow:
 
-1. Search or filter records by mineral, country, evidence type, supply-chain stage, agency, date, and subject.
-2. Select a record and generate quick drafts from metadata.
-3. Open the source URL when fuller context is needed and paste a short passage into the paste tab.
-4. Keep caveats visible, especially for placeholder records and HS-code proxy data.
-5. Draft outputs as posts, talking points, meeting-prep cards, or counterpart questions.
-6. Use Clearance Status to track review.
-7. Export the Word document for clearance or offline use.
+1. Start with a policy question: which mineral, country, supply-chain stage, and time period need explanation?
+2. Use the Global Supply-Chain Change View to compare country coverage, source mix, and record timing.
+3. Filter records by mineral, country, source type, evidence type, supply-chain stage, agency, date, and subject.
+4. Treat FRUS and NARA records as historical context and archival leads until the item-level metadata and citation are verified.
+5. Treat Census HS-code records as trade-flow proxies; preserve query details and caveats before using figures.
+6. Generate analytical notes from metadata, or paste a short official-source passage when fuller context is needed.
+7. Keep caveats visible, especially for placeholder records, HS-code proxy data, and low-confidence records.
+8. Use Clearance Status to track review.
+9. Export the Word document for clearance or offline meeting prep.

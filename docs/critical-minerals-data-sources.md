@@ -13,7 +13,7 @@ This project is metadata-only. Source modules should collect titles, dates, URLs
 | [DOE](https://www.energy.gov/cmei/ammto/articles/2023-doe-critical-materials-assessment) | Critical materials for energy technologies, criticality assessments, supply risk, and technology relevance. |
 | [DLA Strategic Materials](https://www.dla.mil/Strategic-Materials/) | Defense-relevant strategic materials, stockpiling, material uses, procurement, recycling, and supply-risk context. |
 | [Federal Register](https://www.federalregister.gov/documents/2025/11/07/2025-19813/final-2025-list-of-critical-minerals) | Official notices, final lists, legal determinations, requests for comment, and agency actions. |
-| [State Department](https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial) | Releases, ministerial announcements, investment climate statements, public diplomacy material, and partner-country context. |
+| [State Department](https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial) | Releases, ministerial announcements, investment climate statements, partner-country context, and official policy framing. |
 | USTR / Commerce / EXIM / DFC | Future extensions for trade policy, industrial base, export finance, and development-finance records. |
 
 ## Key Caveats

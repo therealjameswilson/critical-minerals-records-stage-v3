@@ -147,7 +147,7 @@
   .hashtag-pill .pill-check { font-size: 11px; }
   .hashtag-pill.active .pill-check::before { content: "✓ "; }
 
-  /* ── Tweet cards ── */
+  /* ── Note cards ── */
   .tweet-card {
     background: var(--white);
     border: 1.5px solid var(--border);
@@ -512,7 +512,7 @@
   }
 
   /* ── Article-image gallery (shown when a selected event has images;
-       click to attach to the targeted tweet card via local server). ── */
+       click to attach to the targeted note card via local server). ── */
   #eventImageGallery .img-gallery-head {
     font-size: 12px; color: var(--muted);
     margin-bottom: 6px; padding: 0 2px;
@@ -648,6 +648,128 @@
     font-size: 11px;
   }
 
+  .analysis-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, .85fr);
+    gap: 16px;
+  }
+  .analysis-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .analysis-controls label {
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+  .analysis-controls select,
+  .analysis-controls input[type=range] {
+    width: 100%;
+  }
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .metric-tile {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    background: var(--bg);
+  }
+  .metric-tile strong {
+    display: block;
+    color: var(--navy);
+    font-size: 20px;
+    line-height: 1.1;
+  }
+  .metric-tile span {
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  .timeline-bars {
+    display: flex;
+    align-items: end;
+    gap: 5px;
+    min-height: 116px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #f7f9fc;
+  }
+  .timeline-bar {
+    flex: 1;
+    min-width: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    color: var(--muted);
+  }
+  .timeline-bar .bar {
+    width: 100%;
+    min-height: 4px;
+    border-radius: 4px 4px 0 0;
+    background: #1b6ca8;
+  }
+  .timeline-bar.active .bar {
+    background: #8a2b2b;
+  }
+  .map-shell {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #eef5fb;
+    overflow: hidden;
+  }
+  .global-map {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .map-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .source-stack {
+    display: grid;
+    gap: 8px;
+  }
+  .source-stack-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 9px 10px;
+    background: #fff;
+  }
+  .source-stack-item strong {
+    display: block;
+    color: var(--navy);
+    font-size: 12px;
+  }
+  .source-stack-item span {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .change-narrative {
+    border-left: 3px solid var(--blue);
+    padding: 8px 10px;
+    background: #f7fbff;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+  @media (max-width: 900px) {
+    .analysis-panel { grid-template-columns: 1fr; }
+    .metrics-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
   .source-filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
   .source-filter {
     font-size: 11px; padding: 3px 10px; border-radius: 12px; cursor: pointer;
@@ -661,7 +783,7 @@
   .empty-state { text-align: center; padding: 32px 16px; color: var(--muted); }
   .empty-state .icon { font-size: 32px; margin-bottom: 8px; }
 
-  /* ── Draft Generator ── */
+  /* ── Note Generator ── */
   .draft-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 12px; }
   .draft-tab {
     padding: 6px 14px; font-size: 12px; font-weight: 600; cursor: pointer;
@@ -723,7 +845,7 @@
   .card-header.collapsed .collapse-icon { transform: rotate(-90deg); }
   .card-body.collapsed { display: none; }
 
-  /* ── Target tweet selector ── */
+  /* ── Target note selector ── */
   .target-tweet-bar {
     display: flex; gap: 8px; align-items: center; padding: 8px 12px;
     background: #fff3cd; border-radius: 6px; margin-bottom: 12px; border: 1px solid #ffc107;
@@ -736,6 +858,23 @@
     .tweet-row, .tweet-row.two, .field-grid.two, .field-grid.three { grid-template-columns: 1fr; }
     header { padding: 14px 16px; }
     main { padding: 14px 12px 80px; }
+    .api-bar, .target-tweet-bar, .export-bar { flex-wrap: wrap; }
+    .api-bar input[type=password] { flex: 1 1 180px; min-width: 0; }
+    .api-bar .api-status { flex-basis: 100%; }
+    .export-bar {
+      margin: 0;
+      padding: 10px 12px;
+      gap: 8px;
+      justify-content: flex-start;
+    }
+    .export-bar .summary { flex: 1 1 100%; }
+    .export-bar .btn {
+      flex: 1 1 calc(50% - 8px);
+      justify-content: center;
+      padding: 9px 10px;
+      font-size: 13px;
+    }
+    .export-bar .btn-green { flex-basis: 100%; }
   }
 </style>
 </head>
@@ -752,59 +891,105 @@
 <main>
 
 <div class="card">
-  <div class="card-header">Critical Minerals Briefing Desk</div>
+  <div class="card-header">Critical Minerals Change Workbench</div>
   <div class="card-body">
-    <p class="info-note" style="margin-bottom:14px;">Find official U.S. government records, trade-data proxies, historical context, and policy releases for meeting prep, public diplomacy, ministerial follow-up, and evidence packs. The cache stores metadata, summaries, source URLs, and caveats only - not full document body text.</p>
+    <p class="info-note" style="margin-bottom:14px;">Understand how U.S. access to critical minerals and supply chains changes across time. The workbench combines source-backed metadata from FRUS, NARA Catalog discovery, Census trade-data proxies, and other public U.S. government sources. It stores metadata, summaries, source URLs, and caveats only - not full document body text.</p>
     <div class="field-grid three">
       <div>
-        <label>Briefing modes</label>
+        <label>Analytical mode</label>
         <select id="briefingMode">
+          <option>Change across time</option>
+          <option>Global access map</option>
+          <option>Trusted evidence stack</option>
+          <option>Trade-flow proxy review</option>
+          <option>Historical sensitivity review</option>
           <option>Meeting prep brief</option>
-          <option>Historical sensitivity brief</option>
-          <option>Public diplomacy thread</option>
-          <option>Ministerial follow-up tracker</option>
-          <option>Evidence pack</option>
-          <option>Talking points</option>
-          <option>Questions for host-government counterparts</option>
         </select>
       </div>
       <div>
-        <label>Sample campaign</label>
+        <label>Analytical focus</label>
         <select id="sampleCampaign">
-          <option>Critical Minerals Ministerial follow-up</option>
-          <option>Nickel supply-chain evidence pack</option>
+          <option>US access and supply-chain exposure</option>
+          <option>Nickel trade and processing access</option>
           <option>Cobalt investment climate context</option>
-          <option>Graphite processing and refining</option>
+          <option>Graphite processing and refining capacity</option>
           <option>Gallium and germanium semiconductor materials</option>
           <option>Rare earths historical context</option>
           <option>Copper import-reliance overview</option>
         </select>
       </div>
       <div>
-        <label>Clearance framing</label>
+        <label>Primary evidence sources</label>
         <select id="clearanceFraming">
-          <option>Draft talking points</option>
-          <option>Draft meeting-prep cards</option>
-          <option>Draft posts</option>
-          <option>Export for review</option>
+          <option>FRUS + NARA + Census</option>
+          <option>FRUS historical context</option>
+          <option>NARA archival discovery</option>
+          <option>Census trade data</option>
+          <option>Other public USG sources</option>
         </select>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ─── Publication Details ────────────────────────────────────── -->
+<!-- ─── Global Analysis Workbench ──────────────────────────────── -->
 <div class="card">
-  <div class="card-header collapsible" onclick="toggleCollapse(this)">📚 Briefing / Campaign Details <span class="hint" style="font-weight:400;opacity:.7;margin-left:8px;">(optional - fill in once for all outputs in this campaign)</span> <span class="collapse-icon" style="margin-left:auto;">▼</span></div>
+  <div class="card-header">🌐 Global Supply-Chain Change View</div>
   <div class="card-body">
-    <p class="info-note" style="margin-bottom:14px;">Describe the meeting, reporting task, policy thread, or evidence pack this campaign supports. These fields populate boilerplate across talking points, posts, cards, and exports.</p>
-    <div class="field-grid two" style="margin-bottom:14px;">
+    <div class="analysis-panel">
       <div>
-        <label>Briefing / Campaign Title</label>
-        <input type="text" id="volTitle" placeholder="e.g. Critical Minerals Ministerial Follow-up: Nickel">
+        <div class="analysis-controls">
+          <label>Mineral
+            <select id="analysisMineral" onchange="renderAnalysisWorkbench()">
+              <option value="">All minerals</option>
+            </select>
+          </label>
+          <label>Evidence source
+            <select id="analysisSourceType" onchange="renderAnalysisWorkbench()">
+              <option value="">All trusted sources</option>
+            </select>
+          </label>
+          <label>Supply-chain stage
+            <select id="analysisStage" onchange="renderAnalysisWorkbench()">
+              <option value="">All stages</option>
+            </select>
+          </label>
+          <label>Through year <span id="analysisYearLabel"></span>
+            <input type="range" id="analysisYear" min="1900" max="2026" value="2026" oninput="renderAnalysisWorkbench()">
+          </label>
+        </div>
+        <div class="metrics-row">
+          <div class="metric-tile"><strong id="metricRecords">0</strong><span>Records</span></div>
+          <div class="metric-tile"><strong id="metricCountries">0</strong><span>Countries</span></div>
+          <div class="metric-tile"><strong id="metricYears">0</strong><span>Years</span></div>
+          <div class="metric-tile"><strong id="metricTrusted">0</strong><span>Trusted Sources</span></div>
+        </div>
+        <div class="map-shell" id="globalMap"></div>
+        <div class="map-note">Country markers show metadata coverage and evidence concentration, not production volume or trade value. Census HS-code records remain proxy evidence until query details and caveats are reviewed.</div>
       </div>
       <div>
-        <label>Briefing / Evidence Pack URL <span class="hint">(optional)</span></label>
+        <div class="section-label">Change Over Time</div>
+        <div class="timeline-bars" id="timelineBars"></div>
+        <div class="change-narrative" id="changeNarrative" style="margin-top:10px;"></div>
+        <div class="section-label" style="margin-top:14px;">Trusted Evidence Stack</div>
+        <div class="source-stack" id="sourceStack"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Analytical Question Details ────────────────────────────── -->
+<div class="card">
+  <div class="card-header collapsible" onclick="toggleCollapse(this)">📚 Analytical Question Details <span class="hint" style="font-weight:400;opacity:.7;margin-left:8px;">(optional - fill in once for an evidence review or briefing)</span> <span class="collapse-icon" style="margin-left:auto;">▼</span></div>
+  <div class="card-body">
+    <p class="info-note" style="margin-bottom:14px;">Frame the policy question the evidence should answer: what changed, where access shifted, which supply-chain stage is exposed, and which source types support the conclusion.</p>
+    <div class="field-grid two" style="margin-bottom:14px;">
+      <div>
+        <label>Analytical Question</label>
+        <input type="text" id="volTitle" placeholder="e.g. How has U.S. access to nickel processing changed since the Cold War?">
+      </div>
+      <div>
+        <label>Evidence Pack URL <span class="hint">(optional)</span></label>
         <input type="text" id="volId" placeholder="e.g. https://state.gov/... or internal review link">
       </div>
     </div>
@@ -814,8 +999,8 @@
         <input type="text" id="volYears" placeholder="e.g. 1981–1988, May 1991, Q3 2024">
       </div>
       <div>
-        <label>Campaign / Cable / Task Identifier</label>
-        <input type="text" id="volNum" placeholder="e.g. MIN-2026-NICKEL-01">
+        <label>Evidence Review Identifier</label>
+        <input type="text" id="volNum" placeholder="e.g. CM-ACCESS-NICKEL-01">
       </div>
       <div>
         <label>Target Review Date</label>
@@ -831,10 +1016,10 @@
   </div>
 </div>
 
-<!-- ─── Document Lookup & Draft Generator ──────────────────────── -->
+<!-- ─── Evidence Lookup & Note Generator ───────────────────────── -->
 <div class="card">
-  <div class="card-header collapsible" onclick="toggleCollapse(this)">📜 Evidence Lookup &amp; Briefing Draft Generator
-    <span style="font-size:11px;font-weight:400;opacity:.7;">Browse records or paste text to generate briefing and post drafts</span>
+  <div class="card-header collapsible" onclick="toggleCollapse(this)">📜 Evidence Explorer &amp; Analytical Notes
+    <span style="font-size:11px;font-weight:400;opacity:.7;">Browse trusted metadata or paste source excerpts to build analytical notes</span>
     <span class="collapse-icon" style="margin-left:auto;">▼</span>
   </div>
   <div class="card-body">
@@ -847,11 +1032,11 @@
     </div>
 
     <div class="target-tweet-bar">
-      <strong>Load drafts into:</strong>
+      <strong>Send note to:</strong>
       <select id="targetTweetSelect">
-        <option value="">- select a draft -</option>
+        <option value="">- select an analytical note -</option>
       </select>
-      <span style="font-size:11px;">Generated text will fill the selected draft field</span>
+      <span style="font-size:11px;">Generated text will fill the selected analytical-note field</span>
     </div>
 
     <div class="lookup-layout">
@@ -978,7 +1163,7 @@
         </div>
       </div>
 
-      <!-- RIGHT: Draft generation -->
+      <!-- RIGHT: Note generation -->
       <div>
         <div class="draft-tabs">
           <button class="draft-tab active" onclick="switchDraftTab('event', this)">From Selected Record</button>
@@ -989,10 +1174,10 @@
         <div id="draftPanelEvent" class="draft-panel active">
           <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
             <button class="btn btn-ai" id="aiEventDraftBtn" onclick="generateAiEventDrafts()" disabled>
-              🤖 AI Drafts
+              🤖 AI Notes
             </button>
             <button class="btn btn-primary" onclick="generateEventDrafts()">
-              ✨ Quick Drafts
+              ✨ Quick Notes
             </button>
             <button class="btn btn-green" id="openAndPasteBtn" onclick="openAndPaste()" style="display:none;font-size:13px;padding:8px 14px;">
               📄 Open Doc &amp; Paste
@@ -1000,7 +1185,7 @@
           </div>
           <div id="eventImageGallery" style="display:none;"></div>
           <div id="eventDraftCards" class="draft-cards">
-            <div class="draft-empty">Select a record on the left, then click "Quick Drafts" for metadata-based talking points or posts, or "Open Doc & Paste" to craft richer drafts from source text.</div>
+            <div class="draft-empty">Select a record on the left, then click "Quick Notes" for metadata-based observations, or "Open Doc & Paste" to craft a richer note from source text.</div>
           </div>
         </div>
 
@@ -1015,14 +1200,14 @@
           </div>
           <div style="display:flex;gap:8px;margin-top:10px;">
             <button class="btn btn-ai" id="aiPasteDraftBtn" onclick="generateAiPasteDrafts()" disabled>
-              🤖 AI Drafts
+              🤖 AI Notes
             </button>
             <button class="btn btn-primary" onclick="generatePasteDrafts()">
-              ✨ Quick Drafts
+              ✨ Quick Notes
             </button>
           </div>
           <div id="pasteDraftCards" class="draft-cards" style="margin-top:10px;">
-            <div class="draft-empty">Paste an official-source passage above, then click "Quick Drafts" or "AI Drafts" to generate draft text.</div>
+            <div class="draft-empty">Paste an official-source passage above, then click "Quick Notes" or "AI Notes" to generate analytical text.</div>
           </div>
         </div>
       </div>
@@ -1031,15 +1216,15 @@
   </div>
 </div>
 
-<!-- ─── Draft Outputs ──────────────────────────────────────────── -->
+<!-- ─── Analytical Notes ───────────────────────────────────────── -->
 <div class="card">
   <div class="card-header">
-    🐦 Draft Outputs
-    <span class="badge" id="tweetCount">0 drafts</span>
+    📝 Analytical Notes
+    <span class="badge" id="tweetCount">0 notes</span>
   </div>
   <div class="card-body">
     <div id="tweetList"></div>
-    <button class="btn-add-tweet" onclick="addTweet()">＋ Add Draft</button>
+    <button class="btn-add-tweet" onclick="addTweet()">＋ Add Note</button>
   </div>
 </div>
 
@@ -1087,13 +1272,13 @@
 <!-- ─── Export bar ─────────────────────────────────────────────── -->
 <div class="export-bar">
   <div class="summary">
-    <strong id="summaryTweets">0 drafts</strong> ready
+    <strong id="summaryTweets">0 notes</strong> ready
     <span id="summaryVolWrap">&nbsp;·&nbsp; Briefing: <strong id="summaryVol">—</strong></span>
   </div>
   <input type="file" id="snapshotFile" accept="application/json,.json" style="display:none" onchange="loadCampaignSnapshotFile(this)">
-  <button class="btn btn-outline" onclick="saveCampaignSnapshot()" title="Download the current campaign as a JSON snapshot you can restore later">💾 Save snapshot</button>
-  <button class="btn btn-outline" onclick="document.getElementById('snapshotFile').click()" title="Restore a previously saved campaign snapshot (replaces the current campaign)">📂 Restore snapshot</button>
-  <button id="exportBtn" class="btn btn-green" onclick="exportDocx()">📄 Export as Word Document</button>
+  <button class="btn btn-outline" onclick="saveCampaignSnapshot()" title="Download the current evidence review as a JSON snapshot you can restore later">💾 Save snapshot</button>
+  <button class="btn btn-outline" onclick="document.getElementById('snapshotFile').click()" title="Restore a previously saved evidence-review snapshot">📂 Restore snapshot</button>
+  <button id="exportBtn" class="btn btn-green" onclick="exportDocx()">📄 Export Notes as Word</button>
 </div>
 
 <!-- ─── Libraries (bundled — no internet required) ─────────────── -->
@@ -24185,7 +24370,7 @@ var __async = (__this, __arguments, generator) => {
 <!-- Events cache (embedded) -->
 <script>
 const SUBJECT_TAXONOMY = [{"n":"Critical minerals","c":"Energy technologies","sc":"Energy criticality"},{"n":"Ministerial follow-up","c":"Ministerial follow-up","sc":"FSO outputs"},{"n":"Historical diplomacy","c":"Historical diplomacy","sc":"Historical and archival evidence"},{"n":"Archival discovery","c":"Historical diplomacy","sc":"Historical and archival evidence"},{"n":"FRUS context","c":"Historical diplomacy","sc":"Historical and archival evidence"},{"n":"Trade and import reliance","c":"Trade and import reliance","sc":"Trade data"},{"n":"HS-code proxy","c":"Trade and import reliance","sc":"Trade data"},{"n":"Lithium","c":"Battery minerals","sc":"Core battery inputs"},{"n":"Cobalt","c":"Battery minerals","sc":"Core battery inputs"},{"n":"Nickel","c":"Battery minerals","sc":"Core battery inputs"},{"n":"Graphite","c":"Battery minerals","sc":"Core battery inputs"},{"n":"Rare earth elements","c":"Rare earth elements","sc":"REE diplomacy and processing"},{"n":"Neodymium","c":"Rare earth elements","sc":"REE diplomacy and processing"},{"n":"Dysprosium","c":"Rare earth elements","sc":"REE diplomacy and processing"},{"n":"Gallium","c":"Semiconductor materials","sc":"Chip supply chains"},{"n":"Germanium","c":"Semiconductor materials","sc":"Chip supply chains"},{"n":"Processing and refining","c":"Processing and refining","sc":"Midstream capacity"},{"n":"Recycling and circularity","c":"Processing and refining","sc":"Midstream capacity"},{"n":"Infrastructure and finance","c":"Processing and refining","sc":"Midstream capacity"},{"n":"Strategic stockpiling","c":"Defense industrial base","sc":"Strategic materials"},{"n":"Defense industrial base","c":"Defense industrial base","sc":"Strategic materials"},{"n":"Energy technologies","c":"Energy technologies","sc":"Energy criticality"},{"n":"Resource nationalism","c":"Resource nationalism","sc":"Political economy"},{"n":"Environmental and labor issues","c":"Resource nationalism","sc":"Political economy"},{"n":"Investment climate","c":"Resource nationalism","sc":"Political economy"},{"n":"Policy document","c":"Ministerial follow-up","sc":"FSO outputs"},{"n":"Federal Register","c":"Ministerial follow-up","sc":"FSO outputs"}];
-const EVENTS_CACHE = {"01-01":[{"y":2025,"t":"Census trade-data example: nickel ores and concentrates imports, HS 260400","u":"https://www.census.gov/data/developers/data-sets/international-trade.html","s":"U.S. Census Bureau","sc":122,"de":"Metadata-only example for an import query by HS code. Values are intentionally omitted from the cache; fetch current figures from the Census API.","dd":"January 2025 example query","sb":[5,6],"mi":["nickel"],"cty":["United States"],"st":"Census","et":"trade_data","ch":["trade"],"fu":["reporting","investment_climate"],"ag":["U.S. Census Bureau"],"cf":"medium","hs":["260400"],"cu":"https://www.census.gov/data/developers/data-sets/international-trade.html","cv":"HS code is a proxy for commodity flow and may not identify mined origin or critical-minerals content with policy precision.","rid":"census-nickel-hs-260400-example"},{"y":1982,"t":"FRUS metadata placeholder: strategic and critical minerals access","u":"https://history.state.gov/historicaldocuments/frus1981-88v41/d116","s":"FRUS / HistoryAtState","sc":118,"de":"Sample metadata-only record for a FRUS document surfaced by a critical-minerals query. Verify exact date, title, and citation before operational use.","dd":"1980s example date - verify exact document date","sb":[0,2,19],"mi":["strategic minerals"],"cty":["United States"],"st":"FRUS","et":"historical_record","ch":["diplomacy","stockpiling"],"fu":["historical_context","meeting_prep"],"ag":["Department of State"],"cf":"medium","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1981-88v41/d116","cv":"Sample date and title are placeholders for demo use; cite the HistoryAtState document after source-note review.","rid":"frus-1981-88-v41-d116-example"},{"y":1974,"t":"FRUS metadata placeholder: seabed manganese nodules and resource diplomacy","u":"https://history.state.gov/historicaldocuments/frus1969-76ve01/d430","s":"FRUS / HistoryAtState","sc":118,"de":"Sample metadata-only FRUS discovery record for law-of-the-sea and seabed-minerals context. Verify exact document metadata before use.","dd":"1970s example date - verify exact document date","sb":[0,2,22],"mi":["manganese"],"cty":["United States"],"st":"FRUS","et":"historical_record","ch":["diplomacy","mining"],"fu":["historical_context","talking_points"],"ag":["Department of State"],"cf":"medium","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1969-76ve01/d430","cv":"Sample record flags a topic connection only; verify document-level relevance and exact date.","rid":"frus-1969-76-ve01-d430-example"},{"y":2025,"t":"Census trade-data example: gallium and germanium proxy HS codes","u":"https://www.census.gov/foreign-trade/statistics/historical/hs.html","s":"U.S. Census Bureau","sc":101,"de":"Metadata-only example for semiconductor-material trade monitoring. Confirm HS mappings and query vintage before using in a brief.","dd":"January 2025 example query","sb":[5,6],"mi":["gallium","germanium"],"cty":["United States"],"st":"Census","et":"trade_data","ch":["trade","processing"],"fu":["reporting","talking_points"],"ag":["U.S. Census Bureau"],"cf":"low","hs":["811292","811299"],"cu":"https://www.census.gov/foreign-trade/statistics/historical/hs.html","cv":"Codes are starter proxies only; verify HTS/Schedule B coverage and aggregation before clearance.","rid":"census-gallium-germanium-hs-example"}],"07-09":[{"y":2026,"t":"DLA Strategic Materials overview","u":"https://www.dla.mil/Strategic-Materials/","s":"DLA Strategic Materials","sc":128,"de":"Official DLA reference metadata for defense-relevant strategic materials planning, procurement, and stockpile context.","dd":"Reference record created July 9, 2026","sb":[0,19,20],"mi":["beryllium","germanium","rare earth elements"],"cty":["United States"],"st":"DLA","et":"policy_document","ch":["stockpiling","recycling"],"fu":["meeting_prep","historical_context"],"ag":["Defense Logistics Agency"],"cf":"high","hs":[],"cu":"https://www.dla.mil/Strategic-Materials/","cv":"Use DLA program pages for orientation; cite specific notices or reports for material-specific claims.","rid":"dla-strategic-materials-overview"},{"y":2026,"t":"NARA discovery placeholder: strategic materials and stockpiling","u":"https://catalog.archives.gov/search?q=strategic%20materials%20stockpile","s":"NARA Catalog","sc":108,"de":"Placeholder archival-discovery record for strategic-materials holdings. Use the NARA connector to replace this with cataloged records.","dd":"Search placeholder created July 9, 2026","sb":[3,19,20],"mi":["strategic materials"],"cty":["United States"],"st":"NARA","et":"archival_record","ch":["stockpiling"],"fu":["historical_context","meeting_prep"],"ag":["National Archives and Records Administration","Defense Logistics Agency"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=strategic%20materials%20stockpile","cv":"Search URL only; not a citable archival item.","rid":"nara-strategic-materials-search-placeholder"},{"y":2026,"t":"NARA discovery placeholder: critical minerals archival records","u":"https://catalog.archives.gov/search?q=critical%20minerals","s":"NARA Catalog","sc":107,"de":"Placeholder record representing a NARA Catalog search result set to be replaced by item- or series-level catalog metadata.","dd":"Search placeholder created July 9, 2026","sb":[0,2,3],"mi":["critical minerals"],"cty":["United States"],"st":"NARA","et":"archival_record","ch":["diplomacy"],"fu":["historical_context","evidence_pack"],"ag":["National Archives and Records Administration"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=critical%20minerals","cv":"Search URL only; replace with stable NAID records before clearance.","rid":"nara-critical-minerals-search-placeholder"}],"11-07":[{"y":2025,"t":"USGS / Interior final 2025 List of Critical Minerals","u":"https://www.usgs.gov/news/science-snippet/interior-department-releases-final-2025-list-critical-minerals","s":"USGS","sc":131,"de":"Official source metadata for tracking the U.S. critical minerals list and changes to list composition.","dd":"November 7, 2025","sb":[0,1,25],"mi":["critical minerals","copper","rare earth elements"],"cty":["United States"],"st":"USGS","et":"policy_document","ch":["diplomacy","permitting"],"fu":["talking_points","public_diplomacy","meeting_prep"],"ag":["U.S. Geological Survey","Department of the Interior"],"cf":"high","hs":[],"cu":"https://www.usgs.gov/news/science-snippet/interior-department-releases-final-2025-list-critical-minerals","cv":"Use the Federal Register notice for the controlling legal list when needed.","rid":"usgs-2025-critical-minerals-list"},{"y":2025,"t":"Final 2025 List of Critical Minerals","u":"https://www.federalregister.gov/documents/2025/11/07/2025-19813/final-2025-list-of-critical-minerals","s":"Federal Register","sc":124,"de":"Federal Register metadata for the final 2025 critical minerals list.","dd":"November 7, 2025","sb":[0,25,26],"mi":["critical minerals"],"cty":["United States"],"st":"Federal Register","et":"policy_document","ch":["permitting","diplomacy"],"fu":["talking_points","public_diplomacy","meeting_prep"],"ag":["Department of the Interior","U.S. Geological Survey"],"cf":"high","hs":[],"cu":"https://www.federalregister.gov/documents/2025/11/07/2025-19813/final-2025-list-of-critical-minerals","cv":"Use notice text for legal citation; this metadata cache is not the source of law.","rid":"federal-register-2025-critical-minerals-list"}],"05-31":[{"y":2023,"t":"DOE 2023 Critical Materials Assessment","u":"https://www.energy.gov/cmei/ammto/articles/2023-doe-critical-materials-assessment","s":"DOE","sc":133,"de":"Official DOE source metadata for energy-technology criticality, supply risk, and material importance context.","dd":"May 2023","sb":[0,16,21],"mi":["lithium","cobalt","rare earth elements","graphite"],"cty":["United States"],"st":"DOE","et":"policy_document","ch":["processing","refining","recycling"],"fu":["meeting_prep","talking_points","public_diplomacy"],"ag":["Department of Energy"],"cf":"high","hs":[],"cu":"https://www.energy.gov/cmei/ammto/articles/2023-doe-critical-materials-assessment","cv":"Assessment scope is energy materials; do not treat it as identical to the USGS critical-minerals list.","rid":"doe-2023-critical-materials-assessment"}],"02-04":[{"y":2026,"t":"2026 Critical Minerals Ministerial","u":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","s":"State Department","sc":137,"de":"Official State Department release metadata for the 2026 Critical Minerals Ministerial and follow-up campaign planning.","dd":"February 4, 2026","sb":[0,1,2],"mi":["critical minerals","rare earth elements","nickel","cobalt","graphite","gallium","germanium","copper"],"cty":["United States"],"st":"State","et":"ministerial_document","ch":["diplomacy","finance","infrastructure"],"fu":["meeting_prep","public_diplomacy","ministerial_follow_up","talking_points"],"ag":["Department of State"],"cf":"high","hs":[],"cu":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","cv":"State.gov pages may block automated retrieval; verify live page access in a browser before final clearance.","rid":"state-2026-critical-minerals-ministerial"}],"09-01":[{"y":2025,"t":"Partner-country placeholder: Australia investment climate and critical minerals","u":"https://www.state.gov/reports/2025-investment-climate-statements/australia","s":"State Department","sc":121,"de":"Sample partner-country / investment-climate metadata record. Use the country statement and post reporting to validate specific claims.","dd":"2025 Investment Climate Statement example","sb":[0,18,24],"mi":["critical minerals"],"cty":["Australia"],"st":"State","et":"policy_document","ch":["finance","processing","infrastructure"],"fu":["investment_climate","meeting_prep","reporting"],"ag":["Department of State"],"cf":"medium","hs":[],"cu":"https://www.state.gov/reports/2025-investment-climate-statements/australia","cv":"Placeholder record for workflow demonstration; verify statement text and country team context.","rid":"state-australia-2025-investment-climate-critical-minerals"}],"02-05":[{"y":2026,"t":"Sample output campaign: rare earths follow-up evidence pack","u":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","s":"Other USG","sc":117,"de":"Demonstrator campaign record tying ministerial follow-up to rare earths, processing capacity, partner coordination, and evidence-pack drafting.","dd":"Ministerial follow-up example","sb":[1,11,16],"mi":["rare earth elements","neodymium","dysprosium"],"cty":["United States"],"st":"Other USG","et":"ministerial_document","ch":["processing","refining","diplomacy"],"fu":["meeting_prep","evidence_pack","questions_for_counterparts"],"ag":["Department of State","Department of Energy","U.S. Geological Survey"],"cf":"low","hs":[],"cu":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","cv":"Internal campaign scaffold only; replace with sourced records before public use.","rid":"ministerial-follow-up-campaign-rare-earths"}]};
+const EVENTS_CACHE = {"01-01":[{"y":2025,"t":"Census trade-data example: nickel ores and concentrates imports, HS 260400","u":"https://www.census.gov/data/developers/data-sets/international-trade.html","s":"U.S. Census Bureau","sc":122,"de":"Metadata-only example for an import query by HS code. Values are intentionally omitted from the cache; fetch current figures from the Census API.","dd":"January 2025 example query","sb":[5,6],"mi":["nickel"],"cty":["United States"],"st":"Census","et":"trade_data","ch":["trade"],"fu":["reporting","investment_climate"],"ag":["U.S. Census Bureau"],"cf":"medium","hs":["260400"],"cu":"https://www.census.gov/data/developers/data-sets/international-trade.html","cv":"HS code is a proxy for commodity flow and may not identify mined origin or critical-minerals content with policy precision.","rid":"census-nickel-hs-260400-example"},{"y":1982,"t":"FRUS metadata placeholder: strategic and critical minerals access","u":"https://history.state.gov/historicaldocuments/frus1981-88v41/d116","s":"FRUS / HistoryAtState","sc":118,"de":"Sample metadata-only record for a FRUS document surfaced by a critical-minerals query. Verify exact date, title, and citation before operational use.","dd":"1980s example date - verify exact document date","sb":[0,2,19],"mi":["strategic minerals"],"cty":["United States"],"st":"FRUS","et":"historical_record","ch":["diplomacy","stockpiling"],"fu":["historical_context","meeting_prep"],"ag":["Department of State"],"cf":"medium","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1981-88v41/d116","cv":"Sample date and title are placeholders for demo use; cite the HistoryAtState document after source-note review.","rid":"frus-1981-88-v41-d116-example"},{"y":1974,"t":"FRUS metadata placeholder: seabed manganese nodules and resource diplomacy","u":"https://history.state.gov/historicaldocuments/frus1969-76ve01/d430","s":"FRUS / HistoryAtState","sc":118,"de":"Sample metadata-only FRUS discovery record for law-of-the-sea and seabed-minerals context. Verify exact document metadata before use.","dd":"1970s example date - verify exact document date","sb":[0,2,22],"mi":["manganese"],"cty":["United States"],"st":"FRUS","et":"historical_record","ch":["diplomacy","mining"],"fu":["historical_context","talking_points"],"ag":["Department of State"],"cf":"medium","hs":[],"cu":"https://history.state.gov/historicaldocuments/frus1969-76ve01/d430","cv":"Sample record flags a topic connection only; verify document-level relevance and exact date.","rid":"frus-1969-76-ve01-d430-example"},{"y":2025,"t":"Census trade-data example: copper ores and refined copper query","u":"https://www.census.gov/data/developers/data-sets/international-trade.html","s":"U.S. Census Bureau","sc":114,"de":"Metadata-only example for a partner-country trade query by HS code. Values are intentionally omitted from the cache; fetch current figures from the Census API.","dd":"January 2025 example query","sb":[0,5,6],"mi":["copper"],"cty":["United States","Chile"],"st":"Census","et":"trade_data","ch":["trade","refining"],"fu":["reporting","supply_chain_mapping"],"ag":["U.S. Census Bureau"],"cf":"low","hs":["260300","740311"],"cu":"https://www.census.gov/data/developers/data-sets/international-trade.html","cv":"Partner-country and HS-code parameters are placeholders; verify Census query fields, commodity coverage, and period before using figures.","rid":"census-copper-chile-hs-example"},{"y":2025,"t":"Census trade-data example: gallium and germanium proxy HS codes","u":"https://www.census.gov/foreign-trade/statistics/historical/hs.html","s":"U.S. Census Bureau","sc":101,"de":"Metadata-only example for semiconductor-material trade monitoring. Confirm HS mappings and query vintage before using in a brief.","dd":"January 2025 example query","sb":[5,6],"mi":["gallium","germanium"],"cty":["United States"],"st":"Census","et":"trade_data","ch":["trade","processing"],"fu":["reporting","talking_points"],"ag":["U.S. Census Bureau"],"cf":"low","hs":["811292","811299"],"cu":"https://www.census.gov/foreign-trade/statistics/historical/hs.html","cv":"Codes are starter proxies only; verify HTS/Schedule B coverage and aggregation before clearance.","rid":"census-gallium-germanium-hs-example"}],"07-09":[{"y":2026,"t":"DLA Strategic Materials overview","u":"https://www.dla.mil/Strategic-Materials/","s":"DLA Strategic Materials","sc":128,"de":"Official DLA reference metadata for defense-relevant strategic materials planning, procurement, and stockpile context.","dd":"Reference record created July 9, 2026","sb":[0,19,20],"mi":["beryllium","germanium","rare earth elements"],"cty":["United States"],"st":"DLA","et":"policy_document","ch":["stockpiling","recycling"],"fu":["meeting_prep","historical_context"],"ag":["Defense Logistics Agency"],"cf":"high","hs":[],"cu":"https://www.dla.mil/Strategic-Materials/","cv":"Use DLA program pages for orientation; cite specific notices or reports for material-specific claims.","rid":"dla-strategic-materials-overview"},{"y":2026,"t":"NARA discovery placeholder: strategic materials and stockpiling","u":"https://catalog.archives.gov/search?q=strategic%20materials%20stockpile","s":"NARA Catalog","sc":108,"de":"Placeholder archival-discovery record for strategic-materials holdings. Use the NARA connector to replace this with cataloged records.","dd":"Search placeholder created July 9, 2026","sb":[3,19,20],"mi":["strategic materials"],"cty":["United States"],"st":"NARA","et":"archival_record","ch":["stockpiling"],"fu":["historical_context","meeting_prep"],"ag":["National Archives and Records Administration","Defense Logistics Agency"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=strategic%20materials%20stockpile","cv":"Search URL only; not a citable archival item.","rid":"nara-strategic-materials-search-placeholder"},{"y":2026,"t":"NARA discovery placeholder: Indonesia nickel and strategic materials","u":"https://catalog.archives.gov/search?q=Indonesia%20nickel%20strategic%20materials","s":"NARA Catalog","sc":108,"de":"Placeholder archival-discovery record showing how a NARA Catalog query for Indonesia and nickel-related strategic-materials context would enter the global view.","dd":"Search placeholder created July 9, 2026","sb":[0,3,16],"mi":["nickel"],"cty":["Indonesia"],"st":"NARA","et":"archival_record","ch":["mining","processing"],"fu":["historical_context","access_analysis"],"ag":["National Archives and Records Administration"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=Indonesia%20nickel%20strategic%20materials","cv":"Search URL only; replace with item- or series-level NARA API metadata before citation.","rid":"nara-indonesia-nickel-search-placeholder"},{"y":2026,"t":"NARA discovery placeholder: Congo cobalt and strategic minerals","u":"https://catalog.archives.gov/search?q=Congo%20cobalt%20strategic%20minerals","s":"NARA Catalog","sc":108,"de":"Placeholder archival-discovery record showing how a NARA Catalog query for Congo, cobalt, and strategic-minerals context would enter the global view.","dd":"Search placeholder created July 9, 2026","sb":[0,3,22],"mi":["cobalt"],"cty":["Democratic Republic of the Congo"],"st":"NARA","et":"archival_record","ch":["mining","diplomacy"],"fu":["historical_context","access_analysis"],"ag":["National Archives and Records Administration"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=Congo%20cobalt%20strategic%20minerals","cv":"Search URL only; country terminology and archival relevance require item-level verification.","rid":"nara-drc-cobalt-search-placeholder"},{"y":2026,"t":"NARA discovery placeholder: critical minerals archival records","u":"https://catalog.archives.gov/search?q=critical%20minerals","s":"NARA Catalog","sc":107,"de":"Placeholder record representing a NARA Catalog search result set to be replaced by item- or series-level catalog metadata.","dd":"Search placeholder created July 9, 2026","sb":[0,2,3],"mi":["critical minerals"],"cty":["United States"],"st":"NARA","et":"archival_record","ch":["diplomacy"],"fu":["historical_context","evidence_pack"],"ag":["National Archives and Records Administration"],"cf":"low","hs":[],"cu":"https://catalog.archives.gov/search?q=critical%20minerals","cv":"Search URL only; replace with stable NAID records before clearance.","rid":"nara-critical-minerals-search-placeholder"}],"11-07":[{"y":2025,"t":"USGS / Interior final 2025 List of Critical Minerals","u":"https://www.usgs.gov/news/science-snippet/interior-department-releases-final-2025-list-critical-minerals","s":"USGS","sc":131,"de":"Official source metadata for tracking the U.S. critical minerals list and changes to list composition.","dd":"November 7, 2025","sb":[0,1,25],"mi":["critical minerals","copper","rare earth elements"],"cty":["United States"],"st":"USGS","et":"policy_document","ch":["diplomacy","permitting"],"fu":["talking_points","historical_context","meeting_prep"],"ag":["U.S. Geological Survey","Department of the Interior"],"cf":"high","hs":[],"cu":"https://www.usgs.gov/news/science-snippet/interior-department-releases-final-2025-list-critical-minerals","cv":"Use the Federal Register notice for the controlling legal list when needed.","rid":"usgs-2025-critical-minerals-list"},{"y":2025,"t":"Final 2025 List of Critical Minerals","u":"https://www.federalregister.gov/documents/2025/11/07/2025-19813/final-2025-list-of-critical-minerals","s":"Federal Register","sc":124,"de":"Federal Register metadata for the final 2025 critical minerals list.","dd":"November 7, 2025","sb":[0,25,26],"mi":["critical minerals"],"cty":["United States"],"st":"Federal Register","et":"policy_document","ch":["permitting","diplomacy"],"fu":["talking_points","reporting","meeting_prep"],"ag":["Department of the Interior","U.S. Geological Survey"],"cf":"high","hs":[],"cu":"https://www.federalregister.gov/documents/2025/11/07/2025-19813/final-2025-list-of-critical-minerals","cv":"Use notice text for legal citation; this metadata cache is not the source of law.","rid":"federal-register-2025-critical-minerals-list"}],"05-31":[{"y":2023,"t":"DOE 2023 Critical Materials Assessment","u":"https://www.energy.gov/cmei/ammto/articles/2023-doe-critical-materials-assessment","s":"DOE","sc":133,"de":"Official DOE source metadata for energy-technology criticality, supply risk, and material importance context.","dd":"May 2023","sb":[0,16,21],"mi":["lithium","cobalt","rare earth elements","graphite"],"cty":["United States"],"st":"DOE","et":"policy_document","ch":["processing","refining","recycling"],"fu":["meeting_prep","talking_points","access_analysis"],"ag":["Department of Energy"],"cf":"high","hs":[],"cu":"https://www.energy.gov/cmei/ammto/articles/2023-doe-critical-materials-assessment","cv":"Assessment scope is energy materials; do not treat it as identical to the USGS critical-minerals list.","rid":"doe-2023-critical-materials-assessment"}],"02-04":[{"y":2026,"t":"2026 Critical Minerals Ministerial","u":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","s":"State Department","sc":137,"de":"Official State Department release metadata for the 2026 Critical Minerals Ministerial and follow-up evidence review.","dd":"February 4, 2026","sb":[0,1,2],"mi":["critical minerals","rare earth elements","nickel","cobalt","graphite","gallium","germanium","copper"],"cty":["United States"],"st":"State","et":"ministerial_document","ch":["diplomacy","finance","infrastructure"],"fu":["meeting_prep","supply_chain_mapping","ministerial_follow_up","talking_points"],"ag":["Department of State"],"cf":"high","hs":[],"cu":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","cv":"State.gov pages may block automated retrieval; verify live page access in a browser before final clearance.","rid":"state-2026-critical-minerals-ministerial"}],"09-01":[{"y":2025,"t":"Partner-country placeholder: Australia investment climate and critical minerals","u":"https://www.state.gov/reports/2025-investment-climate-statements/australia","s":"State Department","sc":121,"de":"Sample partner-country / investment-climate metadata record. Use the country statement and country-team reporting channels to validate specific claims.","dd":"2025 Investment Climate Statement example","sb":[0,18,24],"mi":["critical minerals"],"cty":["Australia"],"st":"State","et":"policy_document","ch":["finance","processing","infrastructure"],"fu":["investment_climate","meeting_prep","reporting"],"ag":["Department of State"],"cf":"medium","hs":[],"cu":"https://www.state.gov/reports/2025-investment-climate-statements/australia","cv":"Placeholder record for workflow demonstration; verify statement text and country team context.","rid":"state-australia-2025-investment-climate-critical-minerals"}],"02-05":[{"y":2026,"t":"Sample evidence review: rare earths follow-up evidence pack","u":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","s":"Other USG","sc":117,"de":"Demonstrator evidence-review record tying ministerial follow-up to rare earths, processing capacity, partner coordination, and source-backed analysis.","dd":"Ministerial follow-up example","sb":[1,11,16],"mi":["rare earth elements","neodymium","dysprosium"],"cty":["United States"],"st":"Other USG","et":"ministerial_document","ch":["processing","refining","diplomacy"],"fu":["meeting_prep","evidence_pack","questions_for_counterparts"],"ag":["Department of State","Department of Energy","U.S. Geological Survey"],"cf":"low","hs":[],"cu":"https://www.state.gov/releases/office-of-the-spokesperson/2026/02/2026-critical-minerals-ministerial","cv":"Internal evidence-review scaffold only; replace with sourced records before operational use.","rid":"ministerial-follow-up-evidence-review-rare-earths"}]};
 
 </script>
 
@@ -24194,7 +24379,10 @@ const EVENTS_CACHE = {"01-01":[{"y":2025,"t":"Census trade-data example: nickel 
 let tweetSeq = 0;
 const tweets = [];
 const tweetImageData = {};  // id → { buffer, type, name, width, height }
-const PRESET_HASHTAGS = ["#OnThisDay", "#DiplomaticHistory", "#USHistory", "#ForeignPolicy", "#Diplomacy", "#ColdWar"];
+const NOTE_LABELS = ["Trusted USG", "FRUS", "NARA", "Census", "USGS/DOE", "Needs Review"];
+const PRESET_HASHTAGS = NOTE_LABELS;
+const NOTE_CHAR_LIMIT = 700;
+const NOTE_WARN_LIMIT = 620;
 
 // ── Preset draft text templates ────────────────────────────────────────────
 const PRESETS = {
@@ -24207,7 +24395,7 @@ const PRESETS = {
       const url   = v("volId")    || "[URL]";
       return `Briefing note: ${title} (${years}, ${num}).\n\n${url}`;
     },
-    defaultHashtags: ["#USHistory","#ForeignPolicy"],
+    defaultHashtags: ["Trusted USG"],
     defaultTheme: "Briefing / Evidence Pack",
     defaultTime: "12:00",
     altTextHint: "Source image or document preview: [BRIEFING TITLE], [DATE RANGE], [IDENTIFIER]"
@@ -24215,7 +24403,7 @@ const PRESETS = {
   chapterFocus: {
     label: "Meeting Prep Card",
     text: () => `Meeting prep: [MINERAL / COUNTRY] raises [SUPPLY-CHAIN ISSUE]. Evidence to cite: [SOURCE OR RECORD].`,
-    defaultHashtags: ["#USHistory"],
+    defaultHashtags: ["Trusted USG"],
     defaultTheme: "Meeting Prep",
     defaultTime: "13:00",
     altTextHint: "[IMAGE DESCRIPTION] | [DATE OF PHOTO/DOCUMENT] | Courtesy: [ARCHIVE SOURCE]"
@@ -24223,7 +24411,7 @@ const PRESETS = {
   chapterEmphasizes: {
     label: "Talking Point",
     text: () => `Talking point: [MINERAL] supply-chain resilience depends on [PROCESSING / TRADE / FINANCE ISSUE].`,
-    defaultHashtags: ["#USHistory"],
+    defaultHashtags: ["Trusted USG"],
     defaultTheme: "Talking Points",
     defaultTime: "13:30",
     altTextHint: "[IMAGE DESCRIPTION] | [DATE OF PHOTO/DOCUMENT] | Courtesy: [ARCHIVE SOURCE]"
@@ -24234,7 +24422,7 @@ const PRESETS = {
       const title = v("volTitle") || "[BRIEFING TITLE]";
       return `${title}: [SPECIFIC SOURCE] supports [KEY POINT] but needs caveat [CAVEAT].`;
     },
-    defaultHashtags: ["#USHistory"],
+    defaultHashtags: ["Needs Review"],
     defaultTheme: "Evidence Pack",
     defaultTime: "14:00",
     altTextHint: "[DOCUMENT DESCRIPTION] | Courtesy [ARCHIVE SOURCE] | Full URL: [DIRECT IMAGE URL]"
@@ -24242,47 +24430,47 @@ const PRESETS = {
   relatedVolume: {
     label: "Follow-up Source",
     text: () => `[RELATED ISSUE] needs follow-up with [SOURCE / AGENCY / POST]:\n\n[RELATED URL]`,
-    defaultHashtags: ["#USHistory"],
+    defaultHashtags: ["Trusted USG"],
     defaultTheme: "Ministerial Follow-up",
     defaultTime: "14:30",
     altTextHint: "Related source image: [TITLE], [DATE RANGE], [IDENTIFIER]"
   },
   anniversary: {
-    label: "Anniversary / On This Day",
-    text: () => `[NUMBER] years ago today, [HISTORICAL EVENT DESCRIPTION]. Read more:`,
-    defaultHashtags: ["#USHistory","#Diplomacy"],
-    defaultTheme: "Anniversary",
+    label: "Historical Comparison",
+    text: () => `Historical comparison: [EARLIER PERIOD] shows [PATTERN]. Current access question: [TODAY'S SUPPLY-CHAIN ISSUE].`,
+    defaultHashtags: ["FRUS", "NARA"],
+    defaultTheme: "Historical Context",
     defaultTime: "10:00",
     altTextHint: "[IMAGE DESCRIPTION] | [DATE] | Courtesy: [ARCHIVE SOURCE]"
   },
   otd: {
-    label: "#OnThisDay — Event",
-    text: () => `#OnThisDay:\n\n[YEAR]: [DESCRIBE THE EVENT HERE]`,
-    defaultHashtags: ["#OnThisDay","#DiplomaticHistory","#USHistory"],
-    defaultTheme: "Anniversary",
+    label: "Change Over Time",
+    text: () => `Change over time: In [YEAR], [SOURCE] points to [ACCESS / SUPPLY-CHAIN CONDITION]. Compare with [CURRENT SOURCE].`,
+    defaultHashtags: ["FRUS", "Census"],
+    defaultTheme: "Historical Context",
     defaultTime: "10:00",
     altTextHint: "[IMAGE DESCRIPTION] | [DATE] | Courtesy: [ARCHIVE SOURCE]"
   },
   otdDeclass: {
-    label: "#OnThisDay — Document Spotlight",
-    text: () => `This [YEAR] document was published in [PUB YEAR]:\n\n[DOCUMENT DESCRIPTION]`,
-    defaultHashtags: ["#OnThisDay","#USHistory"],
-    defaultTheme: "Anniversary",
+    label: "Archival Lead",
+    text: () => `Archival lead: [NARA / FRUS RECORD] may clarify [MINERAL / COUNTRY] access in [PERIOD]. Verify item-level metadata before citation.`,
+    defaultHashtags: ["NARA", "Needs Review"],
+    defaultTheme: "Evidence Pack",
     defaultTime: "10:30",
     altTextHint: "[DOCUMENT DESCRIPTION] | [DATE] | Courtesy: [ARCHIVE SOURCE]"
   },
   otdMeeting: {
-    label: "#OnThisDay — Meeting Highlight",
-    text: () => `#OnThisDay in [YEAR]: [LEADER 1] and [LEADER 2] met behind closed doors. The memo was published in [PUB YEAR].`,
-    defaultHashtags: ["#OnThisDay","#Diplomacy"],
-    defaultTheme: "Anniversary",
+    label: "Counterpart Questions",
+    text: () => `Questions for counterparts: How are [COUNTRY] authorities addressing [MINERAL] risks in [MINING / PROCESSING / TRADE]? What changed since [YEAR]?`,
+    defaultHashtags: ["Trusted USG"],
+    defaultTheme: "Meeting Prep",
     defaultTime: "11:00",
     altTextHint: "[IMAGE DESCRIPTION] | [DATE] | Courtesy: [ARCHIVE SOURCE]"
   },
   docOfDay: {
     label: "Document of the Day",
     text: () => `Today's document: [DOCUMENT DESCRIPTION]\n\nPublished in [PUB YEAR]. Read the full text:`,
-    defaultHashtags: ["#USHistory","#Diplomacy"],
+    defaultHashtags: ["Trusted USG"],
     defaultTheme: "Document of the Day",
     defaultTime: "12:00",
     altTextHint: "[DOCUMENT DESCRIPTION] | Courtesy [ARCHIVE SOURCE] | Full URL: [DIRECT IMAGE URL]"
@@ -24302,15 +24490,15 @@ const $ = id => document.getElementById(id);
 const v  = id => ($( id) ? $(id).value.trim() : "");
 
 function updateSummary() {
-  $("summaryTweets").textContent = `${tweets.length} draft${tweets.length !== 1 ? "s" : ""}`;
-  $("tweetCount").textContent    = `${tweets.length} draft${tweets.length !== 1 ? "s" : ""}`;
+  $("summaryTweets").textContent = `${tweets.length} note${tweets.length !== 1 ? "s" : ""}`;
+  $("tweetCount").textContent    = `${tweets.length} note${tweets.length !== 1 ? "s" : ""}`;
   const vol = v("volTitle");
   $("summaryVol").textContent    = vol || "—";
   $("summaryVolWrap").style.display = vol ? "" : "none";
   updateTargetTweetSelect();
 }
 
-// ── Draft Management ───────────────────────────────────────────────────────
+// ── Note Management ────────────────────────────────────────────────────────
 function addTweet(presetKey) {
   tweetSeq++;
   const id = `t${tweetSeq}`;
@@ -24325,7 +24513,7 @@ function addTweet(presetKey) {
   div.innerHTML = `
     <div class="tweet-card-header">
       <div class="tweet-num">
-        Draft ${tweets.length}
+        Note ${tweets.length}
         <span class="tweet-label" id="label_${id}"></span>
       </div>
       <button class="btn btn-danger" onclick="removeTweet('${id}')">🗑 Remove</button>
@@ -24374,26 +24562,25 @@ function addTweet(presetKey) {
         </div>
       </div>
 
-      <!-- Tweet text -->
+      <!-- Analytical note text -->
       <div class="tweet-row full">
         <div>
-          <label>Draft Text <span class="hint">(URLs and tags are counted separately for public-post drafts)</span></label>
+          <label>Analytical Note <span class="hint">(concise, source-bound, caveats preserved)</span></label>
           <textarea id="text_${id}" rows="4"
             oninput="updateCounter('${id}')"
-            placeholder="Write briefing, talking-point, or post text here..."></textarea>
+            placeholder="Write an evidence note, talking point, meeting-prep observation, or counterpart question..."></textarea>
           <div class="char-counter" id="counter_${id}">
             <span>text: <strong>0</strong></span>
-            <span>+ url: <strong>23</strong></span>
-            <span>+ tags: <strong id="tagcount_${id}">0</strong></span>
-            <span>= <span class="total char-ok" id="total_${id}">23 / 280</span></span>
-            <div class="char-bar-wrap"><div class="char-bar" id="bar_${id}" style="width:8%;background:var(--green)"></div></div>
+            <span>+ labels: <strong id="tagcount_${id}">0</strong></span>
+            <span>= <span class="total char-ok" id="total_${id}">0 / 700</span></span>
+            <div class="char-bar-wrap"><div class="char-bar" id="bar_${id}" style="width:0%;background:var(--green)"></div></div>
           </div>
         </div>
       </div>
 
-      <!-- Hashtags -->
+      <!-- Evidence labels -->
       <div>
-        <label>Hashtags &amp; Handles <span class="hint">(click to toggle)</span></label>
+        <label>Evidence Labels <span class="hint">(click to toggle)</span></label>
         <div class="hashtag-group" id="tags_${id}">
           ${PRESET_HASHTAGS.map(h => `
             <label class="hashtag-pill${preset.defaultHashtags.includes(h) ? " active" : ""}"
@@ -24403,13 +24590,13 @@ function addTweet(presetKey) {
               <span class="pill-check"></span>${h}
             </label>`).join("")}
         </div>
-        <input type="text" id="customtag_${id}" placeholder="Add custom tag, e.g. #ColdWar  (comma-separated)"
+        <input type="text" id="customtag_${id}" placeholder="Add custom label, e.g. partner-country lead (comma-separated)"
           style="margin-top:8px; font-size:13px;" oninput="updateCounter('${id}')">
       </div>
 
       <!-- Image upload -->
       <div>
-          <label>Image <span class="hint">(attached to draft; embedded in Word export)</span></label>
+          <label>Image <span class="hint">(attached to note; embedded in Word export)</span></label>
         <div class="nara-box">
           <button type="button" class="btn-nara-prom" onclick="naraOpen('${id}')"
                   title="Search NARA, the Library of Congress, and Wikimedia Commons for a photo">
@@ -24470,12 +24657,12 @@ function removeTweet(id) {
   if (idx > -1) tweets.splice(idx, 1);
   const el = $(`card_${id}`);
   if (el) el.remove();
-  // Re-number remaining tweets
+  // Re-number remaining notes
   tweets.forEach((tid, i) => {
     const h = document.querySelector(`#card_${tid} .tweet-num`);
     if (h) {
       const label = h.querySelector(".tweet-label");
-      h.childNodes[0].textContent = `Draft ${i + 1} `;
+      h.childNodes[0].textContent = `Note ${i + 1} `;
       if (label) h.appendChild(label);
     }
   });
@@ -24490,7 +24677,7 @@ function applyPreset(id, key) {
   const txt = preset.text();
   $(`text_${id}`).value = txt;
 
-  // Update hashtag pills
+  // Update evidence-label pills
   const pillContainer = $(`tags_${id}`);
   pillContainer.querySelectorAll(".hashtag-pill").forEach(pill => {
     const inp = pill.querySelector("input");
@@ -24624,7 +24811,7 @@ function _restoreImageFromSnapshot(id) {
 // Default is the local server. To use a cloud Worker instead, deploy your own
 // copy of nara_proxy_worker.js (steps are in that file's header) and save its
 // URL in the modal's "NARA proxy URL" field — that value is remembered per
-// browser. The modal is shared across all tweet cards; naraCurrentId tracks
+// browser. The modal is shared across all note cards; naraCurrentId tracks
 // which opened it.
 const NARA_DEFAULT_SERVER = "http://localhost:5757";
 let NARA_SERVER = (localStorage.getItem("naraProxyUrl") || NARA_DEFAULT_SERVER).replace(/\/+$/, "");
@@ -24699,7 +24886,7 @@ function naraOpen(id) {
   if (!overlay) return;
   overlay.classList.add("open");
 
-  // Prefill the query from the tweet's text (without hashtags or URLs).
+  // Prefill the query from the note text (without labels or URLs).
   // This is just a starting point — the user will almost always edit it.
   const seed = naraSeedQueryFromTweet(id);
   const q = document.getElementById("naraQ");
@@ -24727,8 +24914,8 @@ function naraClose() {
 }
 
 function naraSeedQueryFromTweet(id) {
-  // Try to derive a useful starting query from the tweet body.
-  // Strip URLs, hashtags, and "On this day in YYYY" preambles, then take
+  // Try to derive a useful starting query from the note body.
+  // Strip URLs and old hashtag-style tokens, then take
   // the first ~6 capitalized words (likely proper nouns).
   const raw = (document.getElementById(`text_${id}`)?.value || "")
     .replace(/https?:\/\/\S+/g, "")
@@ -25070,7 +25257,7 @@ async function naraAttach(card) {
   if (!naraCurrentId) return;
   const id = naraCurrentId;
   const status = document.getElementById("naraStatus");
-  status.innerHTML = `<span class="nara-ok">Fetching image for draft #${tweets.indexOf(id) + 1}...</span>`;
+  status.innerHTML = `<span class="nara-ok">Fetching image for note #${tweets.indexOf(id) + 1}...</span>`;
 
   // NARA images come through the proxy (S3 needs a CORS fixup); Commons images
   // are fetched directly from upload.wikimedia.org (CORS-enabled). Either way
@@ -25143,7 +25330,7 @@ async function naraAttach(card) {
   }
 
   const label = card.source === "commons" ? "Wikimedia Commons image" : `NAID ${card.id}`;
-  status.innerHTML = `<span class="nara-ok">Attached. ${label} added to draft.</span>`;
+  status.innerHTML = `<span class="nara-ok">Attached. ${label} added to note.</span>`;
   setTimeout(naraClose, 700);
 }
 
@@ -25174,15 +25361,15 @@ function updateCounter(id) {
 
   const textLen = text.length;
   const tagLen  = tagStr.length;
-  const total   = textLen + 23 + tagLen; // 23 for auto-shortened URL
+  const total   = textLen + tagLen;
 
-  const pct  = Math.min(100, (total / 280) * 100);
-  const cls  = total > 280 ? "char-over" : total > 250 ? "char-warn" : "char-ok";
-  const color = total > 280 ? "var(--red)" : total > 250 ? "var(--warn)" : "var(--green)";
+  const pct  = Math.min(100, (total / NOTE_CHAR_LIMIT) * 100);
+  const cls  = total > NOTE_CHAR_LIMIT ? "char-over" : total > NOTE_WARN_LIMIT ? "char-warn" : "char-ok";
+  const color = total > NOTE_CHAR_LIMIT ? "var(--red)" : total > NOTE_WARN_LIMIT ? "var(--warn)" : "var(--green)";
 
   $(`tagcount_${id}`).textContent = tagLen;
   const totalEl = $(`total_${id}`);
-  totalEl.textContent  = `${total} / 280`;
+  totalEl.textContent  = `${total} / ${NOTE_CHAR_LIMIT}`;
   totalEl.className    = `total ${cls}`;
   const bar = $(`bar_${id}`);
   bar.style.width      = `${pct}%`;
@@ -25252,6 +25439,36 @@ const SOURCE_META = {
 
 const MONTHS = ["January","February","March","April","May","June",
                 "July","August","September","October","November","December"];
+
+const COUNTRY_COORDS = {
+  "United States": { lat: 39.8, lon: -98.6 },
+  "Australia": { lat: -25.3, lon: 133.8 },
+  "Canada": { lat: 56.1, lon: -106.3 },
+  "China": { lat: 35.9, lon: 104.2 },
+  "Japan": { lat: 36.2, lon: 138.2 },
+  "Indonesia": { lat: -2.5, lon: 118.0 },
+  "Democratic Republic of the Congo": { lat: -2.9, lon: 23.7 },
+  "European Union": { lat: 50.8, lon: 4.4 },
+  "Chile": { lat: -35.7, lon: -71.5 },
+  "Argentina": { lat: -38.4, lon: -63.6 },
+  "Brazil": { lat: -14.2, lon: -51.9 },
+  "Mexico": { lat: 23.6, lon: -102.5 },
+  "South Africa": { lat: -30.6, lon: 22.9 },
+  "India": { lat: 20.6, lon: 78.9 },
+  "Philippines": { lat: 12.9, lon: 121.8 },
+};
+
+const TRUSTED_SOURCE_DESCRIPTIONS = {
+  FRUS: "Historical diplomatic context and policy memory.",
+  NARA: "Archival discovery and primary-source leads.",
+  Census: "Official trade-flow data by HS code, with proxy caveats.",
+  USGS: "Critical-minerals lists, commodity science, and import-reliance context.",
+  DOE: "Energy-technology critical materials and supply-risk assessment.",
+  DLA: "Strategic-materials and stockpile context.",
+  "Federal Register": "Official notices and list actions.",
+  State: "Releases, ministerials, and investment-climate context.",
+  "Other USG": "Other public U.S. government source or evidence scaffold.",
+};
 
 const CRITICAL_FILTERS = [
   { id: "mineralFilter", key: "mi", empty: "All minerals" },
@@ -25325,6 +25542,209 @@ function compactJoin(event, key, max = 3) {
   if (!values.length) return "";
   const head = values.slice(0, max).map(formatFilterValue).join(", ");
   return values.length > max ? `${head} +${values.length - max}` : head;
+}
+
+function allEvidenceRecords() {
+  const out = [];
+  if (typeof EVENTS_CACHE === "undefined") return out;
+  for (const [dateKey, events] of Object.entries(EVENTS_CACHE || {})) {
+    if (!Array.isArray(events)) continue;
+    for (const event of events) out.push({ ...event, _dateKey: dateKey });
+  }
+  return out;
+}
+
+function populateAnalysisSelect(id, values, blankLabel) {
+  const sel = document.getElementById(id);
+  if (!sel) return;
+  const current = sel.value;
+  sel.innerHTML = "";
+  sel.appendChild(new Option(blankLabel, ""));
+  [...values].sort((a, b) => a.localeCompare(b)).forEach(value => {
+    sel.appendChild(new Option(formatFilterValue(value), value));
+  });
+  if ([...sel.options].some(opt => opt.value === current)) sel.value = current;
+}
+
+function initAnalysisWorkbench() {
+  const events = allEvidenceRecords();
+  if (!events.length) return;
+  populateAnalysisSelect("analysisMineral", new Set(events.flatMap(e => fieldValues(e, "mi"))), "All minerals");
+  populateAnalysisSelect("analysisSourceType", new Set(events.flatMap(e => fieldValues(e, "st"))), "All trusted sources");
+  populateAnalysisSelect("analysisStage", new Set(events.flatMap(e => fieldValues(e, "ch"))), "All stages");
+  const years = events.map(e => parseInt(e.y || e.year || "0", 10)).filter(Boolean);
+  const slider = document.getElementById("analysisYear");
+  if (slider && years.length) {
+    slider.min = Math.min(...years);
+    slider.max = Math.max(...years);
+    slider.value = slider.max;
+  }
+  renderAnalysisWorkbench();
+}
+
+function analysisFilteredEvents({ throughYear = null, includeYearFilter = true } = {}) {
+  const mineral = document.getElementById("analysisMineral")?.value || "";
+  const sourceType = document.getElementById("analysisSourceType")?.value || "";
+  const stage = document.getElementById("analysisStage")?.value || "";
+  const yearLimit = throughYear == null
+    ? parseInt(document.getElementById("analysisYear")?.value || "9999", 10)
+    : throughYear;
+  return allEvidenceRecords().filter(event => {
+    const year = parseInt(event.y || event.year || "0", 10) || 0;
+    if (includeYearFilter && year && year > yearLimit) return false;
+    if (mineral && !fieldValues(event, "mi").includes(mineral)) return false;
+    if (sourceType && !fieldValues(event, "st").includes(sourceType)) return false;
+    if (stage && !fieldValues(event, "ch").includes(stage)) return false;
+    return true;
+  });
+}
+
+function renderAnalysisWorkbench() {
+  const slider = document.getElementById("analysisYear");
+  const throughYear = parseInt(slider?.value || "9999", 10);
+  const label = document.getElementById("analysisYearLabel");
+  if (label && Number.isFinite(throughYear)) label.textContent = `(${throughYear})`;
+
+  const events = analysisFilteredEvents({ throughYear });
+  const allFilteredNoYear = analysisFilteredEvents({ includeYearFilter: false });
+  const countries = new Set(events.flatMap(e => fieldValues(e, "cty")));
+  const years = new Set(events.map(e => parseInt(e.y || e.year || "0", 10)).filter(Boolean));
+  const sources = new Set(events.flatMap(e => fieldValues(e, "st")));
+
+  setText("metricRecords", events.length);
+  setText("metricCountries", countries.size);
+  setText("metricYears", years.size);
+  setText("metricTrusted", sources.size);
+
+  renderTimeline(allFilteredNoYear, throughYear);
+  renderGlobalMap(events);
+  renderSourceStack(events);
+  renderChangeNarrative(events, throughYear);
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function renderTimeline(events, activeYear) {
+  const container = document.getElementById("timelineBars");
+  if (!container) return;
+  const counts = new Map();
+  events.forEach(event => {
+    const year = parseInt(event.y || event.year || "0", 10);
+    if (year) counts.set(year, (counts.get(year) || 0) + 1);
+  });
+  const years = [...counts.keys()].sort((a, b) => a - b);
+  if (!years.length) {
+    container.innerHTML = '<div class="empty-state" style="padding:12px;">No records match the selected filters.</div>';
+    return;
+  }
+  const maxCount = Math.max(...counts.values());
+  container.innerHTML = years.map(year => {
+    const count = counts.get(year) || 0;
+    const pct = Math.max(8, Math.round((count / maxCount) * 96));
+    const active = year <= activeYear ? " active" : "";
+    return `<div class="timeline-bar${active}" title="${year}: ${count} record${count === 1 ? "" : "s"}">
+      <div class="bar" style="height:${pct}px"></div>
+      <span>${year}</span>
+    </div>`;
+  }).join("");
+}
+
+function renderGlobalMap(events) {
+  const container = document.getElementById("globalMap");
+  if (!container) return;
+  const byCountry = new Map();
+  events.forEach(event => {
+    fieldValues(event, "cty").forEach(country => {
+      if (!byCountry.has(country)) byCountry.set(country, []);
+      byCountry.get(country).push(event);
+    });
+  });
+  const markers = [];
+  for (const [country, rows] of byCountry.entries()) {
+    const coord = COUNTRY_COORDS[country];
+    if (!coord) continue;
+    const x = ((coord.lon + 180) / 360) * 960;
+    const y = ((90 - coord.lat) / 180) * 430;
+    const r = Math.min(24, 7 + rows.length * 3);
+    const sourceTypes = [...new Set(rows.flatMap(e => fieldValues(e, "st")))].join(", ");
+    markers.push(`
+      <g class="country-marker" data-country="${escHtml(country)}" tabindex="0" role="button" aria-label="${escHtml(country)} ${rows.length} records">
+        <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="#8a2b2b" fill-opacity="0.74" stroke="#ffffff" stroke-width="2"></circle>
+        <text x="${(x + r + 4).toFixed(1)}" y="${(y + 4).toFixed(1)}" font-size="12" fill="#1b3a5b">${escHtml(country)}</text>
+        <title>${escHtml(country)}: ${rows.length} record${rows.length === 1 ? "" : "s"} (${escHtml(sourceTypes || "source unspecified")})</title>
+      </g>`);
+  }
+  container.innerHTML = `
+    <svg class="global-map" viewBox="0 0 960 430" role="img" aria-label="Global critical minerals evidence map">
+      <rect width="960" height="430" fill="#edf6fb"></rect>
+      ${[-120,-60,0,60,120].map(lon => {
+        const x = ((lon + 180) / 360) * 960;
+        return `<line x1="${x}" y1="0" x2="${x}" y2="430" stroke="#c8d8e5" stroke-width="1"></line>`;
+      }).join("")}
+      ${[-60,-30,0,30,60].map(lat => {
+        const y = ((90 - lat) / 180) * 430;
+        return `<line x1="0" y1="${y}" x2="960" y2="${y}" stroke="#c8d8e5" stroke-width="1"></line>`;
+      }).join("")}
+      <path d="M105 172 C150 120 230 118 275 165 C300 195 290 250 236 279 C177 309 102 270 82 218 C76 199 85 184 105 172Z" fill="#d7e7d7" opacity=".8"></path>
+      <path d="M438 130 C488 86 585 95 650 144 C704 184 721 245 688 296 C646 362 529 352 470 294 C420 245 397 166 438 130Z" fill="#d7e7d7" opacity=".8"></path>
+      <path d="M688 118 C772 98 858 132 895 200 C926 258 885 322 802 319 C733 317 684 272 660 213 C644 174 654 132 688 118Z" fill="#d7e7d7" opacity=".8"></path>
+      <path d="M720 306 C768 286 838 303 868 348 C844 381 762 386 704 356 C690 340 697 316 720 306Z" fill="#d7e7d7" opacity=".8"></path>
+      <text x="80" y="36" font-size="13" fill="#496579">Americas</text>
+      <text x="440" y="36" font-size="13" fill="#496579">Europe / Africa</text>
+      <text x="710" y="36" font-size="13" fill="#496579">Asia-Pacific</text>
+      ${markers.join("")}
+    </svg>`;
+  container.querySelectorAll(".country-marker").forEach(marker => {
+    marker.addEventListener("click", () => {
+      const country = marker.getAttribute("data-country") || "";
+      const sel = document.getElementById("countryFilter");
+      if (sel && [...sel.options].some(opt => opt.value === country)) {
+        sel.value = country;
+        switchLookupMode("search");
+        runSearch(true);
+      }
+    });
+  });
+}
+
+function renderSourceStack(events) {
+  const container = document.getElementById("sourceStack");
+  if (!container) return;
+  const counts = new Map();
+  events.forEach(event => {
+    fieldValues(event, "st").forEach(source => counts.set(source, (counts.get(source) || 0) + 1));
+  });
+  const ordered = ["FRUS", "NARA", "Census", "USGS", "DOE", "DLA", "Federal Register", "State", "Other USG"]
+    .filter(source => counts.has(source));
+  if (!ordered.length) {
+    container.innerHTML = '<div class="source-stack-item"><strong>No matching sources</strong><span>Adjust filters to restore source coverage.</span></div>';
+    return;
+  }
+  container.innerHTML = ordered.map(source => `
+    <div class="source-stack-item">
+      <strong>${escHtml(source)} · ${counts.get(source)} record${counts.get(source) === 1 ? "" : "s"}</strong>
+      <span>${escHtml(TRUSTED_SOURCE_DESCRIPTIONS[source] || "Public evidence source.")}</span>
+    </div>`).join("");
+}
+
+function renderChangeNarrative(events, throughYear) {
+  const box = document.getElementById("changeNarrative");
+  if (!box) return;
+  if (!events.length) {
+    box.textContent = "No evidence records match this filter set. Widen the mineral, source, stage, or year selection.";
+    return;
+  }
+  const exactYear = events.filter(e => (parseInt(e.y || e.year || "0", 10) || 0) === throughYear);
+  const countries = [...new Set(events.flatMap(e => fieldValues(e, "cty")))].sort();
+  const stages = [...new Set(events.flatMap(e => fieldValues(e, "ch")))].sort();
+  const minerals = [...new Set(events.flatMap(e => fieldValues(e, "mi")))].sort();
+  const yearText = exactYear.length
+    ? `${exactYear.length} new record${exactYear.length === 1 ? "" : "s"} in ${throughYear}`
+    : `No new matching record exactly in ${throughYear}; map shows records through that year`;
+  box.innerHTML = `<strong>${yearText}.</strong> Coverage currently touches ${countries.length || 0} countr${countries.length === 1 ? "y" : "ies"} (${escHtml(countries.slice(0, 5).join(", ") || "none")}${countries.length > 5 ? "..." : ""}) across ${stages.length || 0} supply-chain stage${stages.length === 1 ? "" : "s"}. Mineral focus: ${escHtml(minerals.slice(0, 6).join(", ") || "all minerals")}${minerals.length > 6 ? "..." : ""}.`;
 }
 
 function evidenceLabel(value) {
@@ -25729,7 +26149,7 @@ function selectEvent(event, el) {
   const openBtn = document.getElementById("openAndPasteBtn");
   openBtn.style.display = url ? "inline-flex" : "none";
 
-  // Enable the AI event drafts button if API key is set
+  // Enable the AI event-notes button if API key is set
   const aiBtn = document.getElementById("aiEventDraftBtn");
   if (aiBtn && getApiKey()?.startsWith("sk-ant-")) aiBtn.disabled = false;
 
@@ -25747,7 +26167,7 @@ function clearSelection() {
 // from the PDF extraction), surface a horizontal strip of thumbnails.
 // Each thumbnail's Attach button fetches the page-render JPEG through
 // the local server's /ia/fetch proxy and drops it into the currently-
-// targeted tweet card, mirroring the NARA attach flow.
+// targeted note card, mirroring the NARA attach flow.
 
 function _iaIdentifierFromUrl(url) {
   if (!url) return "";
@@ -25790,7 +26210,7 @@ function renderEventImageGallery(event) {
         <div class="caption">${_escAttr(cap)}</div>
         <div class="attach-row">
           <button onclick="attachIAImage('${iaId}', ${page}, ${idx}, this)">
-            📎 Attach to selected tweet
+            📎 Attach to selected note
           </button>
         </div>
       </div>`;
@@ -25799,8 +26219,8 @@ function renderEventImageGallery(event) {
   const plural = images.length === 1 ? "image" : "images";
   gallery.innerHTML = `
     <div class="img-gallery-head">
-      📷 ${images.length} ${plural} in this source — click to attach to the draft
-      selected in the <em>Load drafts into</em> dropdown above (alt text auto-fills).
+      📷 ${images.length} ${plural} in this source — click to attach to the note
+      selected in the <em>Send note to</em> dropdown above (alt text auto-fills).
     </div>
     <div class="img-gallery-strip">${cards}</div>`;
   gallery.style.display = "block";
@@ -25809,11 +26229,11 @@ function renderEventImageGallery(event) {
 async function attachIAImage(iaId, page, imgIdx, button) {
   const targetId = document.getElementById("targetTweetSelect").value;
   if (!targetId) {
-    alert("Pick a target draft first using the 'Load drafts into' dropdown above.");
+    alert("Pick a target note first using the 'Send note to' dropdown above.");
     return;
   }
   if (!tweets.includes(targetId)) {
-    alert("The selected target draft no longer exists. Pick another.");
+    alert("The selected target note no longer exists. Pick another.");
     return;
   }
 
@@ -25873,7 +26293,7 @@ async function attachIAImage(iaId, page, imgIdx, button) {
     naturalW, naturalH, docW, docH,
   };
 
-  // Update the tweet card's preview UI — same DOM hooks as handleImageUpload.
+  // Update the note card's preview UI — same DOM hooks as handleImageUpload.
   const bytes = new Uint8Array(buffer);
   let b64 = "";
   for (let i = 0; i < bytes.length; i += 0x8000) {
@@ -26447,7 +26867,7 @@ function openAndPaste() {
   document.getElementById("pasteUrl").value = url;
   document.getElementById("pasteText").value = "";
   document.getElementById("pasteText").placeholder =
-    "The document is open in a new tab. Copy the key passage and paste it here, then click a drafts button.";
+    "The document is open in a new tab. Copy the key passage and paste it here, then click a notes button.";
   document.getElementById("pasteText").focus();
 }
 
@@ -26474,8 +26894,8 @@ function buildDraftsFromEvent(event) {
   const confidence = event.cf ? formatFilterValue(event.cf) : "";
   const description = event.de || "";
   const caveat = event.cv || "";
-  const otdIn = (y) => `#OnThisDay in ${y}`;
-  const otdQ = "";
+  const datePrefix = (y) => `Historical context (${y})`;
+  const questionPrefix = "Analytical question: ";
   const drafts = [];
 
   if (event.st || event.et || minerals) {
@@ -26524,60 +26944,60 @@ function buildDraftsFromEvent(event) {
     if (top2.length >= 2) {
       drafts.push({
         label: "Meeting Highlight",
-        text: `${otdIn(year)}: ${who2} met behind closed doors. ${pubInline}.${pubLine}`,
+        text: `${datePrefix(year)}: ${who2} met behind closed doors. ${pubInline}.${pubLine}`,
       });
     } else {
       drafts.push({
         label: "Meeting Highlight",
-        text: `${otdIn(year)}: a ${docWord} records ${top2[0]} in a high-level meeting. ${pubInline}.${pubLine}`,
+        text: `${datePrefix(year)}: a ${docWord} records ${top2[0]} in a high-level meeting. ${pubInline}.${pubLine}`,
       });
     }
     if (cl) {
       const partStr = top2.length >= 2 ? `between ${who2}` : `involving ${top2[0]}`;
       drafts.push({
         label: "Classification Reveal",
-        text: `${otdIn(year)}: Originally classified ${cl}, this ${docWord} ${partStr} was${pubYear ? ` declassified in ${pubYear} and` : ""} published in.${pubLine}`,
+        text: `${datePrefix(year)}: Originally classified ${cl}, this ${docWord} ${partStr} was${pubYear ? ` declassified in ${pubYear} and` : ""} published in.${pubLine}`,
       });
     }
     drafts.push({
       label: "Historical Hook",
-      text: `${otdIn(year)}: What did ${top2[0]} discuss in a ${cl ? cl.toLowerCase() + " " : ""}meeting${top2.length >= 2 ? " with " + top2[1] : ""}? ${pubInline}.`,
+        text: `${questionPrefix}What did ${top2[0]} discuss in a ${cl ? cl.toLowerCase() + " " : ""}meeting${top2.length >= 2 ? " with " + top2[1] : ""}? ${pubInline}.`,
     });
     if (allParts.length >= 2) {
       drafts.push({
         label: "Participants",
-        text: `${otdIn(year)}: ${whoAll} — a ${cl ? cl.toLowerCase() + " " : ""}meeting. ${pubInline}.${pubLine}`,
+        text: `${datePrefix(year)}: ${whoAll} - a ${cl ? cl.toLowerCase() + " " : ""}meeting. ${pubInline}.${pubLine}`,
       });
     }
   } else if (!isBareBones) {
     drafts.push({
-      label: "OnThisDay Fact",
-      text: `${otdIn(year || "history")}: ${title}${pubLine}`,
+      label: "Historical Context",
+      text: `${datePrefix(year || "history")}: ${title}${pubLine}`,
     });
     if (cl) {
       drafts.push({
         label: "Classification Reveal",
-        text: `${otdIn(year)}: Originally classified ${cl}, this ${docWord} was${pubYear ? ` declassified in ${pubYear} and` : ""} published:\n\n${title}`,
+        text: `${datePrefix(year)}: Originally classified ${cl}, this ${docWord} was${pubYear ? ` declassified in ${pubYear} and` : ""} published:\n\n${title}`,
       });
     }
     drafts.push({
       label: "Historical Hook",
-      text: `${otdQ}What does a ${year} ${docWord}${pubYear ? ` declassified in ${pubYear} and` : ""} published reveal? Find out:\n\n${title}`,
+      text: `${questionPrefix}What does a ${year} ${docWord}${pubYear ? ` declassified in ${pubYear} and` : ""} published reveal for current supply-chain analysis?\n\n${title}`,
     });
   } else {
     drafts.push({
-      label: "OnThisDay — needs detail",
-      text: `${otdIn(year)}: [describe what this ${docWord} reveals]. ${pubInline}.${pubLine}`,
+      label: "Historical Context - needs detail",
+      text: `${datePrefix(year)}: [describe what this ${docWord} reveals]. ${pubInline}.${pubLine}`,
     });
     if (cl) {
       drafts.push({
         label: "Classification — needs detail",
-        text: `${otdIn(year)}: Originally classified ${cl}, this ${docWord} reveals [key finding].${pubYear ? ` Declassified in ${pubYear} and` : ""} Published in.`,
+        text: `${datePrefix(year)}: Originally classified ${cl}, this ${docWord} reveals [key finding].${pubYear ? ` Declassified in ${pubYear} and` : ""} Published in.`,
       });
     }
     drafts.push({
       label: "Hook — needs detail",
-      text: `${otdIn(year)}: A ${cl ? cl.toLowerCase() + " " : ""}${docWord} sheds new light on [topic]. ${pubInline}.${pubLine}`,
+      text: `${datePrefix(year)}: A ${cl ? cl.toLowerCase() + " " : ""}${docWord} sheds new light on [topic]. ${pubInline}.${pubLine}`,
     });
   }
 
@@ -26606,7 +27026,7 @@ async function generateAiEventDrafts() {
   const container = document.getElementById("eventDraftCards");
   btn.disabled = true;
   btn.innerHTML = '<span class="ai-spinner"></span>Generating…';
-  container.innerHTML = '<div class="draft-empty"><span class="ai-spinner"></span> Claude is writing drafts…</div>';
+  container.innerHTML = '<div class="draft-empty"><span class="ai-spinner"></span> Claude is writing notes…</div>';
 
   try {
     const e = selectedEvent;
@@ -26641,7 +27061,7 @@ async function generateAiEventDrafts() {
       eventDateLabel = `${MONTHS[mm - 1]} ${dd}, ${year}`;
     }
 
-    const _hashtagRule = "HASHTAG RULE: Do NOT use the string \"#OnThisDay\" anywhere in any draft — not in the body and not as a hashtag. Begin drafts with the exact date from the Date field — write \"On [MONTH] [DAY], [YEAR]:\" or \"In [MONTH] [YEAR]:\". Do NOT substitute a different date from memory or training data. The #OnThisDay hashtag is added separately by the application when an OTD preset is selected, not by you.";
+    const _styleRule = "STYLE RULE: Write analytical notes, not promotional copy. Do not use hashtags, slogans, or calls to share. Begin date-anchored notes with the exact date from the Date field, such as \"On [MONTH] [DAY], [YEAR]:\" or \"In [MONTH] [YEAR]:\". Do NOT substitute a different date from memory or training data.";
 
     // Build source-appropriate fields
     let fields, sourceContext;
@@ -26694,21 +27114,20 @@ URL: ${url}
 Source context: ${sourceContext}`;
     }
 
-    // Hashtag rule comes FIRST so it's the most-recent context the model has read
-    const prompt = `${_hashtagRule}
+    // Style rule comes first so the model treats this as analytical briefing work.
+    const prompt = `${_styleRule}
 
-Write 3 concise FSO-facing drafts based on this:
+Write 3 concise FSO-facing analytical notes based on this:
 
 ${fields}
 
-Each draft <= 250 chars. Vary the angles across meeting prep, talking point, evidence pack, public diplomacy, or counterpart question. Re-read the HASHTAG RULE and DATE RULE above before you finalize each draft.`;
+Each note should usually be <= 450 characters. Vary the angles across change over time, meeting prep, evidence pack, supply-chain exposure, and counterpart question. Preserve caveats and do not make claims not present in the metadata.`;
 
     const result = await callClaude(prompt);
     const drafts = parseAiDrafts(result);
 
     if (drafts.length) {
-      // Defensive client-side scrub — strip any #OnThisDay tokens Claude may have
-      // added despite the prompt rule. The prefix is applied at load time in useDraft().
+      // Defensive client-side scrub - strip inherited hashtag-style tokens if the model adds them.
       for (const d of drafts) {
         d.text = d.text
           .replace(/#OnThisDay\s+in\s+(\d{4})\s*[:,]?\s*/gi, 'In $1: ')
@@ -26725,7 +27144,7 @@ Each draft <= 250 chars. Vary the angles across meeting prep, talking point, evi
     container.innerHTML = `<div class="draft-empty" style="color:var(--red);">Error: ${escHtml(e.message)}</div>`;
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '🤖 AI Drafts';
+    btn.innerHTML = '🤖 AI Notes';
   }
 }
 
@@ -26736,17 +27155,17 @@ function toggleCollapse(headerEl) {
   if (body) body.classList.toggle("collapsed");
 }
 
-// ── Target tweet selector ─────────────────────────────────────────────────
+// ── Target note selector ──────────────────────────────────────────────────
 function updateTargetTweetSelect() {
   const sel = $("targetTweetSelect");
   if (!sel) return;
   const current = sel.value;
-  sel.innerHTML = '<option value="">- select a draft -</option>';
+  sel.innerHTML = '<option value="">- select an analytical note -</option>';
   tweets.forEach((tid, i) => {
     const label = $(`label_${tid}`)?.textContent || "";
     const opt = document.createElement("option");
     opt.value = tid;
-    opt.textContent = `Draft ${i + 1}${label}`;
+    opt.textContent = `Note ${i + 1}${label}`;
     sel.appendChild(opt);
   });
   // Restore selection if still valid
@@ -26769,23 +27188,23 @@ function switchDraftTab(tab, btn) {
 function renderDraftCards(drafts, containerId, url) {
   const container = document.getElementById(containerId);
   if (!drafts.length) {
-    container.innerHTML = '<div class="draft-empty">No drafts could be generated. Try pasting more text.</div>';
+    container.innerHTML = '<div class="draft-empty">No notes could be generated. Try pasting more text.</div>';
     return;
   }
   container.innerHTML = "";
   drafts.forEach((d, i) => {
-    const urlChars = url ? 25 : 0;
+    const urlChars = url ? url.length + 2 : 0;
     const totalChars = d.text.length + urlChars;
-    const overClass = totalChars > 280 ? " style='color:var(--red)'" : "";
+    const overClass = totalChars > NOTE_CHAR_LIMIT ? " style='color:var(--red)'" : "";
 
     const card = document.createElement("div");
     card.className = "draft-card";
     card.innerHTML = `
       <div class="draft-label">${escHtml(d.label)}</div>
       <div class="draft-text">${escHtml(d.text)}${url ? "\n\n" + escHtml(url) : ""}</div>
-      <div class="draft-chars"${overClass}>${totalChars} / 280 chars${totalChars > 280 ? " ⚠ over!" : ""}</div>
+      <div class="draft-chars"${overClass}>${totalChars} / ${NOTE_CHAR_LIMIT} chars${totalChars > NOTE_CHAR_LIMIT ? " ⚠ long" : ""}</div>
       <div class="draft-actions">
-        <button class="btn btn-primary" style="font-size:12px;padding:5px 11px;" onclick="useDraft(${i}, '${containerId}')">Use this draft</button>
+        <button class="btn btn-primary" style="font-size:12px;padding:5px 11px;" onclick="useDraft(${i}, '${containerId}')">Use this note</button>
         <button class="btn btn-copy" style="font-size:12px;padding:5px 11px;" onclick="copyDraft(${i}, '${containerId}', this)">📋 Copy</button>
       </div>
     `;
@@ -26795,7 +27214,7 @@ function renderDraftCards(drafts, containerId, url) {
   container._url = url;
 }
 
-/** Load a draft into the targeted tweet card */
+/** Load a generated note into the targeted note card */
 function useDraft(index, containerId) {
   const container = document.getElementById(containerId);
   const drafts = container._drafts;
@@ -26804,24 +27223,17 @@ function useDraft(index, containerId) {
 
   const targetId = $("targetTweetSelect").value;
   if (!targetId) {
-    alert("Please select a target draft from the dropdown above the Draft Generator first.");
+    alert("Please select a target note from the dropdown above the Note Generator first.");
     return;
   }
 
   const textField = $(`text_${targetId}`);
   if (!textField) {
-    alert("Target draft not found. It may have been removed.");
+    alert("Target note not found. It may have been removed.");
     return;
   }
 
-  const OTD_PRESETS = new Set(["otd", "otdDeclass", "otdMeeting", "anniversary"]);
-  const selectedPreset = $(`preset_${targetId}`)?.value || "";
   let draftText = drafts[index].text;
-  if (OTD_PRESETS.has(selectedPreset) && !/^#OnThisDay\b/i.test(draftText)) {
-    draftText = draftText.replace(/^In\s+(\d{4})\s*[,:]\s*/i, '#OnThisDay in $1: ')
-                         .replace(/^On\s+\w[^,]+,\s*(\d{4})\s*[,:]\s*/i, '#OnThisDay in $1: ');
-    if (!/^#OnThisDay\b/i.test(draftText)) draftText = '#OnThisDay — ' + draftText;
-  }
   if (url && !draftText.includes(url)) draftText += '\n\n' + url;
   textField.value = draftText;
   updateCounter(targetId);
@@ -26856,9 +27268,9 @@ function generatePasteDrafts() {
   // Auto-detect year from text if not provided
   const extractedYear = year || (text.match(/\b(1[789]\d{2}|20[0-2]\d)\b/) || [])[1] || "";
 
-  const otdPrefix = "#OnThisDay";
-  const otdIn = (y) => `#OnThisDay in ${y}`;
-  const otdQ = "";
+  const historyPrefix = "Historical context";
+  const datedContext = (y) => `Historical context (${y})`;
+  const questionPrefix = "Analytical question: ";
 
   // Detect doc type
   let docType = "";
@@ -26882,7 +27294,7 @@ function generatePasteDrafts() {
     if (interestWords.test(s)) score += 3;
     if (/President|Secretary|Ambassador|King|Prime Minister/i.test(s)) score += 2;
     if (/["""]/. test(s)) score += 2; // contains a quote
-    if (s.length > 40 && s.length < 180) score += 1; // good tweet length
+    if (s.length > 40 && s.length < 220) score += 1; // useful concise-note length
     return { text: s, score };
   });
   scored.sort((a, b) => b.score - a.score);
@@ -26936,7 +27348,7 @@ function generatePasteDrafts() {
   // 1. Best-sentence hook
   drafts.push({
     label: "Best Hook",
-    text: `${extractedYear ? otdIn(extractedYear) : (otdPrefix || "History")}: ${hook}`,
+    text: `${extractedYear ? datedContext(extractedYear) : historyPrefix}: ${hook}`,
   });
 
   // 2. Quote pull (if a direct quote was found)
@@ -26944,7 +27356,7 @@ function generatePasteDrafts() {
     const attr = people.length ? people[0] : extractedYear ? `${extractedYear} ${docType}` : docType;
     drafts.push({
       label: "Quote Pull",
-      text: `${otdQ}"${quote}"\n\n— ${attr}, in a ${docType}${selectedEvent && selectedEvent.py ? ` (declassified ${selectedEvent.py})` : ""}`,
+      text: `${questionPrefix}How should this source frame current access questions? "${quote}"\n\n- ${attr}, in a ${docType}${selectedEvent && selectedEvent.py ? ` (declassified ${selectedEvent.py})` : ""}`,
     });
   }
 
@@ -26954,7 +27366,7 @@ function generatePasteDrafts() {
     const whoStr = people.length >= 2 ? `${people[0]} and ${people[1]}` : people[0];
     drafts.push({
       label: "People & Topic",
-      text: `${otdIn(extractedYear)}: ${whoStr} discussed ${topicStr}. The ${cl ? cl.toLowerCase() + " " : ""}${docType} was${selectedEvent && selectedEvent.py ? ` declassified in ${selectedEvent.py} and` : ""} published in.`,
+      text: `${datedContext(extractedYear)}: ${whoStr} discussed ${topicStr}. The ${cl ? cl.toLowerCase() + " " : ""}${docType} was${selectedEvent && selectedEvent.py ? ` declassified in ${selectedEvent.py} and` : ""} published in.`,
     });
   }
 
@@ -26965,7 +27377,7 @@ function generatePasteDrafts() {
     const shortDetail = detail.length > 140 ? detail.slice(0, 137) + "…" : detail;
     drafts.push({
       label: "Classification Reveal",
-      text: `${otdIn(extractedYear)}: Originally classified ${cl}, this ${docType} reveals: ${shortDetail}${pyStr}`,
+      text: `${datedContext(extractedYear)}: Originally classified ${cl}, this ${docType} reveals: ${shortDetail}${pyStr}`,
     });
   }
 
@@ -26974,7 +27386,7 @@ function generatePasteDrafts() {
     const pyInline = selectedEvent && selectedEvent.py ? `Declassified in ${selectedEvent.py} and published in` : "Read it in";
     drafts.push({
       label: "Alternate Hook",
-      text: `${extractedYear ? otdIn(extractedYear) : (otdPrefix || "History")}: ${hook2}\n\n${pyInline}.`,
+      text: `${extractedYear ? datedContext(extractedYear) : historyPrefix}: ${hook2}\n\n${pyInline}.`,
     });
   }
 
@@ -27031,22 +27443,22 @@ function checkApiKey() {
   }
 }
 
-const TWEET_SYSTEM_PROMPT = `You write concise FSO-facing drafts from official critical-minerals metadata and source excerpts. Drafts may become meeting-prep cards, talking points, evidence-pack notes, or public-facing posts.
+const TWEET_SYSTEM_PROMPT = `You write concise FSO-facing analytical notes from official critical-minerals metadata and source excerpts. Notes may become meeting-prep cards, talking points, evidence-pack entries, supply-chain exposure observations, or questions for counterparts.
 
-GENERAL RULES (apply to every draft):
-- Each draft MUST be <= 250 characters.
+GENERAL RULES (apply to every note):
+- Each note should usually be <= 450 characters.
 - Be accurate and source-bound. Never invent facts. If the prompt does not supply a detail, leave it out or mark it for human follow-up.
 - Preserve caveats about HS-code proxies, placeholder metadata, confidence, and source limits.
-- Vary the angle across drafts: meeting prep, talking point, evidence-pack note, public-diplomacy line, or question for counterparts.
+- Vary the angle across notes: change over time, meeting prep, evidence-pack note, supply-chain exposure, or question for counterparts.
 
-THE #OnThisDay RULE — hard constraint. NEVER use the string "#OnThisDay" anywhere in any draft you produce. Not in the body, not as a hashtag, not in any form. Begin date-anchored drafts with "In [YEAR]:" or "On [MONTH DAY], [YEAR]:" or a similar phrase. The application adds "#OnThisDay" automatically when the user has selected an OTD preset.
+STYLE RULE - hard constraint. Do not write promotional copy. Do not use hashtags, slogans, or calls to share. Begin date-anchored notes with "In [YEAR]:" or "On [MONTH DAY], [YEAR]:" or a similar phrase.
 
-The user prompt will tell you the source type and any context that's relevant for that record. Stay close to what's in the data — don't speculate about content that isn't supplied.
+The user prompt will tell you the source type and any context that's relevant for that record. Stay close to what's in the data - don't speculate about content that isn't supplied.
 
-Return EXACTLY 3 drafts, one per line, in this format:
-LABEL: draft text
+Return EXACTLY 3 notes, one per line, in this format:
+LABEL: note text
 
-EXAMPLES (notice: no "#OnThisDay" anywhere):
+EXAMPLES:
 Meeting Prep: Ask counterparts how nickel processing constraints affect project timelines and where U.S. finance tools could reduce risk.
 Talking Point: Use the USGS list and DOE assessment separately; they answer different criticality questions.
 Evidence Pack: Census HS codes can show trade movement, but they are proxies and need caveats before clearance.`;
@@ -27143,7 +27555,7 @@ async function callClaudeWithImage(imageBuffer, mimeType, userPrompt, opts = {})
   return data.content?.[0]?.text || "";
 }
 
-// Generate alt text for the image attached to tweet `id`. Uses the current
+// Generate alt text for the image attached to note `id`. Uses the current
 // preset's altTextHint (when present) as a structural template Claude is asked
 // to fill in based on what it sees. Falls back to a generic accessibility
 // prompt when no template is defined.
@@ -27166,7 +27578,7 @@ async function generateAltText(id) {
   // Build the prompt — preset hint as template if available, otherwise free-form
   let prompt;
   if (hint) {
-    prompt = "You are writing alt text for a tweet image. The Office of the Historian uses "
+    prompt = "You are writing alt text for an evidence-note image. The Office of the Historian uses "
       + "this format for this preset:\n\n"
       + hint + "\n\n"
       + "Look at the image and produce a single line of alt text that follows this format. "
@@ -27225,7 +27637,7 @@ async function generateAiPasteDrafts() {
   const container = document.getElementById("pasteDraftCards");
   btn.disabled = true;
   btn.innerHTML = '<span class="ai-spinner"></span>Generating…';
-  container.innerHTML = '<div class="draft-empty"><span class="ai-spinner"></span> Claude is writing drafts…</div>';
+  container.innerHTML = '<div class="draft-empty"><span class="ai-spinner"></span> Claude is writing notes…</div>';
 
   try {
     const year = document.getElementById("pasteYear").value.trim();
@@ -27234,12 +27646,11 @@ async function generateAiPasteDrafts() {
 
     const pubYear = selectedEvent ? (selectedEvent.py || 0) : 0;
 
-    // The #OnThisDay hashtag is reserved for OTD presets — see comment in
-    const _hashtagRulePaste = "HASHTAG RULE: Do NOT use the string \"#OnThisDay\" anywhere in any draft — not in the body and not as a hashtag. Begin drafts with \"In [YEAR]:\" or a similar date-anchored phrase. The application adds \"#OnThisDay\" automatically when the user has selected an OTD preset.";
+    const _styleRulePaste = "STYLE RULE: Write analytical notes, not promotional copy. Do not use hashtags, slogans, or calls to share. Begin date-anchored notes with \"In [YEAR]:\" or a similar date-anchored phrase.";
 
-    const prompt = `${_hashtagRulePaste}
+    const prompt = `${_styleRulePaste}
 
-Write 3 concise FSO-facing drafts based on this source text:
+Write 3 concise FSO-facing analytical notes based on this source text:
 
 Year: ${year || "Unknown"}
 Classification: ${cl || "Unknown"}
@@ -27249,14 +27660,13 @@ URL: ${url || "None"}
 Document text:
 ${text.slice(0, 3000)}
 
-Each draft <= 250 chars. Vary the angles across meeting prep, talking point, evidence pack, public diplomacy, or counterpart question. Pull only details present in the text.${pubYear ? ` The document was published in ${pubYear}.` : ""} Re-read the HASHTAG RULE above before you finalize each draft.`;
+Each note should usually be <= 450 characters. Vary the angles across change over time, meeting prep, evidence pack, supply-chain exposure, or counterpart question. Pull only details present in the text.${pubYear ? ` The document was published in ${pubYear}.` : ""}`;
 
     const result = await callClaude(prompt);
     const drafts = parseAiDrafts(result);
 
     if (drafts.length) {
-      // Defensive client-side scrub — strip any #OnThisDay tokens Claude may have
-      // added despite the prompt rule. The prefix is applied at load time in useDraft().
+      // Defensive client-side scrub - strip inherited hashtag-style tokens if the model adds them.
       for (const d of drafts) {
         d.text = d.text
           .replace(/#OnThisDay\s+in\s+(\d{4})\s*[:,]?\s*/gi, 'In $1: ')
@@ -27273,7 +27683,7 @@ Each draft <= 250 chars. Vary the angles across meeting prep, talking point, evi
     container.innerHTML = `<div class="draft-empty" style="color:var(--red);">Error: ${escHtml(e.message)}</div>`;
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '🤖 AI Drafts';
+    btn.innerHTML = '🤖 AI Notes';
   }
 }
 
@@ -27332,11 +27742,11 @@ function getClearances() {
   return rows;
 }
 
-// ── Campaign snapshots (save / restore as JSON) ─────────────────────────────
-// Download the in-progress campaign — volume details, approvals, clearances,
-// and every tweet (text, hashtags, alt text, attached image) — to a small JSON
+// ── Evidence-review snapshots (save / restore as JSON) ──────────────────────
+// Download the in-progress evidence review - question details, approvals,
+// clearances, and every note (text, labels, alt text, attached image) - to a small JSON
 // file, and restore it later into the open tool. The API key is never included.
-const SNAPSHOT_FORMAT = "records-stage-campaign";
+const SNAPSHOT_FORMAT = "critical-minerals-evidence-review";
 
 function _b64FromBytes(bytes) {
   let s = "";
@@ -27402,7 +27812,7 @@ function saveCampaignSnapshot() {
   const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-");
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `campaign-snapshot-${stamp}.json`;
+  a.download = `evidence-review-snapshot-${stamp}.json`;
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -27418,13 +27828,13 @@ function loadCampaignSnapshotFile(input) {
     try { snap = JSON.parse(e.target.result); }
     catch (err) { alert("Could not read snapshot file: " + err.message); input.value = ""; return; }
     if (!snap || snap._format !== SNAPSHOT_FORMAT) {
-      alert("This file isn't a Records Stage campaign snapshot.");
+      alert("This file isn't a Critical Minerals evidence-review snapshot.");
       input.value = ""; return;
     }
     const hasWork = tweets.length > 0 ||
       (document.getElementById("clearanceBody") &&
        document.getElementById("clearanceBody").children.length > 0);
-    if (hasWork && !confirm("Restore this snapshot? It will replace the current campaign in progress.")) {
+    if (hasWork && !confirm("Restore this snapshot? It will replace the current evidence review in progress.")) {
       input.value = ""; return;
     }
     applyCampaignSnapshot(snap);
@@ -27579,7 +27989,7 @@ async function exportDocx() {
   // ── Column widths ──────────────────────────────────────────────────────
   const C1 = 1700, C2 = 4960, C3 = 2700; // total = 9360
 
-  // ── Build tweet rows ───────────────────────────────────────────────────
+  // ── Build note rows ────────────────────────────────────────────────────
   const tweetRows = tweets.map((tid, idx) => {
     const day     = v(`day_${tid}`)    || `Day ${idx + 1}`;
     const date    = v(`date_${tid}`);
@@ -27591,7 +28001,7 @@ async function exportDocx() {
 
     const shade = idx % 2 === 1 ? ALT_BG : "FFFFFF";
 
-    // Collect selected hashtags
+    // Collect selected evidence labels
     const tags = getSelectedTags(tid);
     const tagLine = tags.join("  ");
 
@@ -27613,8 +28023,8 @@ async function exportDocx() {
     // Character count calculation
     const textLen = tweetTxt.length;
     const tagLen  = tagLine ? tagLine.length + 1 : 0; // +1 for leading space
-    const total   = textLen + 23 + tagLen;
-    const countStr = `[Character Count: ${textLen} + 23 (URL) + ${tagLen} (hashtags) = ${total}]`;
+    const total   = textLen + tagLen;
+    const countStr = `[Length Guide: ${textLen} characters + ${tagLen} labels = ${total}]`;
 
     // Date cell content
     const dateCellParas = [
@@ -27636,8 +28046,8 @@ async function exportDocx() {
           type: imgData.type,
           data: imgData.buffer,
           transformation: { width: imgData.docW, height: imgData.docH },
-          altText: { title: altTxt.slice(0,100) || "Tweet image",
-                     description: altTxt || "Tweet image", name: imgData.name },
+          altText: { title: altTxt.slice(0,100) || "Evidence image",
+                     description: altTxt || "Evidence image", name: imgData.name },
         })] })
       : p(r("[Attach image]", { italics: true }));
 
@@ -27686,9 +28096,9 @@ async function exportDocx() {
       default: { document: { run: { font: "Calibri", size: 22 } } },
     },
     footnotes: {
-      1: { children: [p("The character limit for X/Twitter posts is 280 characters. URLs are automatically shortened to 23 characters. Photos, videos, GIFs, polls, and quoted posts no longer count against the character count.")] },
+      1: { children: [p("Use the length guide as a clearance aid for concise analytical notes; these notes are formatted for analytical review.")] },
       2: { children: [p("Alternative text (alt text) descriptions may be up to 420 characters.")] },
-      3: { children: [p("The character limit for X/Twitter posts is 280 characters. URLs are automatically shortened to 23 characters. Photos, videos, GIFs, polls, and quoted posts no longer count against the character count.")] },
+      3: { children: [p("Use the length guide as a clearance aid for concise analytical notes; these notes are formatted for analytical review.")] },
       4: { children: [p("Alternative text (alt text) descriptions may be up to 420 characters.")] },
     },
     sections: [{
@@ -27701,7 +28111,7 @@ async function exportDocx() {
       children: [
 
         // Title
-        p(r(`Critical Minerals Briefing Drafts`, { bold: true, size: 28, color: "003366" }),
+        p(r(`Critical Minerals Evidence Notes`, { bold: true, size: 28, color: "003366" }),
           { heading: HeadingLevel.HEADING_1 }),
         ...(v("volTitle") ? [
           p([r("Briefing: ", { bold: true }), r(`${volTitle}${volYears ? `, ${volYears}` : ""}${volNum ? `, ${volNum}` : ""}`)]),
@@ -27711,7 +28121,7 @@ async function exportDocx() {
         ]),
         emp(),
 
-        // Main tweet table
+        // Main note table
         new Table({
           width: { size: 9360, type: WidthType.DXA },
           columnWidths: [C1, C2, C3],
@@ -27720,12 +28130,12 @@ async function exportDocx() {
             new TableRow({
               tableHeader: true,
               children: [
-                th("Proposed Draft Date\n[+ Theme]\u00B9", C1),
-                th("Proposed Content\u00B3",               C2),
+                th("Review Date\n[+ Theme]\u00B9", C1),
+                th("Analytical Note / Evidence Text\u00B3", C2),
                 th("Image Alt Text\u2074",                  C3),
               ],
             }),
-            // Tweet rows (or placeholder if none)
+            // Note rows (or placeholder if none)
             ...(tweetRows.length > 0 ? tweetRows : [
               new TableRow({
                 children: [
@@ -27763,7 +28173,7 @@ async function exportDocx() {
         }),
 
         emp(),
-        p(r("Note: The character limit for X/Twitter posts is 280. URLs are automatically shortened to 23 characters. Photos, videos, and GIFs do not count against the character limit.", { italics: true, size: 20 })),
+        p(r("Note: This export is for analytical review and clearance. Keep citations, caveats, and source URLs with any claim used in a briefing.", { italics: true, size: 20 })),
       ],
     }],
   });
@@ -27771,8 +28181,8 @@ async function exportDocx() {
   // ── Save ──────────────────────────────────────────────────────────────
   try {
     const blob = await Packer.toBlob(doc);
-    const slug = (v("volNum") || v("volTitle") || "critical-minerals-drafts")
-      .replace(/[^A-Za-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "") || "critical-minerals-drafts";
+    const slug = (v("volNum") || v("volTitle") || "critical-minerals-notes")
+      .replace(/[^A-Za-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "") || "critical-minerals-notes";
     const filename = `CriticalMinerals_${slug}_${new Date().toISOString().slice(0,10)}.docx`;
     saveAs(blob, filename);
   } catch(e) {
@@ -27786,7 +28196,7 @@ async function exportDocx() {
 // the browser prepends a "<!-- saved from url=... -->" comment. We use that —
 // plus a ?snapshot=1 / #snapshot URL flag and a data-snapshot="1" body
 // attribute — to detect "this is a saved snapshot" and skip the destructive
-// init that would otherwise wipe the saved DOM (clearance rows, tweet cards,
+// init that would otherwise wipe the saved DOM (clearance rows, note cards,
 // dropdowns, the event list, etc.).
 function isSnapshot() {
   // Chrome/Edge "Save Page As" comment (lives as a child of `document`)
@@ -27852,11 +28262,12 @@ window.addEventListener("keydown", e => {
 
 populateDatePresets();  // fill the policy-period / historical-frame dropdowns (both modes)
 initCriticalFilters();
+initAnalysisWorkbench();
 
 if (isSnapshot()) {
   // Snapshot mode: leave the saved DOM intact. Re-sync the in-memory state
-  // (tweet IDs, clearance row counter) from what's already in the DOM so that
-  // user interactions — adding tweets, removing clearance rows, etc. — keep
+  // (note IDs, clearance row counter) from what's already in the DOM so that
+  // user interactions - adding notes, removing clearance rows, etc. - keep
   // working from the saved state.
   loadApiKey();  // safe: only reads localStorage
   document.querySelectorAll(".tweet-card").forEach(card => {
@@ -27897,7 +28308,7 @@ if (isSnapshot()) {
 }
 </script>
 
-<!-- NARA Catalog search modal (shared across all tweet cards) -->
+<!-- NARA Catalog search modal (shared across all note cards) -->
 <div class="nara-overlay" id="naraOverlay" onclick="if(event.target===this)naraClose()">
   <div class="nara-panel">
     <div class="nara-header">
