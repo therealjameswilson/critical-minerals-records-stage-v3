@@ -2,7 +2,7 @@
 
 ## Evidentiary scope
 
-V3 covers 1993–2026 and is statistics-first. FRUS is not used as evidence. The U.S. view comes from two frozen USITC DataWeb workbooks; the China sourcing view comes from frozen China-reporter UN Comtrade responses.
+V3 covers 1993–2026 and is statistics-first. FRUS is not used as evidence. The U.S. partner-level view comes from two frozen USITC DataWeb workbooks; the China sourcing view comes from frozen China-reporter UN Comtrade responses. A frozen USGS Data Series 140 workbook supplies national rare-earth historical context.
 
 ## U.S. reporter layer
 
@@ -16,6 +16,14 @@ The DataWeb query selects 18 countries and 25 four-digit HTS headings. It contai
 Full-year data end in 2025. The 2026 annual cells are structural zeros and become explicit unavailable values. January–April YTD observations form a separate comparable 1993–2026 series.
 
 The value and first-quantity sheets align exactly by partner, heading, description, and quantity bucket. Second quantities lack a lossless HTS4 value-bucket join and remain independent measure rows. Positive DataWeb quantity-suppression counts exclude affected buckets from unit-value calculations.
+
+## USGS historical context layer
+
+The repository freezes `data/raw/usgs_ds140_rare_earths_2020.xlsx` from [USGS Data Series 140](https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140). It covers 1900–2020; the site displays 1993–2020. Quantities are metric tons of rare-earth-oxide equivalent unless the source identifies a unit-value measure.
+
+The normalized layer retains U.S. production, imports, exports, apparent consumption, current and constant-1998-dollar unit values, and world production. Source `NA` and `W` cells remain explicit unavailable and withheld states. The workbook’s six formulas are retained exactly beside their cached values. Method labels follow the embedded notes at the series and year-range level; production cells remain generically qualified because the source does not label each as reported or estimated. USGS identifies the source and usage as public domain.
+
+These national REO-equivalent estimates are context only. They do not identify partners or HTS products and never enter the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.
 
 ## China reporter layer
 
@@ -35,6 +43,6 @@ The three-heading U.S. basket is useful as a broad dependency signal but should 
 
 ## Reproducibility
 
-Raw files are committed unchanged and identified by SHA-256. The ETL creates deterministic CSV and JSON outputs. Validation independently recomputes shares and HHI, verifies audited headline values, checks quantity-slot separation and suppression treatment, verifies Comtrade response hashes and World reconciliation, and enforces browser-data size limits.
+Raw files are committed unchanged and identified by SHA-256. The ETL creates deterministic CSV and JSON outputs. Validation independently recomputes shares and HHI, verifies audited headline values, checks quantity-slot separation and suppression treatment, verifies Comtrade response hashes and World reconciliation, checks the USGS row contract and source isolation, and enforces browser-data size limits.
 
 See `README.md`, `data/processed/query_manifest.json`, and `data/processed/data_dictionary.csv` for commands and field definitions.

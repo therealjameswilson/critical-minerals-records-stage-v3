@@ -6,7 +6,7 @@
   <meta name="description" content="Methodology and provenance for the US–PRC Critical Minerals Record, 1993–2026.">
   <link rel="icon" href="data:,">
   <link rel="canonical" href="https://therealjameswilson.github.io/critical-minerals-records-stage-v3/methodology.html">
-  <link rel="stylesheet" href="assets/v3.css?v=3.1.0">
+  <link rel="stylesheet" href="assets/v3.css?v=3.2.0">
   <title>Methodology · US–PRC Critical Minerals Record</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
       <a class="brand" href="./"><span class="brand-kicker">Strategic Resources</span><span class="brand-title">US–PRC Critical Minerals Record</span></a>
       <nav aria-label="Methodology navigation"><a href="./#disparity">Disparity</a><a href="./#sources">New sources</a><a href="./#explorer">Explorer</a><a href="./#method">Provenance</a></nav>
     </div>
-    <div class="status-strip"><div class="wrap status-inner"><span><span class="status-dot" aria-hidden="true"></span> Methodology note</span><span>Revision 3.1.0</span><span>Source vintage: 10 July 2026</span></div></div>
+    <div class="status-strip"><div class="wrap status-inner"><span><span class="status-dot" aria-hidden="true"></span> Methodology note</span><span>Revision 3.2.0</span><span>Source vintage: 10 July 2026</span></div></div>
   </header>
 
   <main id="main">
@@ -32,7 +32,7 @@
       <div class="wrap" style="max-width:980px">
         <div class="section-heading"><p class="section-number">01 · Evidentiary model</p><h2>Statistics first; FRUS de-emphasized</h2></div>
         <article class="chart-card">
-          <p>V3 covers 1993–2026 and does not use FRUS as evidence. Its U.S. layer comes from frozen USITC DataWeb workbooks. Its China sourcing layer comes from frozen China-reporter UN Comtrade API responses.</p>
+          <p>V3 covers 1993–2026 and does not use FRUS as evidence. Its partner-level U.S. layer comes from frozen USITC DataWeb workbooks. Its China sourcing layer comes from frozen China-reporter UN Comtrade API responses. A frozen USGS Data Series 140 workbook supplies national rare-earth historical context.</p>
           <p>Trade statistics are treated as access signals. They do not directly measure reserves, mine ownership, beneficial ownership, processing capacity, control of third-country assets, or policy intent.</p>
         </article>
       </div>
@@ -59,7 +59,19 @@
 
     <section class="record-section">
       <div class="wrap" style="max-width:980px">
-        <div class="section-heading"><p class="section-number">03 · UN Comtrade</p><h2>The China reporter view</h2><p>All reported origins for annual China imports of HS 2846, 1993–2024.</p></div>
+        <div class="section-heading"><p class="section-number">03 · USGS Data Series 140</p><h2>National rare-earth history</h2><p>Rare-earth-oxide-equivalent context for 1900–2020; displayed on the site for 1993–2020.</p></div>
+        <article class="chart-card">
+          <p>The repository freezes the USGS rare-earth workbook and normalizes U.S. production, imports, exports, apparent consumption, current and constant-1998-dollar unit values, and world production. Quantities are metric tons of rare-earth-oxide equivalent unless the source identifies a unit-value measure.</p>
+          <p>Source <code>NA</code> and <code>W</code> cells remain explicit unavailable and withheld states. The six worksheet formulas are retained verbatim with their cached values. Method labels follow the embedded notes at the series and year-range level; production cells remain generically qualified because the source does not label each as reported or estimated. USGS identifies the source and usage as public domain.</p>
+          <p>This national series has no partner or HTS dimension. It is kept separate from—and never feeds—the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.</p>
+          <p><a href="https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140">Official USGS Data Series 140 rare-earths page</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="record-section">
+      <div class="wrap" style="max-width:980px">
+        <div class="section-heading"><p class="section-number">04 · UN Comtrade</p><h2>The China reporter view</h2><p>All reported origins for annual China imports of HS 2846, 1993–2024.</p></div>
         <article class="chart-card">
           <p>The downloader makes one public-preview request per year for China-reporter imports of rare-earth compounds, with the primary partner interpreted as origin. Each raw JSON response is frozen byte-for-byte with its request URL, retrieval timestamp, classification code, publication metadata, and SHA-256 digest.</p>
           <p>Acquisition fails if the API reports an error, omits the requested period, returns 500 rows, or does not reconcile the sum of non-World partner values to the World record. All 32 years reconcile exactly in this vintage.</p>
@@ -71,7 +83,7 @@
 
     <section class="record-section tint-section">
       <div class="wrap" style="max-width:980px">
-        <div class="section-heading"><p class="section-number">04 · Proxy boundaries</p><h2>Rare earths are not one clean tariff line</h2></div>
+        <div class="section-heading"><p class="section-number">05 · Proxy boundaries</p><h2>Rare earths are not one clean tariff line</h2></div>
         <div class="method-grid" style="grid-template-columns:repeat(3,1fr)">
           <article><span class="method-tag">HTS 2846</span><h3>Rare-earth compounds</h3><p>The cleanest four-digit heading used in this build; also covers yttrium and scandium compounds.</p></article>
           <article><span class="method-tag">HTS 2805</span><h3>Broad metals heading</h3><p>Includes products beyond rare-earth metals, so it is a proxy rather than a chemically pure series.</p></article>
@@ -85,7 +97,7 @@
 
     <section class="record-section">
       <div class="wrap" style="max-width:980px">
-        <div class="section-heading"><p class="section-number">05 · Reproduction</p><h2>Frozen inputs, deterministic outputs</h2></div>
+        <div class="section-heading"><p class="section-number">06 · Reproduction</p><h2>Frozen inputs, deterministic outputs</h2></div>
         <article class="chart-card">
           <pre style="overflow:auto"><code>python3 -m venv .venv
 . .venv/bin/activate
@@ -93,7 +105,7 @@ python -m pip install -r requirements.txt
 python scripts/build_trade_data.py
 python scripts/validate_data.py
 python -m pytest -q</code></pre>
-          <p>Validation independently recomputes China shares and supplier HHI, checks audited headline values, enforces annual/YTD separation, verifies quantity-slot and suppression rules, validates every Comtrade digest and World reconciliation, and keeps browser payloads within their size budgets.</p>
+          <p>Validation independently recomputes China shares and supplier HHI, checks audited headline values, enforces annual/YTD separation, verifies quantity-slot and suppression rules, validates every Comtrade digest and World reconciliation, checks the USGS row contract and source isolation, and keeps browser payloads within their size budgets.</p>
         </article>
         <div class="source-links">
           <a href="README.md">Reproduction guide</a>
@@ -101,12 +113,15 @@ python -m pytest -q</code></pre>
           <a href="data/processed/query_manifest.json">Query manifest</a>
           <a href="data/raw/un_comtrade_china/2846/manifest.json">Comtrade manifest</a>
           <a href="data/processed/data_dictionary.csv">Data dictionary</a>
+          <a href="data/processed/usgs_rare_earths_historical.csv">USGS normalized data</a>
+          <a href="data/processed/usgs_rare_earths_metadata.json">USGS source metadata</a>
+          <a href="data/processed/usgs_rare_earths_data_dictionary.csv">USGS data dictionary</a>
           <a href="./#method">Public provenance panel</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="wrap footer-grid"><div><p class="brand-kicker">Strategic Resources</p><p>Methodology revision 3.1.0.</p></div><p>Use the frozen source vintage and repository commit when citing a result.</p><p><a href="./">Return to the records stage</a></p></div></footer>
+  <footer class="site-footer"><div class="wrap footer-grid"><div><p class="brand-kicker">Strategic Resources</p><p>Methodology revision 3.2.0.</p></div><p>Use the frozen source vintage and repository commit when citing a result.</p><p><a href="./">Return to the records stage</a></p></div></footer>
 </body>
 </html>

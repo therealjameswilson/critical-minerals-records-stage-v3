@@ -21,6 +21,7 @@ YEARS = set(range(1993, 2027))
 EXPECTED_HASHES = {
     "us_imports_for_consumption_1993-2026.xlsx": "fb453f549a3a9923b474a7b1fc4833b98319eef110e00920d79fb63b558d9b45",
     "us_domestic_exports_1993-2026.xlsx": "204dbe2f51cf3d0f5eaf554359dac50a27c45c3572b17d268b12629fea59f19c",
+    "usgs_ds140_rare_earths_2020.xlsx": "0aed33ac422b49ec77b7c550d0e53e57a59b5a38ae315ea37d8e1088fc0bb85f",
     "assets/vendor/chart.js/chart.umd.min.js": "48444a82d4edcb5bec0f1965faacdde18d9c17db3063d042abada2f705c9f54a",
 }
 EXPECTED_DOWNLOAD_TIMESTAMPS = {
@@ -31,6 +32,13 @@ REQUIRED_LONG_COLUMNS = [
     "reporter", "flow", "partner", "partner_iso", "hts", "hts_desc", "mineral",
     "processing_stage", "year", "ytd_flag", "value_usd", "qty1", "qty1_unit",
     "qty2", "qty2_unit", "source", "retrieved_at",
+]
+USGS_DS140_COLUMNS = [
+    "source_id", "commodity", "year", "period_type", "geography", "geography_code", "metric",
+    "metric_label", "value", "unit", "value_status", "method_status", "method_note_id",
+    "source_value_raw", "source_formula", "scope_note", "source", "source_file", "source_sheet",
+    "source_cell", "source_url", "download_url", "worksheet_last_modified", "package_modified_at",
+    "source_publication_date", "retrieved_at",
 ]
 
 
@@ -75,6 +83,9 @@ def main() -> int:
         PROCESSED / "query_manifest.json",
         PROCESSED / "site-summary.json",
         PROCESSED / "explorer-index.json",
+        PROCESSED / "usgs_rare_earths_historical.csv",
+        PROCESSED / "usgs_rare_earths_metadata.json",
+        PROCESSED / "usgs_rare_earths_data_dictionary.csv",
     ]
     for path in required_files:
         require(path.is_file(), f"missing processed artifact: {path.relative_to(ROOT)}")
@@ -88,13 +99,14 @@ def main() -> int:
             require(digest(path) == expected, f"frozen source hash changed: {relative}")
 
     manifest = load_json(PROCESSED / "query_manifest.json")
-    require(manifest.get("schema_version") == "3.1.0", "query manifest schema mismatch")
+    require(manifest.get("schema_version") == "3.2.0", "query manifest schema mismatch")
     require(manifest.get("denominator_scope") == "selected_18_partners", "manifest denominator scope is not explicit")
     require(manifest.get("annual_coverage") == [1993, 2025], "annual coverage must stop at 2025")
     require(manifest.get("ytd_coverage") == [1993, 2026], "YTD coverage must end at 2026")
     require(manifest.get("ytd_months") == "January-April", "YTD month window missing")
     source_hashes = {Path(row["file"]).name: row["sha256"] for row in manifest.get("sources", [])}
-    for filename, expected in list(EXPECTED_HASHES.items())[:2]:
+    for filename, expected_timestamp in EXPECTED_DOWNLOAD_TIMESTAMPS.items():
+        expected = EXPECTED_HASHES[filename]
         require(source_hashes.get(filename) == expected, f"manifest hash mismatch: {filename}")
         source = next((row for row in manifest.get("sources", []) if Path(row["file"]).name == filename), None)
         download_timestamp = next(
@@ -106,9 +118,29 @@ def main() -> int:
             None,
         )
         require(
-            download_timestamp == EXPECTED_DOWNLOAD_TIMESTAMPS[filename],
+            download_timestamp == expected_timestamp,
             f"manifest download timestamp mismatch: {filename}",
         )
+
+    usgs_metadata = load_json(PROCESSED / "usgs_rare_earths_metadata.json")
+    manifest_usgs = manifest.get("usgs_rare_earths_source", {})
+    require(manifest_usgs == usgs_metadata, "manifest USGS metadata differs from standalone metadata")
+    require(usgs_metadata.get("sha256") == EXPECTED_HASHES["usgs_ds140_rare_earths_2020.xlsx"], "USGS metadata hash mismatch")
+    require(usgs_metadata.get("coverage") == [1900, 2020], "USGS metadata coverage mismatch")
+    require(usgs_metadata.get("data_year_count") == 121, "USGS data-year count mismatch")
+    require(usgs_metadata.get("normalized_rows") == 847, "USGS metadata row count mismatch")
+    require(usgs_metadata.get("formula_cells") == [f"E{row}" for row in range(107, 113)], "USGS formula-cell inventory mismatch")
+    require(usgs_metadata.get("package_modified_at") == "2024-06-04T18:22:38Z", "USGS package modification timestamp mismatch")
+    require(
+        usgs_metadata.get("embedded_notes_sha256") == "798f8935664ca1e91b9dc7ca860c9fd0e9ad2e923d5c3fe2a2c11d4dc38ce345",
+        "USGS embedded-notes hash mismatch",
+    )
+    require(usgs_metadata.get("status_counts") == {"available": 695, "not_available": 150, "withheld": 2}, "USGS status inventory mismatch")
+    require(usgs_metadata.get("source_last_modified") == "2023-09-27", "USGS source modification date mismatch")
+    require(usgs_metadata.get("source_publication_date") == "2024-06-04", "USGS page publication date mismatch")
+    require(usgs_metadata.get("retrieved_at") == "2026-07-10", "USGS retrieval date mismatch")
+    require(usgs_metadata.get("public_domain") is True, "USGS public-domain designation missing")
+    require(manifest.get("processed", {}).get("usgs_rare_earths_rows") == 847, "manifest USGS row count mismatch")
 
     with (PROCESSED / "trade_long.csv").open(encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
@@ -129,6 +161,188 @@ def main() -> int:
         all(row["value_usd"] == row["qty1"] == row["qty2"] == "" and row["data_status"] == "not_available" for row in annual_2026),
         "annual 2026 structural zeros were not converted to explicit unavailable values",
     )
+
+    with (PROCESSED / "usgs_rare_earths_historical.csv").open(encoding="utf-8", newline="") as handle:
+        usgs_reader = csv.DictReader(handle)
+        require((usgs_reader.fieldnames or []) == USGS_DS140_COLUMNS, "USGS normalized column contract changed")
+        usgs_rows = list(usgs_reader)
+    require(len(usgs_rows) == 847, "USGS normalized row count mismatch")
+    require({int(row["year"]) for row in usgs_rows} == set(range(1900, 2021)), "USGS year coverage mismatch")
+    require({row["geography_code"] for row in usgs_rows} == {"USA", "WLD"}, "USGS geography contract mismatch")
+    require(
+        {row["metric"] for row in usgs_rows}
+        == {"production", "imports", "exports", "apparent_consumption", "unit_value_current_usd", "unit_value_constant_1998_usd"},
+        "USGS metric inventory mismatch",
+    )
+    require(
+        {(row["geography_code"], row["metric"]) for row in usgs_rows}
+        == {
+            ("USA", "production"), ("USA", "imports"), ("USA", "exports"),
+            ("USA", "apparent_consumption"), ("USA", "unit_value_current_usd"),
+            ("USA", "unit_value_constant_1998_usd"), ("WLD", "production"),
+        },
+        "USGS geography-metric combinations changed",
+    )
+    usgs_status_counts = {
+        status: sum(row["value_status"] == status for row in usgs_rows)
+        for status in ("available", "not_available", "withheld")
+    }
+    require(usgs_status_counts == {"available": 695, "not_available": 150, "withheld": 2}, "USGS CSV status counts mismatch")
+    require(
+        all(
+            (
+                row["value_status"] == "available"
+                and row["value"] != ""
+                and row["method_status"] not in {"not_available", "withheld_to_avoid_proprietary_disclosure"}
+            )
+            or (
+                row["value_status"] == "not_available"
+                and row["value"] == ""
+                and row["source_value_raw"] == "NA"
+                and row["method_status"] in {"not_available", "negative_calculation_published_as_not_available"}
+            )
+            or (row["value_status"] == "withheld" and row["value"] == "" and row["source_value_raw"] == "W" and row["method_status"] == "withheld_to_avoid_proprietary_disclosure")
+            for row in usgs_rows
+        ),
+        "USGS value/status/method preservation mismatch",
+    )
+    require(len({row["source_cell"] for row in usgs_rows}) == 847, "USGS source-cell identifiers are not unique")
+    formula_rows = [row for row in usgs_rows if row["source_formula"]]
+    require(
+        [(row["source_cell"], row["source_formula"]) for row in formula_rows]
+        == [(f"E{row}", f"=(C{row}-D{row})") for row in range(107, 113)],
+        "USGS source formulas were not preserved exactly",
+    )
+    require(
+        all(row["method_status"] == "estimated_material_balance_using_estimated_reo" for row in formula_rows),
+        "USGS formula method status mismatch",
+    )
+    require(
+        all(
+            row["source_id"] == "usgs-ds140-rare-earths-2020"
+            and row["commodity"] == "rare_earths"
+            and row["period_type"] == "annual"
+            and row["source_file"] == "data/raw/usgs_ds140_rare_earths_2020.xlsx"
+            and row["source_sheet"] == "Rare earths"
+            and row["source_url"] == "https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140"
+            and row["worksheet_last_modified"] == "2023-09-27"
+            and row["package_modified_at"] == "2024-06-04T18:22:38Z"
+            for row in usgs_rows
+        ),
+        "USGS row provenance changed",
+    )
+    require(
+        all(as_float(row["value"]) is not None and (as_float(row["value"]) or 0) >= 0 for row in usgs_rows if row["value_status"] == "available"),
+        "USGS available values must be finite and nonnegative",
+    )
+
+    expected_method_notes = {
+        "Production": "embedded-notes:production",
+        "Imports": "embedded-notes:imports",
+        "Exports": "embedded-notes:exports",
+        "Apparent consumption": "embedded-notes:apparent-consumption",
+        "Unit value ($/t)": "embedded-notes:unit-value-current",
+        "Unit value (98$/t)": "embedded-notes:unit-value-constant-1998",
+        "World production": "embedded-notes:world-production",
+    }
+    require(
+        all(row["method_note_id"] == expected_method_notes[row["metric_label"]] for row in usgs_rows),
+        "USGS method-note mapping changed",
+    )
+    interpolated_years = {
+        *range(1911, 1915), *range(1918, 1922), 1932,
+        *range(1942, 1945), *range(1946, 1950),
+    }
+    for row in usgs_rows:
+        if row["value_status"] != "available":
+            continue
+        year = int(row["year"])
+        label = row["metric_label"]
+        if label in {"Production", "World production"}:
+            expected_method = "source_series_reo_content_method_not_cell_specific"
+        elif label in {"Imports", "Exports"}:
+            expected_method = "estimated_reo_equivalent"
+        elif label == "Unit value ($/t)":
+            expected_method = "estimated_weighted_average_imports_exports"
+        elif label == "Unit value (98$/t)":
+            expected_method = "calculated_cpi_adjustment_1998_base"
+        elif year in interpolated_years:
+            expected_method = "interpolated"
+        elif year <= 1999:
+            expected_method = "estimated_material_balance"
+        elif year <= 2008:
+            expected_method = "estimated_material_balance_using_estimated_reo"
+        else:
+            expected_method = "calculated_using_estimated_reo"
+        require(row["method_status"] == expected_method, f"USGS method mismatch: {row['source_cell']}")
+
+    missing_years = {
+        (row["geography_code"], row["metric"]): {
+            int(item["year"])
+            for item in usgs_rows
+            if item["geography_code"] == row["geography_code"]
+            and item["metric"] == row["metric"]
+            and item["value_status"] == "not_available"
+        }
+        for row in usgs_rows
+    }
+    require(
+        missing_years[("USA", "production")]
+        == {*range(1911, 1915), *range(1918, 1925), *range(1926, 1948), 1949},
+        "USGS production missing-year set mismatch",
+    )
+    require(missing_years[("USA", "imports")] == {*range(1900, 1922), 1932, 1934, 1935, 1952}, "USGS import missing-year set mismatch")
+    require(missing_years[("USA", "exports")] == {*range(1900, 1942), 1951, 1952, 1966}, "USGS export missing-year set mismatch")
+    require(missing_years[("USA", "apparent_consumption")] == {2011}, "USGS apparent-consumption missing-year set mismatch")
+    require(missing_years[("USA", "unit_value_current_usd")] == set(range(1900, 1922)), "USGS current-unit-value missing years mismatch")
+    require(missing_years[("USA", "unit_value_constant_1998_usd")] == set(range(1900, 1922)), "USGS constant-unit-value missing years mismatch")
+    require(missing_years[("WLD", "production")] == set(), "USGS world production must be complete")
+    require(
+        {
+            int(row["year"])
+            for row in usgs_rows
+            if row["geography_code"] == "USA" and row["metric"] == "production" and row["value"] == "0"
+        }
+        == {*range(2001, 2012), 2016, 2017},
+        "USGS explicit zero-production years mismatch",
+    )
+
+    usgs_lookup = {(int(row["year"]), row["geography_code"], row["metric"]): row for row in usgs_rows}
+    for row in formula_rows:
+        year = int(row["year"])
+        imports = as_float(usgs_lookup[(year, "USA", "imports")]["value"])
+        exports = as_float(usgs_lookup[(year, "USA", "exports")]["value"])
+        observed = as_float(row["value"])
+        require(
+            imports is not None and exports is not None and observed == imports - exports,
+            f"USGS cached formula value does not reconcile: {row['source_cell']}",
+        )
+    usgs_audit_points = {
+        (1900, "USA", "production"): (227, "available", "B6"),
+        (1956, "USA", "production"): (None, "withheld", "B62"),
+        (1962, "USA", "production"): (None, "withheld", "B68"),
+        (1993, "USA", "production"): (17800, "available", "B99"),
+        (1993, "WLD", "production"): (46700, "available", "H99"),
+        (2001, "USA", "production"): (0, "available", "B107"),
+        (2001, "USA", "apparent_consumption"): (10100, "available", "E107"),
+        (2011, "USA", "apparent_consumption"): (None, "not_available", "E117"),
+        (2020, "USA", "production"): (39000, "available", "B126"),
+        (2020, "USA", "imports"): (7200, "available", "C126"),
+        (2020, "USA", "exports"): (39500, "available", "D126"),
+        (2020, "USA", "apparent_consumption"): (6700, "available", "E126"),
+        (2020, "WLD", "production"): (243000, "available", "H126"),
+    }
+    for key, (expected_value, expected_status, expected_cell) in usgs_audit_points.items():
+        row = usgs_lookup.get(key)
+        require(row is not None, f"missing USGS audit point: {key}")
+        if row is None:
+            continue
+        observed_value = as_float(row["value"])
+        require(observed_value == expected_value, f"USGS value mismatch: {key}")
+        require(row["value_status"] == expected_status, f"USGS status mismatch: {key}")
+        require(row["source_cell"] == expected_cell, f"USGS source-cell mismatch: {key}")
+
+    require(all("usgs" not in row["source"].casefold() for row in rows), "USGS rows leaked into DataWeb trade_long.csv")
 
     first_rows = [row for row in rows if row["quantity_measure_slot"] == "first"]
     second_rows = [row for row in rows if row["quantity_measure_slot"] == "second"]
@@ -237,6 +451,7 @@ def main() -> int:
 
     summary_path = PROCESSED / "site-summary.json"
     summary = load_json(summary_path)
+    require(summary.get("schema_version") == "3.2.0", "site summary schema mismatch")
     require(summary_path.stat().st_size <= 150_000, "site-summary.json exceeds 150 KB budget")
     require(summary["headline"]["year"] == 2025 and close(summary["headline"]["value"], 0.6040394784), "headline claim mismatch")
     prc = summary["prc_supply_origins"]
@@ -244,7 +459,34 @@ def main() -> int:
     require(prc["yearly"][0]["positive_origin_count"] == 14, "PRC 1993 origin count mismatch")
     require(prc["yearly"][-1]["positive_origin_count"] == 33, "PRC 2024 origin count mismatch")
     require(close(prc["yearly"][-1]["hhi_value_0_1"], 0.4059395639), "PRC 2024 HHI mismatch")
-    require({row["flow"] for row in summary["sources"]} == {"imports_for_consumption", "domestic_exports", "china_reported_imports"}, "site provenance does not expose all three frozen inputs")
+    usgs_context = summary.get("usgs_rare_earths_context", {})
+    require(usgs_context.get("status") == "loaded", "USGS site context is not loaded")
+    require(usgs_context.get("full_coverage") == [1900, 2020], "USGS full coverage missing from site context")
+    require(usgs_context.get("displayed_coverage") == [1993, 2020], "USGS displayed coverage mismatch")
+    require(usgs_context.get("unit") == "metric_tons_reo_equivalent", "USGS site unit mismatch")
+    usgs_site_rows = usgs_context.get("series", [])
+    require(len(usgs_site_rows) == 28, "USGS site context must contain 28 annual rows")
+    require([row["year"] for row in usgs_site_rows] == list(range(1993, 2021)), "USGS site-year sequence mismatch")
+    usgs_1993 = next((row for row in usgs_site_rows if row["year"] == 1993), {})
+    usgs_2011 = next((row for row in usgs_site_rows if row["year"] == 2011), {})
+    usgs_2020 = next((row for row in usgs_site_rows if row["year"] == 2020), {})
+    require(usgs_1993.get("us_production") == 17800 and close(usgs_1993.get("us_share_of_world_production", -1), 17800 / 46700), "USGS 1993 site context mismatch")
+    require(usgs_2011.get("us_apparent_consumption") is None, "USGS 2011 unavailable apparent consumption became a value")
+    require(
+        usgs_2020.get("us_production") == 39000
+        and usgs_2020.get("us_imports") == 7200
+        and usgs_2020.get("us_exports") == 39500
+        and usgs_2020.get("us_apparent_consumption") == 6700
+        and usgs_2020.get("world_production") == 243000
+        and close(usgs_2020.get("us_share_of_world_production", -1), 39000 / 243000),
+        "USGS 2020 site context mismatch",
+    )
+    require(usgs_context.get("latest") == usgs_2020, "USGS latest site context mismatch")
+    require(
+        {row["flow"] for row in summary["sources"]}
+        == {"imports_for_consumption", "domestic_exports", "china_reported_imports", "usgs_rare_earths_context"},
+        "site provenance does not expose all four frozen inputs",
+    )
 
     explorer_index = load_json(PROCESSED / "explorer-index.json")
     require(len(explorer_index) == 25, "expected 25 explorer shards")
@@ -262,6 +504,9 @@ def main() -> int:
         "do not, by themselves, prove policy intent",
         "2026 shown as Jan–Apr YTD",
         "assets/vendor/chart.js/chart.umd.min.js",
+        "USGS national balance",
+        "not a partner-level HTS series",
+        "The published series ends in 2020",
     ]
     for phrase in required_phrases:
         require(phrase in public_html, f"index.html missing trust language: {phrase!r}")
@@ -281,7 +526,7 @@ def main() -> int:
         return fail(errors)
     print(
         f"Validation passed: {len(rows):,} normalized rows, {len(unit_rows):,} unit-value rows, "
-        f"25 explorer shards, 32 PRC reporter years, exact audited headline 60.4%."
+        f"847 USGS source-cell rows, 25 explorer shards, 32 PRC reporter years, exact audited headline 60.4%."
     )
     return 0
 

@@ -69,6 +69,38 @@ def test_prc_reporter_snapshot_is_complete_and_reconciled() -> None:
     assert all(row["partner_world_absolute_difference_usd"] == 0 for row in manifest["files"])
 
 
+def test_usgs_ds140_preserves_source_cells_statuses_and_formulas() -> None:
+    rows = csv_rows("usgs_rare_earths_historical.csv")
+    assert len(rows) == 847
+    assert {
+        status: sum(row["value_status"] == status for row in rows)
+        for status in ("available", "not_available", "withheld")
+    } == {"available": 695, "not_available": 150, "withheld": 2}
+    assert [
+        (row["source_cell"], row["source_formula"])
+        for row in rows
+        if row["source_formula"]
+    ] == [(f"E{source_row}", f"=(C{source_row}-D{source_row})") for source_row in range(107, 113)]
+    unavailable_2011 = next(
+        row for row in rows
+        if row["year"] == "2011" and row["geography_code"] == "USA" and row["metric"] == "apparent_consumption"
+    )
+    assert unavailable_2011["value"] == ""
+    assert unavailable_2011["value_status"] == "not_available"
+    assert unavailable_2011["source_value_raw"] == "NA"
+
+
+def test_usgs_site_context_is_separate_from_partner_trade() -> None:
+    summary = load_json("site-summary.json")
+    context = summary["usgs_rare_earths_context"]
+    assert context["displayed_coverage"] == [1993, 2020]
+    assert len(context["series"]) == 28
+    assert next(row for row in context["series"] if row["year"] == 2011)["us_apparent_consumption"] is None
+    assert context["latest"]["us_production"] == 39_000
+    assert abs(context["latest"]["us_share_of_world_production"] - (39_000 / 243_000)) < 1e-10
+    assert all("usgs" not in row["source"].casefold() for row in csv_rows("trade_long.csv"))
+
+
 def test_site_summary_stays_small_and_labels_prc_coverage() -> None:
     summary = load_json("site-summary.json")
     assert (PROCESSED / "site-summary.json").stat().st_size <= 150_000

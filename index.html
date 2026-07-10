@@ -8,7 +8,7 @@
   <meta name="color-scheme" content="light">
   <link rel="icon" href="data:,">
   <link rel="canonical" href="https://therealjameswilson.github.io/critical-minerals-records-stage-v3/">
-  <link rel="stylesheet" href="assets/v3.css?v=3.1.0">
+  <link rel="stylesheet" href="assets/v3.css?v=3.2.0">
   <title>US–PRC Critical Minerals Record, 1993–2026</title>
 </head>
 <body>
@@ -43,7 +43,7 @@
         <div class="hero-copy">
           <p class="eyebrow">A statistical records stage · 1993–2026</p>
           <h1>U.S. dependence remained concentrated. China’s reported supply origins changed.</h1>
-          <p class="hero-deck">A trade-data record of rare-earth proxies and other critical materials—built from frozen USITC DataWeb workbooks, with China-reporter UN Comtrade used only where the series is genuinely comparable.</p>
+          <p class="hero-deck">A trade-data record of rare-earth proxies and other critical materials—built from frozen USITC DataWeb workbooks, with China-reporter UN Comtrade used only where the series is genuinely comparable and USGS Data Series 140 kept as national physical context.</p>
           <div class="scope-callout" role="note">
             <strong>Read the denominator.</strong> The U.S. workbooks contain 18 selected partners, not World. Every U.S. “share” on this page says so. Trade origin is an access signal—not mine ownership, reserves, or proof of state intent.
           </div>
@@ -117,6 +117,41 @@
           <article><p class="finding-value" id="peakShare">—</p><h3 id="peakYear">Peak</h3><p>Highest full-year share in the frozen series.</p></article>
           <article><p class="finding-value" id="currentYtdShare">—</p><h3>Jan–Apr 2026</h3><p>Partial-year share, compared only with the same months in earlier years.</p></article>
         </div>
+
+        <aside class="usgs-context" aria-labelledby="usgsContextTitle">
+          <div class="usgs-context-header">
+            <div>
+              <p class="chart-kicker">USGS national balance · separate context layer</p>
+              <h3 id="usgsContextTitle">U.S. rare-earth production and trade, 1993–2020</h3>
+              <p>Data Series 140 puts production, trade, and apparent consumption on one rare-earth-oxide-equivalent mass basis. It is national context—not a partner-level HTS series—and does not enter the DataWeb China-share, HHI, or unit-value calculations above.</p>
+            </div>
+            <a class="source-chip" href="https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140">Official USGS source</a>
+          </div>
+
+          <div class="usgs-stat-grid" aria-label="USGS rare-earth production context">
+            <article><p class="usgs-stat-value" id="usgsStartWorldShare">—</p><h4>U.S. share in 1993</h4><p>U.S. production divided by estimated world production.</p></article>
+            <article><p class="usgs-stat-value" id="usgsZeroProductionRun">—</p><h4>Source-recorded production</h4><p>Zero from 2001–2011 and again in 2016–2017.</p></article>
+            <article><p class="usgs-stat-value" id="usgsLatestWorldShare">—</p><h4>U.S. share in 2020</h4><p>The endpoint of this frozen USGS series.</p></article>
+          </div>
+
+          <div class="chart-card usgs-chart-card">
+            <div class="chart-title-row">
+              <div><p class="chart-kicker">Metric tons · rare-earth oxide equivalent</p><h3>National rare-earth balance</h3></div>
+              <div class="legend usgs-legend" aria-hidden="true">
+                <span><i class="legend-swatch usgs-production"></i>Production</span>
+                <span><i class="legend-swatch usgs-imports"></i>Imports</span>
+                <span><i class="legend-swatch usgs-exports"></i>Exports</span>
+                <span><i class="legend-swatch usgs-consumption"></i>Apparent consumption</span>
+              </div>
+            </div>
+            <div class="canvas-shell"><canvas id="usgsBalanceChart" role="img" aria-describedby="usgsContextNote"></canvas></div>
+            <p class="chart-note" id="usgsContextNote">The published series ends in 2020. The normalized download preserves the source’s method notes and six worksheet formulas; other production cells are not labeled as reported or estimated individually. The unavailable 2011 apparent-consumption value remains a visible gap.</p>
+            <details class="data-disclosure">
+              <summary>View exact annual values and source gaps</summary>
+              <div class="table-scroll"><table id="usgsContextTable"><caption class="sr-only">USGS national rare-earth balance, 1993–2020. Mass columns are metric tons of rare-earth oxide equivalent.</caption><thead><tr><th>Year</th><th>U.S. production</th><th>Estimated imports</th><th>Estimated exports</th><th>Apparent consumption</th><th>World production</th><th>Derived U.S. share of world production</th></tr></thead><tbody></tbody></table></div>
+            </details>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -262,7 +297,7 @@
           <div>
             <p class="chart-kicker">Frozen inputs</p>
             <h3>Frozen statistical inputs</h3>
-            <p>Two USITC DataWeb workbooks plus the manifest for 32 China-reporter UN Comtrade annual response snapshots.</p>
+            <p>Two USITC DataWeb workbooks, 32 frozen China-reporter UN Comtrade responses, and one USGS Data Series 140 workbook.</p>
           </div>
           <div class="table-scroll"><table id="provenanceTable"><thead><tr><th>Flow</th><th>File</th><th>SHA-256</th></tr></thead><tbody></tbody></table></div>
         </div>
@@ -275,6 +310,9 @@
           <a href="data/processed/prc_supplier_origin_index.csv"><strong>PRC origin index</strong><span>World value, origin count, HHI, and leading origin</span></a>
           <a href="data/processed/query_manifest.json"><strong>Query manifest</strong><span>Parameters, hashes, row inventory</span></a>
           <a href="data/processed/data_dictionary.csv"><strong>Data dictionary</strong><span>Fields and quality labels</span></a>
+          <a href="data/processed/usgs_rare_earths_historical.csv"><strong>USGS rare-earth history</strong><span>847 source-cell observations, 1900–2020</span></a>
+          <a href="data/processed/usgs_rare_earths_metadata.json"><strong>USGS source metadata</strong><span>Hash, scope notes, and source qualifications</span></a>
+          <a href="data/processed/usgs_rare_earths_data_dictionary.csv"><strong>USGS data dictionary</strong><span>National-series field definitions</span></a>
         </div>
 
         <div class="source-links">
@@ -283,6 +321,7 @@
           <a href="https://www.usitc.gov/faq/question/what_meant_country_merchandise_trade_statistics.htm">USITC partner definitions</a>
           <a href="https://www.usitc.gov/harmonized_tariff_information/hts/archive/list">HTS archive</a>
           <a href="https://uncomtrade.org/docs/un-comtrade-api/">UN Comtrade API documentation</a>
+          <a href="https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140">USGS Rare Earths Data Series 140</a>
           <a href="methodology.html">Full methodology note</a>
         </div>
       </div>
@@ -299,6 +338,6 @@
 
   <noscript><div class="noscript">JavaScript is required for interactive charts. All normalized and derived CSV files remain available in the Method &amp; provenance section.</div></noscript>
   <script defer src="assets/vendor/chart.js/chart.umd.min.js"></script>
-  <script defer src="assets/v3.js?v=3.1.0"></script>
+  <script defer src="assets/v3.js?v=3.2.0"></script>
 </body>
 </html>

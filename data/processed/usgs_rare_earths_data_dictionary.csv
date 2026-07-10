@@ -1,0 +1,27 @@
+column,type,description
+source_id,string_or_number,Stable identifier for this frozen USGS workbook vintage.
+commodity,string_or_number,Normalized commodity family; rare_earths for this source.
+year,string_or_number,Calendar year in the USGS worksheet.
+period_type,string_or_number,Annual period; the source contains no YTD observations.
+geography,string_or_number,"United States or World, according to the source heading."
+geography_code,string_or_number,USA or WLD analytical geography code; WLD is not an ISO-3166 code.
+metric,string_or_number,Normalized metric identifier.
+metric_label,string_or_number,Original USGS worksheet column heading.
+value,string_or_number,Numeric source value; blank for NA or W cells.
+unit,string_or_number,REO-equivalent mass or unit-value basis.
+value_status,string_or_number,"available, not_available, or withheld."
+method_status,string_or_number,Method explicitly supported by the embedded worksheet notes; no invented reported/estimated distinction.
+method_note_id,string_or_number,Embedded worksheet-notes section supporting the method and scope label.
+source_value_raw,string_or_number,Original displayed cell token or number.
+source_formula,string_or_number,Exact source formula when the workbook cell contains one; otherwise blank.
+scope_note,string_or_number,Metric definition distilled from the workbook's embedded notes document.
+source,string_or_number,Publishing agency and data-series label.
+source_file,string_or_number,Frozen repository path.
+source_sheet,string_or_number,Source worksheet name.
+source_cell,string_or_number,Exact source cell address.
+source_url,string_or_number,Official USGS landing page.
+download_url,string_or_number,Official source-file URL.
+worksheet_last_modified,string_or_number,Last-modification date printed in the worksheet.
+package_modified_at,string_or_number,Modification timestamp in the XLSX core properties.
+source_publication_date,string_or_number,Publication date on the USGS media page.
+retrieved_at,string_or_number,Repository retrieval date.

@@ -4,7 +4,7 @@ A static, reproducible statistical record of U.S.–PRC critical-mineral trade s
 
 **Public site:** <https://therealjameswilson.github.io/critical-minerals-records-stage-v3/>
 
-V3 changes the evidentiary model used by the 1861–1992 predecessor. It does not use FRUS as evidence. Its public claims resolve to frozen USITC DataWeb workbooks and, for the China-reporter sourcing view, frozen UN Comtrade API responses.
+V3 changes the evidentiary model used by the 1861–1992 predecessor. It does not use FRUS as evidence. Its public claims resolve to frozen USITC DataWeb workbooks, frozen UN Comtrade API responses for the China-reporter sourcing view, and a frozen USGS Data Series 140 workbook for national rare-earth historical context.
 
 ## What the site argues—and what it does not
 
@@ -31,6 +31,7 @@ data/
   raw/
     us_imports_for_consumption_1993-2026.xlsx
     us_domestic_exports_1993-2026.xlsx
+    usgs_ds140_rare_earths_2020.xlsx
     un_comtrade_china/2846/        1993–2024 frozen responses + manifest
   processed/
     trade_long.csv
@@ -39,6 +40,9 @@ data/
     unit_value.csv
     prc_supplier_origin_index.csv
     classification_breaks.csv
+    usgs_rare_earths_historical.csv
+    usgs_rare_earths_metadata.json
+    usgs_rare_earths_data_dictionary.csv
     query_manifest.json
     site-summary.json
     explorer/*.json
@@ -70,6 +74,14 @@ The included files were retrieved from [USITC DataWeb](https://dataweb.usitc.gov
 | Import programs / provision codes / districts | All, aggregated |
 
 The exact exported query-parameter rows, source-row counts, byte sizes, and SHA-256 digests are copied into `data/processed/query_manifest.json` at build time.
+
+## Frozen USGS historical input
+
+`data/raw/usgs_ds140_rare_earths_2020.xlsx` is the rare-earth workbook published with [USGS Data Series 140](https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140). It supplies national rare-earth-oxide-equivalent production, imports, exports, apparent consumption, unit values, and world production for 1900–2020. The public site displays the 1993–2020 portion alongside the trade record.
+
+The ETL preserves source `NA` and `W` cells as `not_available` and `withheld`, respectively, and retains the workbook’s six formulas verbatim beside their cached numeric values. Method labels follow the embedded notes: estimated REO-equivalent trade, specified apparent-consumption calculation/interpolation periods, weighted-average unit values, and the CPI conversion. Production cells retain a source-series qualification because USGS does not label each one as reported or estimated. USGS identifies the source and usage as public domain.
+
+This is a national historical context layer, not partner-level HTS trade. It never enters the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.
 
 ## Reproduce the processed data
 
@@ -108,6 +120,8 @@ qty2, qty2_unit, source, retrieved_at
 
 It then adds source-row, period, suppression, measurement-quality, classification-break, and denominator fields. See `data/processed/data_dictionary.csv` and `docs/data-contract.md`.
 
+The separate USGS context table is `data/processed/usgs_rare_earths_historical.csv`; its fields are documented in `data/processed/usgs_rare_earths_data_dictionary.csv`, and its source vintage, digest, status counts, and workbook notes are in `data/processed/usgs_rare_earths_metadata.json`.
+
 Two quantity rules are essential:
 
 - Value and first quantity join losslessly by flow, period, country, HTS4, source description, and normalized source quantity bucket.
@@ -124,6 +138,7 @@ Annual 2026 source cells are structural zeros while the YTD sheets contain Janua
 - `unit_value.csv`: value divided by a strictly matched, positive, unsuppressed first quantity, with quantity unit and value-coverage share retained.
 - `prc_supplier_origin_index.csv`: annual China-reporter HS 2846 World value, positive-origin count, value HHI, and leading origin.
 - `classification_breaks.csv`: general HS revision checkpoints plus the observed HTS 8505 measurement-regime break in 2019.
+- `usgs_rare_earths_historical.csv`: normalized national and world rare-earth-oxide-equivalent history, 1900–2020; kept analytically separate from partner-level derivations.
 
 HTS 2805 and 8505 are broad proxy headings. HTS 2805 includes products beyond rare-earth metals; HTS 8505 includes non-rare-earth and non-permanent-magnet products. HTS 2846 is the cleanest four-digit rare-earth-compounds heading in this build.
 
@@ -141,6 +156,7 @@ Then open <http://localhost:8000/>. Chart.js 4.5.1 is vendored under `assets/ven
 
 - Source workbooks: [USITC DataWeb](https://dataweb.usitc.gov/). See the [DataWeb quantity FAQ](https://www.usitc.gov/applications/dataweb/faqs), [partner definitions](https://www.usitc.gov/faq/question/what_meant_country_merchandise_trade_statistics.htm), and [HTS archive](https://www.usitc.gov/harmonized_tariff_information/hts/archive/list).
 - China-reporter source: [UN Comtrade API](https://uncomtrade.org/docs/un-comtrade-api/). Raw response snapshots retain the source’s metadata and revision vintage.
+- National historical context: [USGS Rare Earths, Data Series 140](https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140). USGS identifies the source and usage as public domain.
 - Site code and original documentation: MIT License; see `LICENSE`.
 - Chart.js: MIT License; see `assets/vendor/chart.js/LICENSE.md`.
 - U.S. Government and UN source data retain their source-specific terms. The repository’s MIT License does not relicense third-party data or trademarks.

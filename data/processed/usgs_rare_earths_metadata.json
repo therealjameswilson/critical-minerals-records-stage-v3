@@ -1,0 +1,53 @@
+{
+  "agency": "U.S. Geological Survey",
+  "bytes": 49630,
+  "center": "National Minerals Information Center",
+  "citation": "U.S. Geological Survey, 2014, Rare earth statistics, in Kelly, T.D., and Matos, G.R., comps., Historical statistics for mineral and material commodities in the United States: U.S. Geological Survey Data Series 140, accessed July 10, 2026, at https://www.usgs.gov/centers/national-minerals-information-center/historical-statistics-mineral-and-material-commodities.",
+  "comparability_warning": "National REO-equivalent statistics are not partner-level HTS trade data and must not enter the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.",
+  "compiled_by": "1Compiled by C.A. DiFrancesco, J.B. Hedrick, D.J. Cordier, and J. Gambogi.",
+  "coverage": [
+    1900,
+    2020
+  ],
+  "data_year_count": 121,
+  "download_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/ds140-rare-earths-2020.xlsx",
+  "embedded_notes_file": "xl/embeddings/Microsoft_Word_Document.docx",
+  "embedded_notes_sha256": "798f8935664ca1e91b9dc7ca860c9fd0e9ad2e923d5c3fe2a2c11d4dc38ce345",
+  "file": "data/raw/usgs_ds140_rare_earths_2020.xlsx",
+  "formula_cells": [
+    "E107",
+    "E108",
+    "E109",
+    "E110",
+    "E111",
+    "E112"
+  ],
+  "normalized_rows": 847,
+  "notes": {
+    "apparent_consumption": "Estimated for specified years as production plus imports minus exports; interpolated for years listed in the embedded worksheet notes; 2000 onward calculated using estimated REO content.",
+    "constant_unit_value": "U.S. unit value adjusted with the Consumer Price Index to constant 1998 dollars.",
+    "data_sources": "U.S. Bureau of Mines and U.S. Geological Survey Minerals Yearbook and Mineral Resources of the United States.",
+    "exports": "Estimated rare-earth-oxide equivalent in alloys, compounds, metals, and ores exported from the United States.",
+    "general": "Data are calculated, estimated, or reported. See embedded notes document for more information.",
+    "imports": "Estimated rare-earth-oxide equivalent in alloys, compounds, metals, and ores imported into the United States.",
+    "production": "Contained rare-earth-oxide equivalent in U.S.-produced bastnaesite and monazite concentrates.",
+    "status_codes": "NA Not available. W Withheld to avoid disclosing company proprietary data.",
+    "unit_value": "Weighted-average U.S. unit value in current dollars per metric ton of apparent consumption.",
+    "world_production": "World rare-earth-oxide equivalent content of ores produced."
+  },
+  "package_modified_at": "2024-06-04T18:22:38Z",
+  "public_domain": true,
+  "retrieved_at": "2026-07-10",
+  "sha256": "0aed33ac422b49ec77b7c550d0e53e57a59b5a38ae315ea37d8e1088fc0bb85f",
+  "source_id": "usgs-ds140-rare-earths-2020",
+  "source_last_modified": "2023-09-27",
+  "source_page_url": "https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140",
+  "source_publication_date": "2024-06-04",
+  "status_counts": {
+    "available": 695,
+    "not_available": 150,
+    "withheld": 2
+  },
+  "title": "Rare Earths - Historical Statistics (Data Series 140)",
+  "unit_note": "All quantities in metric tons (t) rare-earth oxide equivalent unless otherwise noted"
+}

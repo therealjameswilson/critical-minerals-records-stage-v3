@@ -1,6 +1,6 @@
 "use strict";
 
-const SUMMARY_URL = "data/processed/site-summary.json?v=3.1.0";
+const SUMMARY_URL = "data/processed/site-summary.json?v=3.2.0";
 const state = {
   summary: null,
   charts: new Map(),
@@ -57,6 +57,7 @@ const MINERAL_LABELS = {
 };
 
 function finite(value) {
+  if (value === null || value === undefined || value === "") return null;
   return Number.isFinite(Number(value)) ? Number(value) : null;
 }
 
@@ -295,6 +296,91 @@ function renderDisparity() {
   }).join("");
 }
 
+function renderUsgsContext() {
+  const context = state.summary.usgs_rare_earths_context;
+  if (!context || context.status !== "loaded" || !Array.isArray(context.series) || !context.series.length) return;
+
+  const rows = context.series;
+  const start = rows[0];
+  const latest = context.latest || rows.at(-1);
+  const options = baseOptions();
+  options.plugins.tooltip.callbacks.label = (tooltipContext) => `${tooltipContext.dataset.label}: ${displayNumber(tooltipContext.raw)} t REO`;
+  options.scales.y.ticks.callback = (value) => compactNumber.format(value);
+
+  createChart("usgs-balance", el("usgsBalanceChart"), {
+    type: "line",
+    data: {
+      labels: rows.map((row) => row.year),
+      datasets: [
+        {
+          label: "U.S. production",
+          data: rows.map((row) => finite(row.us_production)),
+          borderColor: COLORS.gold,
+          backgroundColor: COLORS.gold,
+          borderWidth: 3,
+          pointRadius: 1.5,
+          pointHoverRadius: 5,
+          tension: 0.08,
+          spanGaps: false,
+        },
+        {
+          label: "Estimated import REO content",
+          data: rows.map((row) => finite(row.us_imports)),
+          borderColor: COLORS.teal,
+          backgroundColor: COLORS.teal,
+          borderWidth: 2.4,
+          pointRadius: 1.5,
+          pointHoverRadius: 5,
+          tension: 0.08,
+          spanGaps: false,
+        },
+        {
+          label: "Estimated export REO content",
+          data: rows.map((row) => finite(row.us_exports)),
+          borderColor: COLORS.tealLight,
+          backgroundColor: COLORS.tealLight,
+          borderWidth: 2.4,
+          borderDash: [7, 5],
+          pointRadius: 1.5,
+          pointHoverRadius: 5,
+          tension: 0.08,
+          spanGaps: false,
+        },
+        {
+          label: "Apparent consumption",
+          data: rows.map((row) => finite(row.us_apparent_consumption)),
+          borderColor: COLORS.navy,
+          backgroundColor: COLORS.navy,
+          borderWidth: 2.6,
+          pointRadius: 1.5,
+          pointHoverRadius: 5,
+          tension: 0.08,
+          spanGaps: false,
+        },
+      ],
+    },
+    options,
+  });
+
+  el("usgsStartWorldShare").textContent = displayPercent(start.us_share_of_world_production);
+  el("usgsZeroProductionRun").textContent = "0 t";
+  el("usgsLatestWorldShare").textContent = displayPercent(latest.us_share_of_world_production);
+  el("usgsBalanceChart").setAttribute(
+    "aria-label",
+    "USGS national U.S. rare-earth production, estimated import content, estimated export content, and apparent consumption in metric tons of rare-earth oxide equivalent, 1993 through 2020. Apparent consumption is unavailable for 2011.",
+  );
+
+  el("usgsContextTable").querySelector("tbody").innerHTML = rows.map((row) => `<tr>
+    <td>${row.year}</td>
+    <td>${displayNumber(row.us_production)}</td>
+    <td>${displayNumber(row.us_imports)}</td>
+    <td>${displayNumber(row.us_exports)}</td>
+    <td>${displayNumber(row.us_apparent_consumption)}</td>
+    <td>${displayNumber(row.world_production)}</td>
+    <td>${displayPercent(row.us_share_of_world_production)}</td>
+  </tr>`).join("");
+}
+
 function populateShareControls() {
   const select = el("shareMineral");
   const minerals = Object.keys(state.summary.china_share_by_mineral);
@@ -457,7 +543,7 @@ function populateExplorer() {
 
 async function explorerData(hts) {
   if (!state.explorerCache.has(hts)) {
-    state.explorerCache.set(hts, getJson(`data/processed/explorer/${hts}.json?v=3.1.0`));
+    state.explorerCache.set(hts, getJson(`data/processed/explorer/${hts}.json?v=3.2.0`));
   }
   return state.explorerCache.get(hts);
 }
@@ -619,6 +705,7 @@ function renderProvenance() {
     imports_for_consumption: "U.S. imports",
     domestic_exports: "U.S. domestic exports",
     china_reported_imports: "China-reported imports",
+    usgs_rare_earths_context: "USGS national rare-earth context",
   };
   el("provenanceTable").querySelector("tbody").innerHTML = state.summary.sources.map((source) => `<tr><td>${labels[source.flow] || escapeHtml(source.flow)}</td><td><a href="${escapeHtml(source.file)}">${escapeHtml(source.file.split("/").at(-1))}</a></td><td title="${source.sha256}">${source.sha256}</td></tr>`).join("");
 }
@@ -641,6 +728,7 @@ async function init() {
     state.summary = await getJson(SUMMARY_URL);
     renderHero();
     renderDisparity();
+    renderUsgsContext();
     populateShareControls();
     renderShare();
     renderDiversity();

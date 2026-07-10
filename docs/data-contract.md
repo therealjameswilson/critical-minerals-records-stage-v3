@@ -1,6 +1,6 @@
 # V3 statistical data contract
 
-The canonical public table is `data/processed/trade_long.csv`. It is source-bucket long rather than one-row-per-mineral total, because USITC quantity units are not freely additive.
+The canonical partner-level trade table is `data/processed/trade_long.csv`. It is source-bucket long rather than one-row-per-mineral total, because USITC quantity units are not freely additive. National USGS history is published under a separate contract and is never merged into partner-level calculations.
 
 ## Required fields
 
@@ -22,6 +22,16 @@ The CSV begins with the requested contract, in this order:
 | `source` / `retrieved_at` | DataWeb and the frozen retrieval vintage |
 
 `data/processed/data_dictionary.csv` describes all appended provenance, quality, and break fields.
+
+## Separate USGS historical context contract
+
+`data/processed/usgs_rare_earths_historical.csv` normalizes the frozen `data/raw/usgs_ds140_rare_earths_2020.xlsx` workbook from [USGS Data Series 140](https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140). It contains national rare-earth-oxide-equivalent measures for 1900–2020; the site displays 1993–2020.
+
+Each row identifies `year`, `geography`, `metric`, `value`, `unit`, `value_status`, `method_status`, exact source cell, any exact `source_formula`, frozen source file, source URLs, and source dates. `data/processed/usgs_rare_earths_data_dictionary.csv` defines every field, while `data/processed/usgs_rare_earths_metadata.json` records the digest, workbook notes, formula-cell inventory, status counts, and public-domain designation.
+
+Source `NA` and `W` tokens become blank numeric values with `value_status=not_available` and `value_status=withheld`. The `method_status` field follows only methods stated in the embedded notes: estimated REO-equivalent imports and exports, year-specific calculated/estimated/interpolated apparent consumption, weighted-average current-dollar unit value, and the CPI-derived constant-dollar series. Production retains `source_series_reo_content_method_not_cell_specific`; the ETL does not invent a reported/estimated label for individual production cells. The analytical `geography_code` is `USA` or `WLD`; `WLD` is not represented as an ISO-3166 code.
+
+The USGS table is national context, not partner-level HTS trade. It must not feed the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.
 
 ## Quantity slots
 

@@ -25,8 +25,10 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Iterable
+from zipfile import ZipFile
 
 from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
 from openpyxl.utils.datetime import from_excel
 
 
@@ -39,6 +41,13 @@ RETRIEVED_AT = "2026-07-10"
 SOURCE_URL = "https://dataweb.usitc.gov/"
 DENOMINATOR_SCOPE = "selected_18_partners"
 RARE_EARTH_HTS = {"2805", "2846", "8505"}
+USGS_DS140_FILENAME = "usgs_ds140_rare_earths_2020.xlsx"
+USGS_DS140_PAGE_URL = "https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140"
+USGS_DS140_DOWNLOAD_URL = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/ds140-rare-earths-2020.xlsx"
+USGS_DS140_LAST_MODIFIED = "2023-09-27"
+USGS_DS140_PACKAGE_MODIFIED_AT = "2024-06-04T18:22:38Z"
+USGS_DS140_PUBLICATION_DATE = "2024-06-04"
+USGS_DS140_EMBEDDED_NOTES_PATH = "xl/embeddings/Microsoft_Word_Document.docx"
 
 warnings.filterwarnings("ignore", message="Workbook contains no default style.*")
 
@@ -125,6 +134,67 @@ MATERIALS = {
 }
 
 
+# Source heading -> metric id, geography, analytical code, normalized unit, scope note, method-note id.
+USGS_DS140_METRICS = {
+    "Production": (
+        "production",
+        "United States",
+        "USA",
+        "metric_tons_reo_equivalent",
+        "Contained rare-earth-oxide equivalent in U.S.-produced bastnaesite and monazite concentrates.",
+        "embedded-notes:production",
+    ),
+    "Imports": (
+        "imports",
+        "United States",
+        "USA",
+        "metric_tons_reo_equivalent",
+        "Estimated rare-earth-oxide equivalent in alloys, compounds, metals, and ores imported into the United States.",
+        "embedded-notes:imports",
+    ),
+    "Exports": (
+        "exports",
+        "United States",
+        "USA",
+        "metric_tons_reo_equivalent",
+        "Estimated rare-earth-oxide equivalent in alloys, compounds, metals, and ores exported from the United States.",
+        "embedded-notes:exports",
+    ),
+    "Apparent consumption": (
+        "apparent_consumption",
+        "United States",
+        "USA",
+        "metric_tons_reo_equivalent",
+        "USGS apparent consumption; calculated, estimated, or interpolated according to the embedded worksheet notes.",
+        "embedded-notes:apparent-consumption",
+    ),
+    "Unit value ($/t)": (
+        "unit_value_current_usd",
+        "United States",
+        "USA",
+        "usd_per_metric_ton_reo_current",
+        "Weighted-average U.S. unit value in current dollars per metric ton of apparent consumption.",
+        "embedded-notes:unit-value-current",
+    ),
+    "Unit value (98$/t)": (
+        "unit_value_constant_1998_usd",
+        "United States",
+        "USA",
+        "usd_per_metric_ton_reo_constant_1998",
+        "U.S. unit value adjusted with the Consumer Price Index to constant 1998 dollars.",
+        "embedded-notes:unit-value-constant-1998",
+    ),
+    "World production": (
+        "production",
+        "World",
+        "WLD",
+        "metric_tons_reo_equivalent",
+        "World rare-earth-oxide equivalent content of ores produced.",
+        "embedded-notes:world-production",
+    ),
+}
+
+
 CSV_COLUMNS = [
     "reporter",
     "flow",
@@ -161,6 +231,35 @@ CSV_COLUMNS = [
     "mass_kg",
     "mass_status",
     "scope_note",
+]
+
+USGS_DS140_COLUMNS = [
+    "source_id",
+    "commodity",
+    "year",
+    "period_type",
+    "geography",
+    "geography_code",
+    "metric",
+    "metric_label",
+    "value",
+    "unit",
+    "value_status",
+    "method_status",
+    "method_note_id",
+    "source_value_raw",
+    "source_formula",
+    "scope_note",
+    "source",
+    "source_file",
+    "source_sheet",
+    "source_cell",
+    "source_url",
+    "download_url",
+    "worksheet_last_modified",
+    "package_modified_at",
+    "source_publication_date",
+    "retrieved_at",
 ]
 
 
@@ -236,6 +335,254 @@ def read_query_rows(workbook: Any) -> list[dict[str, str]]:
             rendered = str(right or "").strip()
         rows.append({"section": section, "parameter": key, "value": rendered})
     return rows
+
+
+USGS_APPARENT_CONSUMPTION_INTERPOLATED_YEARS = {
+    *range(1911, 1915),
+    *range(1918, 1922),
+    1932,
+    *range(1942, 1945),
+    *range(1946, 1950),
+}
+
+
+def usgs_method_status(header: str, year: int, value_status: str) -> str:
+    """Map only the methods explicitly described in the embedded USGS notes."""
+
+    if value_status == "withheld":
+        return "withheld_to_avoid_proprietary_disclosure"
+    if value_status == "not_available":
+        if header == "Apparent consumption" and year == 2011:
+            return "negative_calculation_published_as_not_available"
+        return "not_available"
+    if header in {"Production", "World production"}:
+        return "source_series_reo_content_method_not_cell_specific"
+    if header in {"Imports", "Exports"}:
+        return "estimated_reo_equivalent"
+    if header == "Unit value ($/t)":
+        return "estimated_weighted_average_imports_exports"
+    if header == "Unit value (98$/t)":
+        return "calculated_cpi_adjustment_1998_base"
+    if header == "Apparent consumption":
+        if year in USGS_APPARENT_CONSUMPTION_INTERPOLATED_YEARS:
+            return "interpolated"
+        if year <= 1999:
+            return "estimated_material_balance"
+        if year <= 2008:
+            return "estimated_material_balance_using_estimated_reo"
+        return "calculated_using_estimated_reo"
+    raise ValueError(f"unmapped USGS method: {header}/{year}/{value_status}")
+
+
+def parse_usgs_ds140() -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Normalize the USGS Data Series 140 rare-earth worksheet.
+
+    This national REO-equivalent balance is intentionally separate from the
+    partner-level HTS trade table. Method labels follow only the series and
+    year ranges identified in the embedded source notes; formulas are retained
+    exactly and no per-cell reported/estimated label is invented.
+    """
+
+    path = RAW / USGS_DS140_FILENAME
+    with ZipFile(path) as archive:
+        embedded_notes = archive.read(USGS_DS140_EMBEDDED_NOTES_PATH)
+        core_properties = archive.read("docProps/core.xml").decode("utf-8")
+    embedded_notes_sha256 = hashlib.sha256(embedded_notes).hexdigest()
+    package_modified_match = re.search(r"<dcterms:modified[^>]*>([^<]+)</dcterms:modified>", core_properties)
+    package_modified_at = package_modified_match.group(1) if package_modified_match else ""
+    if package_modified_at != USGS_DS140_PACKAGE_MODIFIED_AT:
+        raise ValueError(f"{USGS_DS140_FILENAME}: unexpected package modification timestamp {package_modified_at!r}")
+
+    workbook = load_workbook(path, read_only=True, data_only=True)
+    formula_workbook = load_workbook(path, read_only=True, data_only=False)
+    if workbook.sheetnames != ["Rare earths"] or formula_workbook.sheetnames != ["Rare earths"]:
+        raise ValueError(f"{USGS_DS140_FILENAME}: unexpected sheets {workbook.sheetnames}")
+    sheet = workbook["Rare earths"]
+    formula_sheet = formula_workbook["Rare earths"]
+    sheet.reset_dimensions()
+    formula_sheet.reset_dimensions()
+    source_rows = list(sheet.iter_rows(min_row=1, max_row=129, min_col=1, max_col=8, values_only=True))
+    formula_rows = list(formula_sheet.iter_rows(min_row=1, max_row=129, min_col=1, max_col=8, values_only=True))
+    workbook.close()
+    formula_workbook.close()
+
+    if normalize_description(source_rows[0][0]) != "RARE EARTHS STATISTICS1":
+        raise ValueError(f"{USGS_DS140_FILENAME}: unexpected title")
+    unit_note = normalize_description(source_rows[2][0]).strip("[]")
+    last_modified_text = normalize_description(source_rows[3][0])
+    if last_modified_text != "Last modification: September 27, 2023":
+        raise ValueError(f"{USGS_DS140_FILENAME}: unexpected worksheet modification label")
+    expected_headers = ["Year", *USGS_DS140_METRICS]
+    headers = [normalize_description(value) for value in source_rows[4]]
+    if headers != expected_headers:
+        raise ValueError(f"{USGS_DS140_FILENAME}: unexpected headers {headers}")
+
+    rows: list[dict[str, Any]] = []
+    observed_years: list[int] = []
+    status_counts: dict[str, int] = defaultdict(int)
+    formula_cells: list[str] = []
+    for source_row_number, (source_row, formula_row) in enumerate(zip(source_rows[5:126], formula_rows[5:126]), start=6):
+        year_value = number(source_row[0])
+        if year_value is None or int(year_value) != year_value:
+            raise ValueError(f"{USGS_DS140_FILENAME}: invalid year at row {source_row_number}")
+        year = int(year_value)
+        observed_years.append(year)
+        for column_number, header in enumerate(expected_headers[1:], start=2):
+            metric, geography, geography_code, unit, scope_note, method_note_id = USGS_DS140_METRICS[header]
+            raw_value = source_row[column_number - 1]
+            raw_text = str(raw_value if raw_value is not None else "").strip()
+            formula_value = formula_row[column_number - 1]
+            source_formula = str(formula_value).strip() if isinstance(formula_value, str) and formula_value.startswith("=") else ""
+            source_cell = f"{get_column_letter(column_number)}{source_row_number}"
+            if source_formula:
+                formula_cells.append(source_cell)
+            if raw_text.casefold() == "na" or raw_value in (None, ""):
+                value = None
+                value_status = "not_available"
+            elif raw_text.casefold() == "w":
+                value = None
+                value_status = "withheld"
+            else:
+                value = number(raw_value)
+                if value is None:
+                    raise ValueError(
+                        f"{USGS_DS140_FILENAME}: nonnumeric value {raw_value!r} at row {source_row_number}"
+                    )
+                value_status = "available"
+            method_status = usgs_method_status(header, year, value_status)
+            status_counts[value_status] += 1
+            rows.append(
+                {
+                    "source_id": "usgs-ds140-rare-earths-2020",
+                    "commodity": "rare_earths",
+                    "year": year,
+                    "period_type": "annual",
+                    "geography": geography,
+                    "geography_code": geography_code,
+                    "metric": metric,
+                    "metric_label": header,
+                    "value": value,
+                    "unit": unit,
+                    "value_status": value_status,
+                    "method_status": method_status,
+                    "method_note_id": method_note_id,
+                    "source_value_raw": raw_text,
+                    "source_formula": source_formula,
+                    "scope_note": scope_note,
+                    "source": "U.S. Geological Survey Data Series 140",
+                    "source_file": f"data/raw/{USGS_DS140_FILENAME}",
+                    "source_sheet": "Rare earths",
+                    "source_cell": source_cell,
+                    "source_url": USGS_DS140_PAGE_URL,
+                    "download_url": USGS_DS140_DOWNLOAD_URL,
+                    "worksheet_last_modified": USGS_DS140_LAST_MODIFIED,
+                    "package_modified_at": package_modified_at,
+                    "source_publication_date": USGS_DS140_PUBLICATION_DATE,
+                    "retrieved_at": RETRIEVED_AT,
+                }
+            )
+    if observed_years != list(range(1900, 2021)):
+        raise ValueError(f"{USGS_DS140_FILENAME}: expected complete 1900-2020 year rows")
+    if formula_cells != [f"E{row}" for row in range(107, 113)]:
+        raise ValueError(f"{USGS_DS140_FILENAME}: unexpected formula cells {formula_cells}")
+
+    notes = {
+        "data_sources": "U.S. Bureau of Mines and U.S. Geological Survey Minerals Yearbook and Mineral Resources of the United States.",
+        "production": USGS_DS140_METRICS["Production"][4],
+        "imports": USGS_DS140_METRICS["Imports"][4],
+        "exports": USGS_DS140_METRICS["Exports"][4],
+        "apparent_consumption": (
+            "Estimated for specified years as production plus imports minus exports; interpolated for years listed "
+            "in the embedded worksheet notes; 2000 onward calculated using estimated REO content."
+        ),
+        "unit_value": USGS_DS140_METRICS["Unit value ($/t)"][4],
+        "constant_unit_value": USGS_DS140_METRICS["Unit value (98$/t)"][4],
+        "world_production": USGS_DS140_METRICS["World production"][4],
+        "status_codes": normalize_description(source_rows[126][0]),
+        "general": normalize_description(source_rows[128][0]),
+    }
+    metadata = {
+        "source_id": "usgs-ds140-rare-earths-2020",
+        "agency": "U.S. Geological Survey",
+        "center": "National Minerals Information Center",
+        "title": "Rare Earths - Historical Statistics (Data Series 140)",
+        "file": f"data/raw/{USGS_DS140_FILENAME}",
+        "sha256": sha256(path),
+        "bytes": path.stat().st_size,
+        "source_page_url": USGS_DS140_PAGE_URL,
+        "download_url": USGS_DS140_DOWNLOAD_URL,
+        "source_publication_date": USGS_DS140_PUBLICATION_DATE,
+        "source_last_modified": USGS_DS140_LAST_MODIFIED,
+        "retrieved_at": RETRIEVED_AT,
+        "coverage": [1900, 2020],
+        "data_year_count": len(observed_years),
+        "normalized_rows": len(rows),
+        "formula_cells": formula_cells,
+        "package_modified_at": package_modified_at,
+        "embedded_notes_file": USGS_DS140_EMBEDDED_NOTES_PATH,
+        "embedded_notes_sha256": embedded_notes_sha256,
+        "status_counts": dict(sorted(status_counts.items())),
+        "unit_note": unit_note,
+        "compiled_by": normalize_description(source_rows[127][0]),
+        "notes": notes,
+        "public_domain": True,
+        "citation": (
+            "U.S. Geological Survey, 2014, Rare earth statistics, in Kelly, T.D., and Matos, G.R., comps., "
+            "Historical statistics for mineral and material commodities in the United States: U.S. Geological "
+            "Survey Data Series 140, accessed July 10, 2026, at "
+            "https://www.usgs.gov/centers/national-minerals-information-center/"
+            "historical-statistics-mineral-and-material-commodities."
+        ),
+        "comparability_warning": (
+            "National REO-equivalent statistics are not partner-level HTS trade data and must not enter the "
+            "DataWeb China-share, supplier-HHI, or HTS unit-value calculations."
+        ),
+    }
+    return rows, metadata
+
+
+def build_usgs_site_context(rows: list[dict[str, Any]], metadata: dict[str, Any]) -> dict[str, Any]:
+    by_key = {(row["year"], row["geography_code"], row["metric"]): row for row in rows}
+    displayed = []
+    for year in range(1993, 2021):
+        def value(geography_code: str, metric: str) -> int | float | None:
+            row = by_key[(year, geography_code, metric)]
+            return row["value"] if row["value_status"] == "available" else None
+
+        production = value("USA", "production")
+        world_production = value("WLD", "production")
+        displayed.append(
+            {
+                "year": year,
+                "us_production": production,
+                "us_imports": value("USA", "imports"),
+                "us_exports": value("USA", "exports"),
+                "us_apparent_consumption": value("USA", "apparent_consumption"),
+                "world_production": world_production,
+                "us_share_of_world_production": (
+                    round(float(production) / float(world_production), 10)
+                    if production is not None and world_production not in (None, 0)
+                    else None
+                ),
+            }
+        )
+    latest = displayed[-1]
+    return {
+        "status": "loaded",
+        "source_id": metadata["source_id"],
+        "full_coverage": metadata["coverage"],
+        "displayed_coverage": [1993, 2020],
+        "unit": "metric_tons_reo_equivalent",
+        "source_last_modified": metadata["source_last_modified"],
+        "series": displayed,
+        "latest": latest,
+        "warnings": [
+            "This USGS national balance ends in 2020 and is not extended or interpolated.",
+            "Production, imports, exports, and apparent consumption are REO-equivalent estimates, not HTS values or partner-origin measures.",
+            "The embedded notes identify methods by series and year range; individual production cells are not labeled reported or estimated.",
+            "USGS apparent consumption can reflect inventory changes and unattributed trade; the 2011 source value is unavailable after a negative calculation.",
+        ],
+    }
 
 
 def header_map(row: Iterable[Any]) -> dict[str, int]:
@@ -932,6 +1279,8 @@ def build_site_summary(
     diversification: list[dict[str, Any]],
     explorer_index: list[dict[str, Any]],
     sources: list[dict[str, Any]],
+    usgs_rows: list[dict[str, Any]],
+    usgs_metadata: dict[str, Any],
 ) -> dict[str, Any]:
     disparity = rare_earth_disparity(rows)
     latest = next(
@@ -962,8 +1311,18 @@ def build_site_summary(
     comtrade_source = comtrade_source_metadata()
     if comtrade_source:
         public_sources.append(comtrade_source)
+    public_sources.append(
+        {
+            "flow": "usgs_rare_earths_context",
+            "file": usgs_metadata["file"],
+            "sha256": usgs_metadata["sha256"],
+            "bytes": usgs_metadata["bytes"],
+            "source": usgs_metadata["title"],
+            "coverage": usgs_metadata["coverage"],
+        }
+    )
     return {
-        "schema_version": "3.1.0",
+        "schema_version": "3.2.0",
         "generated_at": f"{RETRIEVED_AT}T00:00:00Z",
         "title": "US-PRC Critical Minerals Record, 1993-2026",
         "coverage": {
@@ -972,6 +1331,7 @@ def build_site_summary(
             "ytd_months": "January-April",
             "selected_partner_count": 18,
             "us_denominator_scope": DENOMINATOR_SCOPE,
+            "usgs_ds140": [1900, 2020],
         },
         "headline": {
             "year": 2025,
@@ -993,6 +1353,7 @@ def build_site_summary(
         "us_non_china_diversification": rare_div,
         "us_selected_supplier_series": selected_supplier_series(rows),
         "prc_supply_origins": load_prc_comtrade(),
+        "usgs_rare_earths_context": build_usgs_site_context(usgs_rows, usgs_metadata),
         "explorer_index": explorer_index,
         "sources": public_sources,
         "warnings": [
@@ -1059,6 +1420,46 @@ def write_data_dictionary() -> None:
         for column in CSV_COLUMNS
     ]
     write_csv(PROCESSED / "data_dictionary.csv", rows, ["column", "type", "description"])
+
+
+def write_usgs_data_dictionary() -> None:
+    descriptions = {
+        "source_id": "Stable identifier for this frozen USGS workbook vintage.",
+        "commodity": "Normalized commodity family; rare_earths for this source.",
+        "year": "Calendar year in the USGS worksheet.",
+        "period_type": "Annual period; the source contains no YTD observations.",
+        "geography": "United States or World, according to the source heading.",
+        "geography_code": "USA or WLD analytical geography code; WLD is not an ISO-3166 code.",
+        "metric": "Normalized metric identifier.",
+        "metric_label": "Original USGS worksheet column heading.",
+        "value": "Numeric source value; blank for NA or W cells.",
+        "unit": "REO-equivalent mass or unit-value basis.",
+        "value_status": "available, not_available, or withheld.",
+        "method_status": "Method explicitly supported by the embedded worksheet notes; no invented reported/estimated distinction.",
+        "method_note_id": "Embedded worksheet-notes section supporting the method and scope label.",
+        "source_value_raw": "Original displayed cell token or number.",
+        "source_formula": "Exact source formula when the workbook cell contains one; otherwise blank.",
+        "scope_note": "Metric definition distilled from the workbook's embedded notes document.",
+        "source": "Publishing agency and data-series label.",
+        "source_file": "Frozen repository path.",
+        "source_sheet": "Source worksheet name.",
+        "source_cell": "Exact source cell address.",
+        "source_url": "Official USGS landing page.",
+        "download_url": "Official source-file URL.",
+        "worksheet_last_modified": "Last-modification date printed in the worksheet.",
+        "package_modified_at": "Modification timestamp in the XLSX core properties.",
+        "source_publication_date": "Publication date on the USGS media page.",
+        "retrieved_at": "Repository retrieval date.",
+    }
+    rows = [
+        {"column": column, "type": "string_or_number", "description": descriptions[column]}
+        for column in USGS_DS140_COLUMNS
+    ]
+    write_csv(
+        PROCESSED / "usgs_rare_earths_data_dictionary.csv",
+        rows,
+        ["column", "type", "description"],
+    )
 
 
 def write_prc_origin_index(prc: dict[str, Any]) -> int:
@@ -1131,6 +1532,17 @@ def main() -> int:
     )
     write_csv(PROCESSED / "trade_long.csv", rows, CSV_COLUMNS)
 
+    usgs_rows, usgs_metadata = parse_usgs_ds140()
+    write_csv(
+        PROCESSED / "usgs_rare_earths_historical.csv",
+        usgs_rows,
+        USGS_DS140_COLUMNS,
+    )
+    (PROCESSED / "usgs_rare_earths_metadata.json").write_text(
+        json.dumps(usgs_metadata, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
     shares = build_china_share(rows)
     share_columns = [
         "mineral", "year", "ytd_flag", "china_value_usd", "selected_partner_value_usd",
@@ -1157,11 +1569,12 @@ def main() -> int:
 
     write_classification_breaks()
     write_data_dictionary()
+    write_usgs_data_dictionary()
     explorer_index = build_explorer(rows)
 
     comtrade_source = comtrade_source_metadata()
     manifest = {
-        "schema_version": "3.1.0",
+        "schema_version": "3.2.0",
         "generated_at": f"{RETRIEVED_AT}T00:00:00Z",
         "source_system": "USITC DataWeb",
         "source_url": SOURCE_URL,
@@ -1178,11 +1591,13 @@ def main() -> int:
         "second_quantity_rule": "Second quantities remain independent rows because the HTS4 export has no lossless key to a first-unit value bucket.",
         "sources": sources,
         "optional_china_reporter_source": comtrade_source,
+        "usgs_rare_earths_source": usgs_metadata,
         "official_method_links": {
             "partner_definitions": "https://www.usitc.gov/faq/question/what_meant_country_merchandise_trade_statistics.htm",
             "dataweb_api": "https://www.usitc.gov/applications/dataweb/api/dataweb_query_api.html",
             "dataweb_quantity_faq": "https://www.usitc.gov/applications/dataweb/faqs",
             "hts_archive": "https://www.usitc.gov/harmonized_tariff_information/hts/archive/list",
+            "usgs_ds140_rare_earths": USGS_DS140_PAGE_URL,
         },
         "processed": {
             "trade_long_rows": len(rows),
@@ -1190,12 +1605,21 @@ def main() -> int:
             "diversification_rows": len(diversification),
             "unit_value_rows": len(unit_values),
             "explorer_files": len(explorer_index),
+            "usgs_rare_earths_rows": len(usgs_rows),
         },
     }
     (PROCESSED / "explorer-index.json").write_text(
         json.dumps(explorer_index, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    summary = build_site_summary(rows, shares, diversification, explorer_index, sources)
+    summary = build_site_summary(
+        rows,
+        shares,
+        diversification,
+        explorer_index,
+        sources,
+        usgs_rows,
+        usgs_metadata,
+    )
     prc_origin_rows = write_prc_origin_index(summary["prc_supply_origins"])
     manifest["processed"]["prc_supplier_origin_index_rows"] = prc_origin_rows
     (PROCESSED / "query_manifest.json").write_text(
@@ -1206,8 +1630,9 @@ def main() -> int:
     )
 
     print(
-        f"Built {len(rows):,} normalized rows, {len(unit_values):,} unit-value rows, "
-        f"and {len(explorer_index)} explorer shards in {PROCESSED.relative_to(ROOT)}."
+        f"Built {len(rows):,} DataWeb rows, {len(usgs_rows):,} USGS DS140 rows, "
+        f"{len(unit_values):,} unit-value rows, and {len(explorer_index)} explorer shards "
+        f"in {PROCESSED.relative_to(ROOT)}."
     )
     return 0
 
