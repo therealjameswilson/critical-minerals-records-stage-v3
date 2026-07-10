@@ -1,0 +1,1186 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": {
+    "title": "China-reporter annual imports of HS 2846 by origin partner",
+    "source": "UN Comtrade public preview API",
+    "reporter_code": 156,
+    "reporter_iso3": "CHN",
+    "flow_code": "M",
+    "commodity_code": "2846",
+    "frequency_code": "A",
+    "classification_search_code": "HS",
+    "partner_scope": "World and all available primary partners",
+    "partner_basis": "Country or area of origin, as declared in annual publication metadata",
+    "customs_code": "C00",
+    "mode_of_transport_code": 0,
+    "second_partner_code": 0
+  },
+  "retrieval": {
+    "started_at": "2026-07-10T21:36:29Z",
+    "completed_at": "2026-07-10T21:38:29Z",
+    "script": "scripts/download_un_comtrade_china.py",
+    "output_directory": "data/raw/un_comtrade_china/2846",
+    "public_preview_max_records": 500
+  },
+  "validation": {
+    "status": "passed",
+    "expected_years": [
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "observed_years": [
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "gaps": [],
+    "partner_sum_world_rule": "abs(sum(non-World partner primaryValue) - World primaryValue) <= max(1 USD, abs(World primaryValue) * 1e-9)",
+    "absolute_tolerance_usd": 1,
+    "relative_tolerance": 1e-09,
+    "preview_ceiling_is_failure": true
+  },
+  "publication_metadata_snapshot": {
+    "file": "publication_metadata.json",
+    "url": "https://comtradeapi.un.org/public/v1/getMetadata/C/A/HS?reporterCode=156",
+    "retrieved_at": "2026-07-10T21:36:29Z",
+    "sha256": "e05f005400ce5efe974792b386cc4f6120e2f1de86925acd44787fe57afffab7",
+    "bytes": 27353,
+    "dataset_count": 33,
+    "covered_requested_years": [
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "missing_requested_years": []
+  },
+  "files": [
+    {
+      "year": 1993,
+      "file": "1993.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=1993&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:36:30Z",
+      "sha256": "cbd6d7b6fd1ba0473e103f8b67ae60e016a7dbc040c92ea48c472bb1b50a3a28",
+      "bytes": 15527,
+      "count": 15,
+      "partner_count_excluding_world": 14,
+      "classification_codes": [
+        "H0"
+      ],
+      "world_primary_value_usd": 1165292,
+      "partner_primary_value_sum_usd": 1165292,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156199301052100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2006-01-09T00:00:00",
+          "publication_date_short": "2006-01-09",
+          "publication_note": "N/A",
+          "classification_code": "H0",
+          "trade_system": "Special",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 1994,
+      "file": "1994.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=1994&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:36:34Z",
+      "sha256": "46b09c67136863369acc98e0362ad33e8eeedc47c47a192164daf49f47b5b979",
+      "bytes": 17604,
+      "count": 17,
+      "partner_count_excluding_world": 16,
+      "classification_codes": [
+        "H0"
+      ],
+      "world_primary_value_usd": 1283857,
+      "partner_primary_value_sum_usd": 1283857,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156199401052100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2006-01-09T00:00:00",
+          "publication_date_short": "2006-01-09",
+          "publication_note": "N/A",
+          "classification_code": "H0",
+          "trade_system": "Special",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 1995,
+      "file": "1995.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=1995&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:36:38Z",
+      "sha256": "3ca427f7d7acea1402bddeee92682dd7773457228790f43b74cca90258564dae",
+      "bytes": 16580,
+      "count": 16,
+      "partner_count_excluding_world": 15,
+      "classification_codes": [
+        "H0"
+      ],
+      "world_primary_value_usd": 1831275,
+      "partner_primary_value_sum_usd": 1831275,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156199501052100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2006-01-09T00:00:00",
+          "publication_date_short": "2006-01-09",
+          "publication_note": "N/A",
+          "classification_code": "H0",
+          "trade_system": "Special",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 1996,
+      "file": "1996.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=1996&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:36:41Z",
+      "sha256": "2e94e2fff811e5621372812b9124bc55e07a0a342c68a3c8fcf4308593c0e07e",
+      "bytes": 14559,
+      "count": 14,
+      "partner_count_excluding_world": 13,
+      "classification_codes": [
+        "H1"
+      ],
+      "world_primary_value_usd": 3036781,
+      "partner_primary_value_sum_usd": 3036781,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156199601062100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2006-01-09T00:00:00",
+          "publication_date_short": "2006-01-09",
+          "publication_note": "N/A",
+          "classification_code": "H1",
+          "trade_system": "Special",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 1997,
+      "file": "1997.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=1997&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:36:45Z",
+      "sha256": "d1acbeb1ff3ae91ec8ffb178fdd8e1e04cd522163234d7164913df81efce4f7c",
+      "bytes": 13512,
+      "count": 13,
+      "partner_count_excluding_world": 12,
+      "classification_codes": [
+        "H1"
+      ],
+      "world_primary_value_usd": 4747079,
+      "partner_primary_value_sum_usd": 4747079,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156199701062100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2005-12-30T00:00:00",
+          "publication_date_short": "2005-12-30",
+          "publication_note": "N/A",
+          "classification_code": "H1",
+          "trade_system": "Special",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 1998,
+      "file": "1998.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=1998&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:36:49Z",
+      "sha256": "d963ff62e9c53963d208b696735e089be5d76c98e4ac7843a1d1d950e4543d1a",
+      "bytes": 16621,
+      "count": 16,
+      "partner_count_excluding_world": 15,
+      "classification_codes": [
+        "H1"
+      ],
+      "world_primary_value_usd": 8512481,
+      "partner_primary_value_sum_usd": 8512481,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156199801062100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2002-09-01T00:00:00",
+          "publication_date_short": "2002-09-01",
+          "publication_note": "N/A",
+          "classification_code": "H1",
+          "trade_system": "Special",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 1999,
+      "file": "1999.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=1999&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:36:53Z",
+      "sha256": "7cb435fc4e01ecb29281d54c5c081386acdf30e844b9616b2598a95698604ed6",
+      "bytes": 16607,
+      "count": 16,
+      "partner_count_excluding_world": 15,
+      "classification_codes": [
+        "H1"
+      ],
+      "world_primary_value_usd": 12989816,
+      "partner_primary_value_sum_usd": 12989816,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156199901062100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2005-12-23T00:00:00",
+          "publication_date_short": "2005-12-23",
+          "publication_note": "N/A",
+          "classification_code": "H1",
+          "trade_system": "Special",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2000,
+      "file": "2000.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2000&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:36:56Z",
+      "sha256": "81160227c58644f061023fdbca5fb62e555ca2af18410b9f6d6347df2bd2b126",
+      "bytes": 16684,
+      "count": 16,
+      "partner_count_excluding_world": 15,
+      "classification_codes": [
+        "H1"
+      ],
+      "world_primary_value_usd": 10991816,
+      "partner_primary_value_sum_usd": 10991816,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200001062100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2009-09-02T11:02:59.423",
+          "publication_date_short": "2009-09-02",
+          "publication_note": "Specific revision: Data for this year has been re-processed to make correction to the data. The data was received from/through the Statistics Department, General Administration of Customs of China on 17 February 2006.",
+          "classification_code": "H1",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2001,
+      "file": "2001.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2001&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:03Z",
+      "sha256": "a35678d42732da3ba052b40e8e2565a51fb134c1c83e5f2e3dc16286fc5581f8",
+      "bytes": 22835,
+      "count": 22,
+      "partner_count_excluding_world": 21,
+      "classification_codes": [
+        "H1"
+      ],
+      "world_primary_value_usd": 9223062,
+      "partner_primary_value_sum_usd": 9223062,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200101062100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2009-09-01T15:43:24.477",
+          "publication_date_short": "2009-09-01",
+          "publication_note": "Specific revision: Data for this year has been re-processed to make correction to the data. The data was received from/through the Statistics Department, General Administration of Customs of China  on 17 February 2006.",
+          "classification_code": "H1",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2002,
+      "file": "2002.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2002&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:06Z",
+      "sha256": "2f0bbeea15922215d734d18cd0cba7305e487b412f76feb8b4d49648397a15e5",
+      "bytes": 18683,
+      "count": 18,
+      "partner_count_excluding_world": 17,
+      "classification_codes": [
+        "H2"
+      ],
+      "world_primary_value_usd": 11070721,
+      "partner_primary_value_sum_usd": 11070721,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200201072100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2009-09-01T17:04:23.42",
+          "publication_date_short": "2009-09-01",
+          "publication_note": "Specific revision: Data for this year has been re-processed to make correction to the data. The data was received from/through the Statistics Department, General Administration of Customs of China  on 20 February 2006.",
+          "classification_code": "H2",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2003,
+      "file": "2003.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2003&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:11Z",
+      "sha256": "f53ed68957040e687a59ce16ec6e7f039a5b6390ae0becef2a60ab6dd8ed94eb",
+      "bytes": 20756,
+      "count": 20,
+      "partner_count_excluding_world": 19,
+      "classification_codes": [
+        "H2"
+      ],
+      "world_primary_value_usd": 17149261,
+      "partner_primary_value_sum_usd": 17149261,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200301072100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2009-09-01T18:46:49.23",
+          "publication_date_short": "2009-09-01",
+          "publication_note": "Specific revision: Data for this year has been re-processed to make correction to the data. The data was received from/through the Statistics Department, General Administration of Customs of China  on 21 February 2006.",
+          "classification_code": "H2",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2004,
+      "file": "2004.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2004&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:14Z",
+      "sha256": "050fa542c188fffdad332cfb1c2082d86913ecd10f6548ab021709b1101a43ee",
+      "bytes": 19772,
+      "count": 19,
+      "partner_count_excluding_world": 18,
+      "classification_codes": [
+        "H2"
+      ],
+      "world_primary_value_usd": 29226114,
+      "partner_primary_value_sum_usd": 29226114,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200401072100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2009-09-08T11:05:41.77",
+          "publication_date_short": "2009-09-08",
+          "publication_note": "Specific revision: Data for this year has been re-processed to make correction to the data. The data was received from/through the Statistics Department, General Administration of Customs of China on 21 February 2006.",
+          "classification_code": "H2",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2005,
+      "file": "2005.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2005&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:18Z",
+      "sha256": "fcda913139da229f15713bfcac65e7092c5693b4ac6a8c5d59ea6833084a0300",
+      "bytes": 20796,
+      "count": 20,
+      "partner_count_excluding_world": 19,
+      "classification_codes": [
+        "H2"
+      ],
+      "world_primary_value_usd": 32463864,
+      "partner_primary_value_sum_usd": 32463864,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200501072100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2007-06-08T00:00:00",
+          "publication_date_short": "2007-06-08",
+          "publication_note": "N/A",
+          "classification_code": "H2",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2006,
+      "file": "2006.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2006&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:21Z",
+      "sha256": "01c257c40df0bcc25f57b294559790fbd2ec13e905680ff9dd987566e187f50a",
+      "bytes": 21802,
+      "count": 21,
+      "partner_count_excluding_world": 20,
+      "classification_codes": [
+        "H2"
+      ],
+      "world_primary_value_usd": 47587132,
+      "partner_primary_value_sum_usd": 47587132,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200601072100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2007-05-15T00:00:00",
+          "publication_date_short": "2007-05-15",
+          "publication_note": "N/A",
+          "classification_code": "H2",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2007,
+      "file": "2007.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2007&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:25Z",
+      "sha256": "3aeea741f7053ce0a8cfe22cf3f23ca9414380bf0be34459757199c0c9812760",
+      "bytes": 20813,
+      "count": 20,
+      "partner_count_excluding_world": 19,
+      "classification_codes": [
+        "H3"
+      ],
+      "world_primary_value_usd": 63157299,
+      "partner_primary_value_sum_usd": 63157299,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200701082100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2008-05-02T19:31:35.67",
+          "publication_date_short": "2008-05-02",
+          "publication_note": "New data: Data for this year is published for the first time; the data was received from the Statistics Department, General Administration of Customs of China on 25 April 2008.",
+          "classification_code": "H3",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2008,
+      "file": "2008.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2008&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:29Z",
+      "sha256": "f705a912711794da79305f99fd6b3176c1aa1dacc0ae1911da475cc69eb01dd4",
+      "bytes": 27033,
+      "count": 26,
+      "partner_count_excluding_world": 25,
+      "classification_codes": [
+        "H3"
+      ],
+      "world_primary_value_usd": 23513721,
+      "partner_primary_value_sum_usd": 23513721,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200801082100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2009-06-03T16:36:56.917",
+          "publication_date_short": "2009-06-03",
+          "publication_note": "New data: Data for this year is published for the first time; the provisional data was received from/through the International Trade Centre (ITC) on 28 May 2009.",
+          "classification_code": "H3",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2009,
+      "file": "2009.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2009&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:33Z",
+      "sha256": "5469eda0c79f60c1c399aa0293fdd281cd72eb32ca4fdbd7aede99716ba428c4",
+      "bytes": 24935,
+      "count": 24,
+      "partner_count_excluding_world": 23,
+      "classification_codes": [
+        "H3"
+      ],
+      "world_primary_value_usd": 35455741,
+      "partner_primary_value_sum_usd": 35455741,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156200901082100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2010-04-19T11:33:27.71",
+          "publication_date_short": "2010-04-19",
+          "publication_note": "New data: Data for this year is published for the first time; the provisional data was received from the Statistics Department, General Administration of Customs of China on 13 April 2010.",
+          "classification_code": "H3",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2010,
+      "file": "2010.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2010&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:36Z",
+      "sha256": "0de643c807afe3bd0a3171f79eaca93ad2b7a921218307d160a3331d3b9d5825",
+      "bytes": 24981,
+      "count": 24,
+      "partner_count_excluding_world": 23,
+      "classification_codes": [
+        "H3"
+      ],
+      "world_primary_value_usd": 36666449,
+      "partner_primary_value_sum_usd": 36666449,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201001082100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2011-05-20T14:48:48.207",
+          "publication_date_short": "2011-05-20",
+          "publication_note": "New data: Data for this year is published for the first time; the data was received from/through the Statistics Department, General Administration of Customs of China on 17 May 2011.",
+          "classification_code": "H3",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2011,
+      "file": "2011.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2011&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:40Z",
+      "sha256": "b532f29fb0eb5c4be764d48fd182823ce4bef1e7a0e7e6b64833f375ae7de97e",
+      "bytes": 24890,
+      "count": 24,
+      "partner_count_excluding_world": 23,
+      "classification_codes": [
+        "H3"
+      ],
+      "world_primary_value_usd": 65982260,
+      "partner_primary_value_sum_usd": 65982260,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201101082100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2012-04-24T16:41:32.96",
+          "publication_date_short": "2012-04-24",
+          "publication_note": "New data: Data for this year is published for the first time; the data was received from the Statistics Department, General Administration of Customs of China on 20 April 2012.",
+          "classification_code": "H3",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2012,
+      "file": "2012.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2012&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:45Z",
+      "sha256": "ed09d4d0e163b64c32a8dc955eee3c9e06536cbbb26c4c0a16881d8ab36d14e4",
+      "bytes": 24919,
+      "count": 24,
+      "partner_count_excluding_world": 23,
+      "classification_codes": [
+        "H4"
+      ],
+      "world_primary_value_usd": 46614976,
+      "partner_primary_value_sum_usd": 46614976,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201201092100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2013-05-23T00:02:51.357",
+          "publication_date_short": "2013-05-23",
+          "publication_note": "New data: Data for this year is published for the first time; the data was received from/through the General Administration of Customs of China on 20 May 2013.",
+          "classification_code": "H4",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2013,
+      "file": "2013.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2013&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:48Z",
+      "sha256": "276ce030d9c6c9f0084e5ab94bc225bb6a9c98387953a910b67e5e00d687a4a2",
+      "bytes": 28016,
+      "count": 27,
+      "partner_count_excluding_world": 26,
+      "classification_codes": [
+        "H4"
+      ],
+      "world_primary_value_usd": 156947956,
+      "partner_primary_value_sum_usd": 156947956,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201301092100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2014-06-17T17:00:15.95",
+          "publication_date_short": "2014-06-17",
+          "publication_note": "New data: Data for this year is published for the first time; the data was received from/through the General Administration of Customs of China on 06 June 2014.",
+          "classification_code": "H4",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2014,
+      "file": "2014.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2014&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:52Z",
+      "sha256": "b696a4aeb405c21a6b8a421e4a7007d9c0094e806eb6d05463f68219c2e45e5e",
+      "bytes": 23909,
+      "count": 23,
+      "partner_count_excluding_world": 22,
+      "classification_codes": [
+        "H4"
+      ],
+      "world_primary_value_usd": 62066345,
+      "partner_primary_value_sum_usd": 62066345,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201401092100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2015-05-07T15:41:40.48",
+          "publication_date_short": "2015-05-07",
+          "publication_note": "New data: Data for this year is published for the first time; the data was received from/through the General Administration of Customs of China on 04 May 2015.",
+          "classification_code": "H4",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2015,
+      "file": "2015.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2015&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:55Z",
+      "sha256": "4e133845dc038f027a0f7f56672c0d17feb15b96cde57ded62da0ff34663707e",
+      "bytes": 29107,
+      "count": 28,
+      "partner_count_excluding_world": 27,
+      "classification_codes": [
+        "H4"
+      ],
+      "world_primary_value_usd": 91316697,
+      "partner_primary_value_sum_usd": 91316697,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201501092100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2017-06-29T02:39:12.187",
+          "publication_date_short": "2017-06-29",
+          "publication_note": "Full revision: Data for this year has been published before and we are publishing now newly received updated data; the data was received from/through the General Administration of Customs of China on 14 June 2017.",
+          "classification_code": "H4",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2016,
+      "file": "2016.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2016&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:37:59Z",
+      "sha256": "d34e8f95c0d75dede4414827fb546b0f216b7ace29ba7384c4df35866bb8f60f",
+      "bytes": 27987,
+      "count": 27,
+      "partner_count_excluding_world": 26,
+      "classification_codes": [
+        "H4"
+      ],
+      "world_primary_value_usd": 95597074,
+      "partner_primary_value_sum_usd": 95597074,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201601092100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2017-05-26T04:14:53.14",
+          "publication_date_short": "2017-05-26",
+          "publication_note": "New data: Data for this year is published for the first time; the data was received from/through the ITC on 11 May 2017.",
+          "classification_code": "H4",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2017,
+      "file": "2017.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2017&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:38:03Z",
+      "sha256": "0ca448c215d08e5065194e33c666e8031dc34bc0d3e54a9a55557281f1058936",
+      "bytes": 31197,
+      "count": 30,
+      "partner_count_excluding_world": 29,
+      "classification_codes": [
+        "H5"
+      ],
+      "world_primary_value_usd": 174384399,
+      "partner_primary_value_sum_usd": 174384399,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201701182100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2018-08-16T04:44:19.223",
+          "publication_date_short": "2018-08-16",
+          "publication_note": "New data: Data for this period is published for the first time; the data was received from/through the General Administration of Customs of China on 13 August 2018.",
+          "classification_code": "H5",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2018,
+      "file": "2018.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2018&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:38:07Z",
+      "sha256": "ae013a4348a801225fb561ab85b74c4c72dfd9f49cb4b71a851631f61e157e40",
+      "bytes": 25947,
+      "count": 25,
+      "partner_count_excluding_world": 24,
+      "classification_codes": [
+        "H5"
+      ],
+      "world_primary_value_usd": 203769793,
+      "partner_primary_value_sum_usd": 203769793,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201801182100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2019-11-03T17:39:20.487",
+          "publication_date_short": "2019-11-03",
+          "publication_note": "New Data: Data for this period is published for the first time; the new data was collected from ITC on 01 Nov 19.",
+          "classification_code": "H5",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "Consignment"
+        }
+      }
+    },
+    {
+      "year": 2019,
+      "file": "2019.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2019&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:38:11Z",
+      "sha256": "cab3534fdb0390805f56e18a0284519d66dde653e1ea43d65599c12025f18637",
+      "bytes": 32128,
+      "count": 31,
+      "partner_count_excluding_world": 30,
+      "classification_codes": [
+        "H5"
+      ],
+      "world_primary_value_usd": 272219363,
+      "partner_primary_value_sum_usd": 272219363,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156201901182100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2021-12-09T15:18:45.12",
+          "publication_date_short": "2021-12-09",
+          "publication_note": "New Data: Data for this period is published for the first time; the new data was collected from General Customs Administration of China through ITC on 12 Oct 20.",
+          "classification_code": "H5",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2020,
+      "file": "2020.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2020&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:38:14Z",
+      "sha256": "0d373da9a93ea54d02eb126919414b26ae2425a5ade85f14efb0953f89ab9a20",
+      "bytes": 29075,
+      "count": 28,
+      "partner_count_excluding_world": 27,
+      "classification_codes": [
+        "H5"
+      ],
+      "world_primary_value_usd": 503272416,
+      "partner_primary_value_sum_usd": 503272416,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1,
+      "publication_metadata": {
+        "dataset_code": 20156202001182100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2022-02-19T05:34:46.537",
+          "publication_date_short": "2022-02-19",
+          "publication_note": "Specific revision: Data for this period has been re-processed to make correction to the data; the new data was collected from General Administration of Customs of the People’s Republic of China on 10 Apr 2021.",
+          "classification_code": "H5",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2021,
+      "file": "2021.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2021&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:38:18Z",
+      "sha256": "e1070ec2dfde4eb1851074246e427cfaead925365a8a655a7b5d6a9f1785ed2b",
+      "bytes": 29110,
+      "count": 28,
+      "partner_count_excluding_world": 27,
+      "classification_codes": [
+        "H5"
+      ],
+      "world_primary_value_usd": 1068168392,
+      "partner_primary_value_sum_usd": 1068168392,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1.068168392,
+      "publication_metadata": {
+        "dataset_code": 20156202101182100,
+        "publication_history_count": 2,
+        "latest": {
+          "publication_date": "2023-12-16T06:45:45.4057702",
+          "publication_date_short": "2023-12-16",
+          "publication_note": "Revised Data: Data for this period was published before; the revised data was collected from General Administration of Customs of the People's Republic of China on 13 Dec 23.",
+          "classification_code": "H5",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2022,
+      "file": "2022.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2022&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:38:22Z",
+      "sha256": "39c6802dad4dc5d558f6c7a0f06d141605750a359dc831b8aa16a7bcee8d6611",
+      "bytes": 28074,
+      "count": 27,
+      "partner_count_excluding_world": 26,
+      "classification_codes": [
+        "H6"
+      ],
+      "world_primary_value_usd": 1063610537,
+      "partner_primary_value_sum_usd": 1063610537,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1.063610537,
+      "publication_metadata": {
+        "dataset_code": 20156202201202100,
+        "publication_history_count": 2,
+        "latest": {
+          "publication_date": "2023-12-18T21:57:34.9166667",
+          "publication_date_short": "2023-12-18",
+          "publication_note": "Revised Data: Data for this period was published before; the revised data was collected from General Administration of Customs of the People's Republic of China on 13 Dec 23.",
+          "classification_code": "H6",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2023,
+      "file": "2023.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2023&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:38:26Z",
+      "sha256": "fc6f445805ee10091f43da71e737b5daac7a1d7a2c8f6b4f3b54ee073cdf9867",
+      "bytes": 34298,
+      "count": 33,
+      "partner_count_excluding_world": 32,
+      "classification_codes": [
+        "H6"
+      ],
+      "world_primary_value_usd": 1881334377,
+      "partner_primary_value_sum_usd": 1881334377,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1.881334377,
+      "publication_metadata": {
+        "dataset_code": 20156202301202100,
+        "publication_history_count": 1,
+        "latest": {
+          "publication_date": "2024-04-07T10:12:46.7544265",
+          "publication_date_short": "2024-04-07",
+          "publication_note": "New Data: Data for this period is published for the first time; the new data was collected from General Administration of Customs of the People's Republic of China on 25 Mar 24.",
+          "classification_code": "H6",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    },
+    {
+      "year": 2024,
+      "file": "2024.json",
+      "url": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?period=2024&reporterCode=156&cmdCode=2846&flowCode=M&partner2Code=0&customsCode=C00&motCode=0&maxRecords=500&breakdownMode=classic&includeDesc=true&format=JSON",
+      "retrieved_at": "2026-07-10T21:38:29Z",
+      "sha256": "ed6d85192eabbbca713d0e4eef790ffd6288c1ad27c6858e16bc937b7027859a",
+      "bytes": 35325,
+      "count": 34,
+      "partner_count_excluding_world": 33,
+      "classification_codes": [
+        "H6"
+      ],
+      "world_primary_value_usd": 1386613152,
+      "partner_primary_value_sum_usd": 1386613152,
+      "partner_world_absolute_difference_usd": 0,
+      "partner_world_tolerance_usd": 1.386613152,
+      "publication_metadata": {
+        "dataset_code": 20156202401202100,
+        "publication_history_count": 2,
+        "latest": {
+          "publication_date": "2025-07-04T18:20:18.8501654",
+          "publication_date_short": "2025-07-04",
+          "publication_note": "Specific revision: Data for this period has been re-processed to make corrections to the data (net weight); the data was collected from the General Administration of Customs of the People's Republic of China on 05 Jun 25.",
+          "classification_code": "H6",
+          "trade_system": "General",
+          "currency": "USD",
+          "import_valuation": "CIF",
+          "import_partner_country": "Origin",
+          "import_partner2_country": "N/A"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "year_count": 32,
+    "first_year": 1993,
+    "last_year": 2024,
+    "classification_codes": [
+      "H0",
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "H5",
+      "H6"
+    ],
+    "raw_response_bytes": 754082,
+    "raw_response_bytes_including_metadata": 781435
+  }
+}

@@ -3,14 +3,302 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=records-stage.html">
-  <link rel="canonical" href="records-stage.html">
-  <title>U.S. and PRC Access to Critical Minerals, 1993–2026</title>
+  <meta name="description" content="A source-auditable comparison of U.S. rare-earth import dependence and China’s changing rare-earth-compound supply origins, 1993–2026.">
+  <meta name="theme-color" content="#102d45">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:,">
+  <link rel="canonical" href="https://therealjameswilson.github.io/critical-minerals-records-stage-v3/">
+  <link rel="stylesheet" href="assets/v3.css?v=3.1.0">
+  <title>US–PRC Critical Minerals Record, 1993–2026</title>
 </head>
 <body>
-  <main>
-    <h1>U.S. and PRC Access to Critical Minerals, 1993–2026</h1>
-    <p><a href="records-stage.html">Open the statistical comparison platform</a></p>
+  <a class="skip-link" href="#main">Skip to the statistical record</a>
+
+  <header class="site-header">
+    <div class="masthead wrap">
+      <a class="brand" href="#top" aria-label="Strategic Resources home">
+        <span class="brand-kicker">Strategic Resources</span>
+        <span class="brand-title">US–PRC Critical Minerals Record</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#disparity">Disparity</a>
+        <a href="#share">China share</a>
+        <a href="#sources">New sources</a>
+        <a href="#explorer">Explorer</a>
+        <a href="#method">Method</a>
+      </nav>
+    </div>
+    <div class="status-strip">
+      <div class="wrap status-inner">
+        <span><span class="status-dot" aria-hidden="true"></span> Official statistics</span>
+        <span>USITC DataWeb vintage: 10 July 2026</span>
+        <span id="prcCoverageStatus">PRC reporter series: checking local record…</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">A statistical records stage · 1993–2026</p>
+          <h1>U.S. dependence remained concentrated. China’s reported supply origins changed.</h1>
+          <p class="hero-deck">A trade-data record of rare-earth proxies and other critical materials—built from frozen USITC DataWeb workbooks, with China-reporter UN Comtrade used only where the series is genuinely comparable.</p>
+          <div class="scope-callout" role="note">
+            <strong>Read the denominator.</strong> The U.S. workbooks contain 18 selected partners, not World. Every U.S. “share” on this page says so. Trade origin is an access signal—not mine ownership, reserves, or proof of state intent.
+          </div>
+        </div>
+
+        <article class="headline-card" aria-labelledby="headlineLabel">
+          <p class="stat-kicker">Latest complete U.S. year</p>
+          <p class="headline-stat" id="headlineValue" aria-live="polite">—</p>
+          <h2 id="headlineLabel">China share of the selected-origin U.S. rare-earth proxy basket</h2>
+          <p class="stat-detail"><span id="headlineYear">2025</span> · HTS 2805, 2846, 8505 · import value</p>
+          <div class="sparkline-shell">
+            <canvas id="heroSparkline" role="img" aria-label="China share of selected-origin U.S. rare-earth proxy imports from 1993 through 2025"></canvas>
+          </div>
+          <dl class="stat-ledger">
+            <div><dt>From China</dt><dd id="headlineNumerator">—</dd></div>
+            <div><dt>18-partner sum</dt><dd id="headlineDenominator">—</dd></div>
+          </dl>
+        </article>
+      </div>
+      <div class="wrap hero-footnotes">
+        <span>Annual record ends 2025</span>
+        <span>2026 shown as Jan–Apr YTD</span>
+        <span>Missing values remain gaps</span>
+        <span>FRUS is not an evidentiary source here</span>
+      </div>
+    </section>
+
+    <section class="record-section" id="disparity">
+      <div class="wrap">
+        <div class="section-heading split-heading">
+          <div>
+            <p class="section-number">01 · The disparity</p>
+            <h2>China versus every other selected U.S. supplier</h2>
+            <p>U.S. imports for consumption in the three-heading rare-earth proxy basket. Value is complete for the queried scope; reported mass is a coverage measure, not total tonnage.</p>
+          </div>
+          <div class="control-panel" aria-label="Disparity chart controls">
+            <label for="disparityPeriod">Period</label>
+            <select id="disparityPeriod">
+              <option value="annual">Full year, 1993–2025</option>
+              <option value="ytd">Jan–Apr YTD, 1993–2026</option>
+            </select>
+            <fieldset class="segmented">
+              <legend>Measure</legend>
+              <label><input type="radio" name="disparityMeasure" value="value" checked><span>Import value</span></label>
+              <label><input type="radio" name="disparityMeasure" value="mass"><span>Reported mass</span></label>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="chart-card large-chart-card">
+          <div class="chart-title-row">
+            <div>
+              <p class="chart-kicker" id="disparityKicker">Customs value · current dollars</p>
+              <h3 id="disparityTitle">Selected-origin U.S. rare-earth proxy imports</h3>
+            </div>
+            <div class="legend" aria-hidden="true">
+              <span><i class="legend-swatch china"></i>China</span>
+              <span><i class="legend-swatch other"></i>Other selected origins</span>
+            </div>
+          </div>
+          <div class="canvas-shell chart-tall"><canvas id="disparityChart" role="img"></canvas></div>
+          <p class="chart-note" id="disparityNote">The series sums only the 18 origins selected in the source query. It is not total U.S. imports.</p>
+          <details class="data-disclosure">
+            <summary>View exact endpoint table</summary>
+            <div class="table-scroll"><table id="disparityTable"><thead><tr><th>Year</th><th>China</th><th>Other selected</th><th>China share</th></tr></thead><tbody></tbody></table></div>
+          </details>
+        </div>
+
+        <div class="finding-grid" aria-label="Key disparity findings">
+          <article><p class="finding-value" id="startShare">—</p><h3>1993</h3><p>China’s selected-origin value share at the beginning of the record.</p></article>
+          <article><p class="finding-value" id="peakShare">—</p><h3 id="peakYear">Peak</h3><p>Highest full-year share in the frozen series.</p></article>
+          <article><p class="finding-value" id="currentYtdShare">—</p><h3>Jan–Apr 2026</h3><p>Partial-year share, compared only with the same months in earlier years.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="record-section tint-section" id="share">
+      <div class="wrap">
+        <div class="section-heading split-heading">
+          <div>
+            <p class="section-number">02 · China’s share over time</p>
+            <h2>Move across the critical-mineral proxy set</h2>
+            <p>Each line is China divided by the sum of the same 18 selected origins for one mineral family. A missing denominator appears as a gap, never as zero.</p>
+          </div>
+          <div class="control-panel">
+            <label for="shareMineral">Mineral family</label>
+            <select id="shareMineral"></select>
+            <label for="sharePeriod">Period</label>
+            <select id="sharePeriod">
+              <option value="annual">Full year</option>
+              <option value="ytd">Jan–Apr YTD</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title-row">
+            <div><p class="chart-kicker">Share of selected-origin customs value</p><h3 id="shareTitle">Rare earths</h3></div>
+            <p class="chart-badge">0–100%</p>
+          </div>
+          <div class="canvas-shell"><canvas id="shareChart" role="img"></canvas></div>
+          <p class="chart-note">China and Hong Kong remain separate partners. HTS revision boundaries are marked as continuity-review checkpoints.</p>
+          <details class="data-disclosure">
+            <summary>View exact annual values</summary>
+            <div class="table-scroll"><table id="shareTable"><thead><tr><th>Year</th><th>China share</th><th>Data status</th></tr></thead><tbody></tbody></table></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="record-section dark-section" id="sources">
+      <div class="wrap">
+        <div class="section-heading inverse-heading">
+          <p class="section-number">03 · Cultivating new sources</p>
+          <h2>What the statistics establish: new origins became major reported sources to China</h2>
+          <p>China-reporter HS 2846 imports show source replacement and a wider set of positive origins. They do not, by themselves, prove policy intent, investment, or “cultivation.”</p>
+        </div>
+
+        <div class="comparison-banner" id="prcBanner" role="status">
+          <p class="loading-line">Loading the frozen China-reporter record…</p>
+        </div>
+
+        <div class="origin-overview">
+          <article class="dark-card">
+            <p class="chart-kicker">U.S.-reported imports</p>
+            <h3>Non-China supplier set</h3>
+            <p>Rare-earth proxy basket, limited to 17 non-China partners in the DataWeb query.</p>
+            <div class="canvas-shell compact-chart"><canvas id="usDiversityChart" role="img"></canvas></div>
+          </article>
+          <article class="dark-card">
+            <p class="chart-kicker">China-reported imports</p>
+            <h3>All positive origins</h3>
+            <p>HS 2846 rare-earth compounds, all reported origins in UN Comtrade, through the latest available full year.</p>
+            <div class="canvas-shell compact-chart"><canvas id="prcOriginsChart" role="img"></canvas></div>
+          </article>
+        </div>
+
+        <div class="mini-heading">
+          <h3>Six specified origins, two reporter views</h3>
+          <p>The scopes differ: the U.S. line uses three broad HTS proxies and 18 selected origins; the China line uses HS 2846 and all-origin World value. Compare direction, not absolute level.</p>
+        </div>
+        <div class="supplier-grid" id="supplierCards" aria-live="polite"></div>
+
+        <div class="data-ledger" id="topOriginsLedger">
+          <h3>Data-led sourcing record</h3>
+          <p>Waiting for the frozen PRC reporter files.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="record-section" id="explorer">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-number">04 · Mineral explorer</p>
+          <h2>Inspect one HTS heading at a time</h2>
+          <p>Choose the flow, period, measure, and comparison year. The browser loads only the selected heading’s compact record shard.</p>
+        </div>
+
+        <div class="explorer-shell">
+          <aside class="explorer-controls" aria-label="Mineral explorer controls">
+            <label for="explorerHts">HTS heading</label>
+            <select id="explorerHts"></select>
+            <label for="explorerFlow">Trade flow</label>
+            <select id="explorerFlow">
+              <option value="imports_for_consumption">U.S. imports for consumption</option>
+              <option value="domestic_exports">U.S. domestic exports</option>
+            </select>
+            <label for="explorerPeriod">Period</label>
+            <select id="explorerPeriod">
+              <option value="annual">Full year, 1993–2025</option>
+              <option value="ytd">Jan–Apr YTD, 1993–2026</option>
+            </select>
+            <label for="explorerMeasure">Measure</label>
+            <select id="explorerMeasure">
+              <option value="value_usd">Value (USD)</option>
+              <option value="reported_mass_kg">Reported mass (kg)</option>
+              <option value="unit_value_usd_per_reported_kg">Unit value (USD/kg)</option>
+            </select>
+            <label for="explorerYear">Partner ranking year <output id="explorerYearOutput">2025</output></label>
+            <input id="explorerYear" type="range" min="1993" max="2025" value="2025" step="1">
+            <button class="download-button" id="downloadExplorer" type="button">Download filtered CSV</button>
+            <p class="control-note">The complete normalized CSV remains available below for audit and reuse.</p>
+          </aside>
+
+          <div class="explorer-main">
+            <div class="explorer-title">
+              <div><p class="chart-kicker" id="explorerMeta">Loading heading…</p><h3 id="explorerTitle">HTS 2846</h3></div>
+              <span class="stage-pill" id="explorerStage">compound</span>
+            </div>
+            <p class="scope-note" id="explorerScope"></p>
+            <div class="explorer-chart-grid">
+              <div><h4>China and selected-origin total over time</h4><div class="canvas-shell"><canvas id="explorerTimeline" role="img"></canvas></div></div>
+              <div><h4 id="rankingTitle">Leading partners, 2025</h4><div class="canvas-shell"><canvas id="explorerPartners" role="img"></canvas></div></div>
+            </div>
+            <div class="table-scroll fixed-table"><table id="explorerTable"><thead><tr><th>Partner</th><th>Value</th><th>Reported mass</th><th>USD/kg</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="record-section method-section" id="method">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-number">05 · Method & provenance</p>
+          <h2>Every claim resolves to a frozen source row</h2>
+          <p>The pipeline preserves source quantity buckets, suppression counts, period type, workbook name, and row identifiers before calculating any share or concentration index.</p>
+        </div>
+
+        <div class="method-grid">
+          <article><span class="method-tag">Reporter</span><h3>United States</h3><p>USITC DataWeb imports use country of origin; domestic exports use ultimate destination. Exports to China are not treated as China’s total access.</p></article>
+          <article><span class="method-tag">Periods</span><h3>Annual + comparable YTD</h3><p>Full-year charts end in 2025. All 2026 annual source zeros are labeled unavailable. Jan–Apr YTD is its own 1993–2026 series.</p></article>
+          <article><span class="method-tag">Quantities</span><h3>No false joins</h3><p>Value and first quantity match exactly by source unit bucket. Second quantities remain independent rows because HTS4 does not expose a lossless join.</p></article>
+          <article><span class="method-tag">Continuity</span><h3>Breaks stay visible</h3><p>HTS revision years are review checkpoints. A documented 8505 quantity-regime break is marked at 2019. Missing and suppressed quantities remain labeled.</p></article>
+        </div>
+
+        <div class="provenance-panel">
+          <div>
+            <p class="chart-kicker">Frozen inputs</p>
+            <h3>Frozen statistical inputs</h3>
+            <p>Two USITC DataWeb workbooks plus the manifest for 32 China-reporter UN Comtrade annual response snapshots.</p>
+          </div>
+          <div class="table-scroll"><table id="provenanceTable"><thead><tr><th>Flow</th><th>File</th><th>SHA-256</th></tr></thead><tbody></tbody></table></div>
+        </div>
+
+        <div class="download-grid" aria-label="Data downloads">
+          <a href="data/processed/trade_long.csv"><strong>Normalized long CSV</strong><span>71,026 source-faithful measure rows</span></a>
+          <a href="data/processed/china_share_of_us_imports.csv"><strong>China share table</strong><span>Explicit selected-partner denominator</span></a>
+          <a href="data/processed/supplier_diversification_index.csv"><strong>Diversification table</strong><span>Supplier count and value HHI</span></a>
+          <a href="data/processed/unit_value.csv"><strong>Unit-value table</strong><span>Matched, unsuppressed quantity buckets</span></a>
+          <a href="data/processed/prc_supplier_origin_index.csv"><strong>PRC origin index</strong><span>World value, origin count, HHI, and leading origin</span></a>
+          <a href="data/processed/query_manifest.json"><strong>Query manifest</strong><span>Parameters, hashes, row inventory</span></a>
+          <a href="data/processed/data_dictionary.csv"><strong>Data dictionary</strong><span>Fields and quality labels</span></a>
+        </div>
+
+        <div class="source-links">
+          <a href="https://dataweb.usitc.gov/">USITC DataWeb</a>
+          <a href="https://www.usitc.gov/applications/dataweb/faqs">DataWeb quantity FAQ</a>
+          <a href="https://www.usitc.gov/faq/question/what_meant_country_merchandise_trade_statistics.htm">USITC partner definitions</a>
+          <a href="https://www.usitc.gov/harmonized_tariff_information/hts/archive/list">HTS archive</a>
+          <a href="https://uncomtrade.org/docs/un-comtrade-api/">UN Comtrade API documentation</a>
+          <a href="methodology.html">Full methodology note</a>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div><p class="brand-kicker">Strategic Resources</p><p>A public, reproducible statistical record.</p></div>
+      <p>V3 covers 1993–2026. For the document-centered 1861–1992 predecessor, visit <a href="https://therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html">V2</a>.</p>
+      <p><a href="https://github.com/therealjameswilson/critical-minerals-records-stage-v3">Repository and source code</a></p>
+    </div>
+  </footer>
+
+  <noscript><div class="noscript">JavaScript is required for interactive charts. All normalized and derived CSV files remain available in the Method &amp; provenance section.</div></noscript>
+  <script defer src="assets/vendor/chart.js/chart.umd.min.js"></script>
+  <script defer src="assets/v3.js?v=3.1.0"></script>
 </body>
 </html>

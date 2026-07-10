@@ -1,54 +1,40 @@
 # Methodology
 
-## Scope
+## Evidentiary scope
 
-V3 covers 1993–2026 and uses only official U.S. Government statistical
-publications, workbooks, and query exports. It is not a continuation of the
-FRUS evidentiary method used by V2.
+V3 covers 1993–2026 and is statistics-first. FRUS is not used as evidence. The U.S. view comes from two frozen USITC DataWeb workbooks; the China sourcing view comes from frozen China-reporter UN Comtrade responses.
 
-## Current layer
+## U.S. reporter layer
 
-The first release freezes two USITC DataWeb XLSX exports. DataWeb republishes
-official U.S. merchandise-trade statistics originating with the Census Bureau.
-The imported sheet reports imports for consumption on a customs-value basis;
-the exported sheet reports domestic exports on an F.A.S.-value basis.
+The DataWeb query selects 18 countries and 25 four-digit HTS headings. It contains no World total.
 
-The source query selects 18 partners and 25 four-digit HTS categories. Those
-partners are not the world total. Product categories are not the same as mined
-materials, and several categories contain multiple materials or manufactured
-goods.
+- Imports for consumption use customs value and country of origin.
+- Domestic exports use FAS value and ultimate destination.
+- “Country of origin” does not establish mine origin, ownership, processing location, or end use.
+- Exports to China do not measure China’s total imports.
 
-## Time treatment
+Full-year data end in 2025. The 2026 annual cells are structural zeros and become explicit unavailable values. January–April YTD observations form a separate comparable 1993–2026 series.
 
-The source provides:
+The value and first-quantity sheets align exactly by partner, heading, description, and quantity bucket. Second quantities lack a lossless HTS4 value-bucket join and remain independent measure rows. Positive DataWeb quantity-suppression counts exclude affected buckets from unit-value calculations.
 
-1. full annual values through 2025 plus January–April 2026; and
-2. January–April year-to-date values for every year from 1993 through 2026.
+## China reporter layer
 
-The public explorer defaults to the second series because its month coverage is
-consistent. When the mixed annual/current-YTD series is selected, 2026 is marked
-partial and is not presented as directly comparable with prior full years.
+The repository snapshots UN Comtrade public-preview responses for China-reporter annual imports of HS 2846 by all primary origin partners, 1993–2024. Each year is requested separately. The acquisition fails if a response reaches the 500-row ceiling, omits the requested year, reports an API error, or fails to reconcile partner values to World.
 
-## Aggregation
+China has no annual 2025–2026 record in the frozen series. No interpolation is used.
 
-DataWeb's HTS4 value sheets sometimes split one partner/category across source
-rows with different quantity descriptions. V3 sums the value rows within the
-same flow, partner, HTS4 category, and period. It does not combine physical
-quantities across unlike units.
+The original HS edition changes over the run (H0 through H6), and China changes from the Special to General trade system in 2000. Both are interpretation boundaries. The public claim is descriptive: new origins became major reported sources. The trade statistics alone do not prove state cultivation, investment, or causal intent.
 
-## Interpretation
+## Rare-earth proxies
 
-- Import partner means reported country of origin, not mine origin, ownership,
-  route, processing location, or end use.
-- Export partner means reported destination, not the partner's total imports.
-- Domestic exports exclude foreign exports and are not interchangeable with
-  total exports.
-- China and Hong Kong remain separate source-reported partners.
-- No loaded series currently uses the PRC as reporting economy.
+- HTS 2846: rare-earth compounds, yttrium, and scandium; the cleanest four-digit proxy in this build.
+- HTS 2805: a broad metals heading that also includes products outside the rare-earth scope.
+- HTS 8505: magnets, electromagnets, holding devices, couplings, brakes, lifting heads, and parts; it does not isolate rare-earth permanent magnets.
 
-## Verification
+The three-heading U.S. basket is useful as a broad dependency signal but should not be read as a chemically pure rare-earth series. China’s sourcing visual uses HS 2846 alone and is labeled accordingly.
 
-The raw files are committed unchanged and identified by SHA-256. Rebuilding the
-browser data from those files must produce no Git diff. Validation checks year
-bounds, roles, units, array lengths, hashes, query metadata, public caveats, and
-the absence of FRUS-era data artifacts.
+## Reproducibility
+
+Raw files are committed unchanged and identified by SHA-256. The ETL creates deterministic CSV and JSON outputs. Validation independently recomputes shares and HHI, verifies audited headline values, checks quantity-slot separation and suppression treatment, verifies Comtrade response hashes and World reconciliation, and enforces browser-data size limits.
+
+See `README.md`, `data/processed/query_manifest.json`, and `data/processed/data_dictionary.csv` for commands and field definitions.

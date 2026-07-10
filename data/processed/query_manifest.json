@@ -1,0 +1,337 @@
+{
+  "aggregation_level": 4,
+  "annual_coverage": [
+    1993,
+    2025
+  ],
+  "classification": "HTS Items",
+  "denominator_scope": "selected_18_partners",
+  "denominator_warning": "The workbooks contain 18 selected partners and no World row.",
+  "generated_at": "2026-07-10T00:00:00Z",
+  "official_method_links": {
+    "dataweb_api": "https://www.usitc.gov/applications/dataweb/api/dataweb_query_api.html",
+    "dataweb_quantity_faq": "https://www.usitc.gov/applications/dataweb/faqs",
+    "hts_archive": "https://www.usitc.gov/harmonized_tariff_information/hts/archive/list",
+    "partner_definitions": "https://www.usitc.gov/faq/question/what_meant_country_merchandise_trade_statistics.htm"
+  },
+  "optional_china_reporter_source": {
+    "bytes": 47753,
+    "commodity": "HS 2846",
+    "coverage": [
+      1993,
+      2024
+    ],
+    "file": "data/raw/un_comtrade_china/2846/manifest.json",
+    "flow": "china_reported_imports",
+    "raw_response_count": 32,
+    "sha256": "6e8efa48792faaf5edcda094cfbe6aa1bfd757b1de3bfdd1585ae7f7bc4883f2",
+    "source": "UN Comtrade public preview API",
+    "validation_status": "passed"
+  },
+  "processed": {
+    "china_share_rows": 1360,
+    "diversification_rows": 1360,
+    "explorer_files": 25,
+    "prc_supplier_origin_index_rows": 32,
+    "trade_long_rows": 71026,
+    "unit_value_rows": 2950
+  },
+  "reporter": "United States",
+  "retrieved_at": "2026-07-10",
+  "schema_version": "3.1.0",
+  "second_quantity_rule": "Second quantities remain independent rows because the HTS4 export has no lossless key to a first-unit value bucket.",
+  "source_system": "USITC DataWeb",
+  "source_url": "https://dataweb.usitc.gov/",
+  "sources": [
+    {
+      "bytes": 531530,
+      "file": "data/raw/us_imports_for_consumption_1993-2026.xlsx",
+      "flow": "imports_for_consumption",
+      "normalized_rows": 36550,
+      "query_parameters": [
+        {
+          "parameter": "Download Date",
+          "section": "",
+          "value": "2026-07-10"
+        },
+        {
+          "parameter": "Trade Flow",
+          "section": "Step 1: Trade Flow and Classification System",
+          "value": "Imports For Consumption"
+        },
+        {
+          "parameter": "Classification System",
+          "section": "Step 1: Trade Flow and Classification System",
+          "value": "HTS Items"
+        },
+        {
+          "parameter": "Data To Report",
+          "section": "Step 2: Data and Years",
+          "value": "Customs Value, First Unit of Quantity, Second Unit of Quantity"
+        },
+        {
+          "parameter": "Data Format",
+          "section": "Step 2: Data and Years",
+          "value": "1"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 2: Data and Years",
+          "value": "Full Years"
+        },
+        {
+          "parameter": "Years",
+          "section": "Step 2: Data and Years",
+          "value": "1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026"
+        },
+        {
+          "parameter": "Timeframe Aggregation",
+          "section": "Step 2: Data and Years",
+          "value": "Year-to-Date"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 3: Countries",
+          "value": "Select Individual Countries"
+        },
+        {
+          "parameter": "Country List",
+          "section": "Step 3: Countries",
+          "value": "Australia, Brazil, Canada, Chile, China, Democratic Republic of the Congo, Estonia, France, Germany, Hong Kong, India, Japan, Malaysia, Myanmar (Burma), Russia, South Africa, South Korea, Vietnam"
+        },
+        {
+          "parameter": "Country Aggregation",
+          "section": "Step 3: Countries",
+          "value": "Break Out Countries"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 4: Commodities",
+          "value": "Select Individual Commodities"
+        },
+        {
+          "parameter": "Commodity List",
+          "section": "Step 4: Commodities",
+          "value": "8103, 8110, 2610, 8001, 2602, 2504, 7502, 7202, 2606, 7901, 2846, 2601, 2609, 8105, 8106, 8505, 2603, 2612, 8112, 2805, 2825, 8101, 2605, 2836, 2611"
+        },
+        {
+          "parameter": "Commodity Aggregation Level",
+          "section": "Step 4: Commodities",
+          "value": "4"
+        },
+        {
+          "parameter": "Commodity Aggregation",
+          "section": "Step 4: Commodities",
+          "value": "Break Out Commodities"
+        },
+        {
+          "parameter": "Description Display",
+          "section": "Step 4: Commodities",
+          "value": "YES"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 5: Programs",
+          "value": "Use All Programs"
+        },
+        {
+          "parameter": "Import Program Aggregation",
+          "section": "Step 5: Programs",
+          "value": "Aggregate CSC"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 6: Rate Provision Codes",
+          "value": "Use All Provision Codes"
+        },
+        {
+          "parameter": "Provision Code Aggregation",
+          "section": "Step 6: Rate Provision Codes",
+          "value": "Aggregate RPCODE"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 7: Districts",
+          "value": "Use All Districts"
+        },
+        {
+          "parameter": "District List",
+          "section": "Step 7: Districts",
+          "value": ""
+        },
+        {
+          "parameter": "District Aggregation",
+          "section": "Step 7: Districts",
+          "value": "Aggregate District"
+        },
+        {
+          "parameter": "Column Order",
+          "section": "Step 8: Report Layout",
+          "value": "COUNTRY, HTS4 & DESCRIPTION"
+        },
+        {
+          "parameter": "Column Sort Order",
+          "section": "Step 8: Report Layout",
+          "value": "Countries"
+        }
+      ],
+      "sha256": "fb453f549a3a9923b474a7b1fc4833b98319eef110e00920d79fb63b558d9b45",
+      "source_row_inventory": {
+        "Customs Value": 398,
+        "Customs Value YTD": 401,
+        "First Unit of Quantity": 398,
+        "First Unit of Quantity YTD": 401,
+        "Second Unit of Quantity": 138,
+        "Second Unit of Quantity YTD": 138
+      }
+    },
+    {
+      "bytes": 551704,
+      "file": "data/raw/us_domestic_exports_1993-2026.xlsx",
+      "flow": "domestic_exports",
+      "normalized_rows": 34476,
+      "query_parameters": [
+        {
+          "parameter": "Download Date",
+          "section": "",
+          "value": "2026-07-10"
+        },
+        {
+          "parameter": "Trade Flow",
+          "section": "Step 1: Trade Flow and Classification System",
+          "value": "Domestic Exports"
+        },
+        {
+          "parameter": "Classification System",
+          "section": "Step 1: Trade Flow and Classification System",
+          "value": "HTS Items"
+        },
+        {
+          "parameter": "Data To Report",
+          "section": "Step 2: Data and Years",
+          "value": "First Unit of Quantity, FAS Value, Second Unit of Quantity"
+        },
+        {
+          "parameter": "Data Format",
+          "section": "Step 2: Data and Years",
+          "value": "1"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 2: Data and Years",
+          "value": "Full Years"
+        },
+        {
+          "parameter": "Years",
+          "section": "Step 2: Data and Years",
+          "value": "1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026"
+        },
+        {
+          "parameter": "Timeframe Aggregation",
+          "section": "Step 2: Data and Years",
+          "value": "Year-to-Date"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 3: Countries",
+          "value": "Select Individual Countries"
+        },
+        {
+          "parameter": "Country List",
+          "section": "Step 3: Countries",
+          "value": "Australia, Brazil, Canada, Chile, China, Democratic Republic of the Congo, Estonia, France, Germany, Hong Kong, India, Japan, Malaysia, Myanmar (Burma), Russia, South Africa, South Korea, Vietnam"
+        },
+        {
+          "parameter": "Country Aggregation",
+          "section": "Step 3: Countries",
+          "value": "Break Out Countries"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 4: Commodities",
+          "value": "Select Individual Commodities"
+        },
+        {
+          "parameter": "Commodity List",
+          "section": "Step 4: Commodities",
+          "value": "8103, 8110, 2610, 8001, 2602, 2504, 7502, 7202, 2606, 7901, 2846, 2601, 2609, 8105, 8106, 8505, 2603, 2612, 8112, 2805, 2825, 8101, 2605, 2836, 2611"
+        },
+        {
+          "parameter": "Commodity Aggregation Level",
+          "section": "Step 4: Commodities",
+          "value": "4"
+        },
+        {
+          "parameter": "Commodity Aggregation",
+          "section": "Step 4: Commodities",
+          "value": "Break Out Commodities"
+        },
+        {
+          "parameter": "Description Display",
+          "section": "Step 4: Commodities",
+          "value": "YES"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 5: Programs",
+          "value": "Use All Programs"
+        },
+        {
+          "parameter": "Import Program Aggregation",
+          "section": "Step 5: Programs",
+          "value": "Aggregate CSC"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 6: Rate Provision Codes",
+          "value": "Use All Provision Codes"
+        },
+        {
+          "parameter": "Provision Code Aggregation",
+          "section": "Step 6: Rate Provision Codes",
+          "value": "Aggregate RPCODE"
+        },
+        {
+          "parameter": "Select Type",
+          "section": "Step 7: Districts",
+          "value": "Use All Districts"
+        },
+        {
+          "parameter": "District List",
+          "section": "Step 7: Districts",
+          "value": ""
+        },
+        {
+          "parameter": "District Aggregation",
+          "section": "Step 7: Districts",
+          "value": "Aggregate District"
+        },
+        {
+          "parameter": "Column Order",
+          "section": "Step 8: Report Layout",
+          "value": "COUNTRY, HTS4 & DESCRIPTION"
+        },
+        {
+          "parameter": "Column Sort Order",
+          "section": "Step 8: Report Layout",
+          "value": "Countries"
+        }
+      ],
+      "sha256": "720ef6d04586002c2d2475a85ab45e0b63ad025ce0dc1a9a0fdf7a3f4f91a2c1",
+      "source_row_inventory": {
+        "FAS Value": 474,
+        "FAS Value YTD": 474,
+        "First Unit of Quantity": 474,
+        "First Unit of Quantity YTD": 474,
+        "Second Unit of Quantity": 33,
+        "Second Unit of Quantity YTD": 33
+      }
+    }
+  ],
+  "value_quantity_join": "Value and first quantity join exactly by partner, HTS4, source description, and normalized source quantity bucket.",
+  "ytd_coverage": [
+    1993,
+    2026
+  ],
+  "ytd_months": "January-April"
+}

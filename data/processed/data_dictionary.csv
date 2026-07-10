@@ -1,0 +1,36 @@
+column,type,description
+reporter,string_or_number,Reporting economy; US for both DataWeb workbooks.
+flow,string_or_number,imports_for_consumption or domestic_exports.
+partner,string_or_number,Country of origin for imports; ultimate destination for exports.
+partner_iso,string_or_number,ISO 3166-1 alpha-3 partner code.
+hts,string_or_number,Four-digit HTS heading as queried.
+hts_desc,string_or_number,Source-reported heading description.
+mineral,string_or_number,Analytical mineral/proxy family.
+processing_stage,string_or_number,"ore, metal, compound, magnet, or alloy."
+year,string_or_number,Calendar year.
+ytd_flag,string_or_number,true for comparable January-April YTD; false for full-year annual.
+value_usd,string_or_number,Customs value for imports or FAS value for domestic exports; blank on Q2-only rows.
+qty1,string_or_number,First unit quantity on the losslessly matched value bucket.
+qty1_unit,string_or_number,Normalized first quantity unit.
+qty2,string_or_number,Independent second-unit quantity row; never duplicated across value buckets.
+qty2_unit,string_or_number,Normalized second quantity unit.
+source,string_or_number,Publishing agency/system.
+retrieved_at,string_or_number,Frozen retrieval date.
+period_label,string_or_number,ETL provenance or measurement-quality field.
+source_quantity_bucket,string_or_number,ETL provenance or measurement-quality field.
+quantity_measure_slot,string_or_number,ETL provenance or measurement-quality field.
+suppression_raw,string_or_number,ETL provenance or measurement-quality field.
+quantity_incomplete,string_or_number,ETL provenance or measurement-quality field.
+data_status,string_or_number,ETL provenance or measurement-quality field.
+missing_data_label,string_or_number,ETL provenance or measurement-quality field.
+value_basis,string_or_number,ETL provenance or measurement-quality field.
+partner_role,string_or_number,ETL provenance or measurement-quality field.
+source_workbook,string_or_number,ETL provenance or measurement-quality field.
+source_sheet,string_or_number,ETL provenance or measurement-quality field.
+source_row_id,string_or_number,ETL provenance or measurement-quality field.
+classification_status,string_or_number,ETL provenance or measurement-quality field.
+break_note_id,string_or_number,ETL provenance or measurement-quality field.
+denominator_scope,string_or_number,ETL provenance or measurement-quality field.
+mass_kg,string_or_number,ETL provenance or measurement-quality field.
+mass_status,string_or_number,ETL provenance or measurement-quality field.
+scope_note,string_or_number,ETL provenance or measurement-quality field.

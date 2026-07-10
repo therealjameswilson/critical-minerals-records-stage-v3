@@ -1,0 +1,227 @@
+[
+  {
+    "hts": "2504",
+    "label": "Natural graphite",
+    "mineral": "natural_graphite",
+    "processing_stage": "ore",
+    "scope_note": "Natural graphite in primary forms.",
+    "file": "data/processed/explorer/2504.json",
+    "bytes": 199660
+  },
+  {
+    "hts": "2601",
+    "label": "Iron ores and concentrates",
+    "mineral": "iron",
+    "processing_stage": "ore",
+    "scope_note": "Ore and concentrate proxy.",
+    "file": "data/processed/explorer/2601.json",
+    "bytes": 162341
+  },
+  {
+    "hts": "2602",
+    "label": "Manganese ores and concentrates",
+    "mineral": "manganese",
+    "processing_stage": "ore",
+    "scope_note": "Ore and concentrate proxy.",
+    "file": "data/processed/explorer/2602.json",
+    "bytes": 142443
+  },
+  {
+    "hts": "2603",
+    "label": "Copper ores and concentrates",
+    "mineral": "copper",
+    "processing_stage": "ore",
+    "scope_note": "Ore and concentrate proxy.",
+    "file": "data/processed/explorer/2603.json",
+    "bytes": 164320
+  },
+  {
+    "hts": "2605",
+    "label": "Cobalt ores and concentrates",
+    "mineral": "cobalt",
+    "processing_stage": "ore",
+    "scope_note": "Ore and concentrate proxy.",
+    "file": "data/processed/explorer/2605.json",
+    "bytes": 143591
+  },
+  {
+    "hts": "2606",
+    "label": "Aluminum ores and concentrates",
+    "mineral": "aluminum",
+    "processing_stage": "ore",
+    "scope_note": "Bauxite and other aluminum ores.",
+    "file": "data/processed/explorer/2606.json",
+    "bytes": 165046
+  },
+  {
+    "hts": "2609",
+    "label": "Tin ores and concentrates",
+    "mineral": "tin",
+    "processing_stage": "ore",
+    "scope_note": "Ore and concentrate proxy.",
+    "file": "data/processed/explorer/2609.json",
+    "bytes": 109879
+  },
+  {
+    "hts": "2610",
+    "label": "Chromium ores and concentrates",
+    "mineral": "chromium",
+    "processing_stage": "ore",
+    "scope_note": "Ore and concentrate proxy.",
+    "file": "data/processed/explorer/2610.json",
+    "bytes": 144535
+  },
+  {
+    "hts": "2611",
+    "label": "Tungsten ores and concentrates",
+    "mineral": "tungsten",
+    "processing_stage": "ore",
+    "scope_note": "Ore and concentrate proxy.",
+    "file": "data/processed/explorer/2611.json",
+    "bytes": 193495
+  },
+  {
+    "hts": "2612",
+    "label": "Uranium or thorium ores",
+    "mineral": "uranium_thorium",
+    "processing_stage": "ore",
+    "scope_note": "Combined uranium and thorium category.",
+    "file": "data/processed/explorer/2612.json",
+    "bytes": 80152
+  },
+  {
+    "hts": "2805",
+    "label": "Rare-earth metals and related metals",
+    "mineral": "rare_earths",
+    "processing_stage": "metal",
+    "scope_note": "Broad HTS4 proxy; also includes alkali metals and mercury.",
+    "file": "data/processed/explorer/2805.json",
+    "bytes": 219439
+  },
+  {
+    "hts": "2825",
+    "label": "Selected metal oxides and hydroxides",
+    "mineral": "mixed_metal_oxides",
+    "processing_stage": "compound",
+    "scope_note": "Broad mixed chemical category.",
+    "file": "data/processed/explorer/2825.json",
+    "bytes": 229978
+  },
+  {
+    "hts": "2836",
+    "label": "Carbonates and peroxocarbonates",
+    "mineral": "mixed_carbonates",
+    "processing_stage": "compound",
+    "scope_note": "Broad mixed chemical category.",
+    "file": "data/processed/explorer/2836.json",
+    "bytes": 242482
+  },
+  {
+    "hts": "2846",
+    "label": "Rare-earth compounds",
+    "mineral": "rare_earths",
+    "processing_stage": "compound",
+    "scope_note": "Compounds of rare-earth metals, yttrium, or scandium.",
+    "file": "data/processed/explorer/2846.json",
+    "bytes": 203768
+  },
+  {
+    "hts": "7202",
+    "label": "Ferroalloys",
+    "mineral": "ferroalloys",
+    "processing_stage": "alloy",
+    "scope_note": "Broad mixed alloy category.",
+    "file": "data/processed/explorer/7202.json",
+    "bytes": 217879
+  },
+  {
+    "hts": "7502",
+    "label": "Nickel, unwrought",
+    "mineral": "nickel",
+    "processing_stage": "metal",
+    "scope_note": "Unwrought nickel.",
+    "file": "data/processed/explorer/7502.json",
+    "bytes": 217297
+  },
+  {
+    "hts": "7901",
+    "label": "Zinc, unwrought",
+    "mineral": "zinc",
+    "processing_stage": "metal",
+    "scope_note": "Unwrought zinc.",
+    "file": "data/processed/explorer/7901.json",
+    "bytes": 193872
+  },
+  {
+    "hts": "8001",
+    "label": "Tin, unwrought",
+    "mineral": "tin",
+    "processing_stage": "metal",
+    "scope_note": "Unwrought tin.",
+    "file": "data/processed/explorer/8001.json",
+    "bytes": 220686
+  },
+  {
+    "hts": "8101",
+    "label": "Tungsten and articles",
+    "mineral": "tungsten",
+    "processing_stage": "metal",
+    "scope_note": "Tungsten plus downstream articles.",
+    "file": "data/processed/explorer/8101.json",
+    "bytes": 218710
+  },
+  {
+    "hts": "8103",
+    "label": "Tantalum and articles",
+    "mineral": "tantalum",
+    "processing_stage": "metal",
+    "scope_note": "Tantalum plus downstream articles.",
+    "file": "data/processed/explorer/8103.json",
+    "bytes": 202807
+  },
+  {
+    "hts": "8105",
+    "label": "Cobalt products and articles",
+    "mineral": "cobalt",
+    "processing_stage": "metal",
+    "scope_note": "Cobalt mattes and other products/articles.",
+    "file": "data/processed/explorer/8105.json",
+    "bytes": 219454
+  },
+  {
+    "hts": "8106",
+    "label": "Bismuth and articles",
+    "mineral": "bismuth",
+    "processing_stage": "metal",
+    "scope_note": "Bismuth plus downstream articles.",
+    "file": "data/processed/explorer/8106.json",
+    "bytes": 169244
+  },
+  {
+    "hts": "8110",
+    "label": "Antimony and articles",
+    "mineral": "antimony",
+    "processing_stage": "metal",
+    "scope_note": "Antimony plus downstream articles.",
+    "file": "data/processed/explorer/8110.json",
+    "bytes": 188342
+  },
+  {
+    "hts": "8112",
+    "label": "Selected minor metals and articles",
+    "mineral": "minor_metals",
+    "processing_stage": "metal",
+    "scope_note": "Broad mixed minor-metals category.",
+    "file": "data/processed/explorer/8112.json",
+    "bytes": 228685
+  },
+  {
+    "hts": "8505",
+    "label": "Magnets, electromagnets, and parts",
+    "mineral": "rare_earths",
+    "processing_stage": "magnet",
+    "scope_note": "Broad magnet proxy; includes non-rare-earth and non-permanent-magnet products.",
+    "file": "data/processed/explorer/8505.json",
+    "bytes": 220982
+  }
+]

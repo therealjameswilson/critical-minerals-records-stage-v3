@@ -1,207 +1,112 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Evidence, provenance, comparability, and gap rules for the V3 U.S.–PRC critical-minerals statistical platform.">
-  <meta name="theme-color" content="#17354d">
+  <meta name="description" content="Methodology and provenance for the US–PRC Critical Minerals Record, 1993–2026.">
+  <link rel="icon" href="data:,">
   <link rel="canonical" href="https://therealjameswilson.github.io/critical-minerals-records-stage-v3/methodology.html">
-  <title>Methodology · U.S. and PRC Access to Critical Minerals, 1993–2026</title>
-  <link rel="stylesheet" href="assets/v3.css?v=3.0.0">
-  <style>
-    .methodology-hero { padding: 78px max(20px, calc((100vw - var(--max)) / 2)) 62px; border-bottom: 1px solid var(--line); background: var(--paper-strong); }
-    .methodology-hero .eyebrow { margin-bottom: 14px; }
-    .methodology-hero h1 { max-width: 980px; margin-bottom: 22px; font-size: clamp(3rem, 6vw, 5.5rem); }
-    .methodology-hero .hero-deck { max-width: 900px; }
-    .methodology-layout { display: grid; grid-template-columns: 250px minmax(0, 760px); justify-content: center; gap: 72px; padding: 74px 0 100px; }
-    .methodology-toc { position: sticky; top: 124px; align-self: start; padding: 20px; border: 1px solid var(--line); background: var(--paper-strong); }
-    .methodology-toc strong { display: block; margin-bottom: 10px; color: var(--ink-deep); font-family: var(--serif); }
-    .methodology-toc a { display: block; padding: 7px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); font-size: .75rem; font-weight: 750; text-decoration: none; }
-    .methodology-toc a:last-child { border-bottom: 0; }
-    .methodology-article section { margin-bottom: 64px; scroll-margin-top: 126px; }
-    .methodology-article h2 { margin-bottom: 20px; font-size: clamp(2rem, 4vw, 3.1rem); }
-    .methodology-article h3 { margin-top: 30px; }
-    .methodology-article p, .methodology-article li { color: var(--ink-soft); }
-    .methodology-article li { margin-bottom: 8px; }
-    .rule-box { margin: 24px 0; padding: 22px 24px; border-left: 5px solid var(--gold); background: var(--paper-muted); }
-    .rule-box strong { color: var(--ink-deep); }
-    .role-table { margin: 26px 0; border: 1px solid var(--line); background: var(--paper-strong); }
-    code { padding: 2px 5px; border-radius: 2px; background: var(--paper-muted); color: var(--ink-deep); font-family: var(--mono); font-size: .85em; }
-    .methodology-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-    @media (max-width: 840px) { .methodology-layout { grid-template-columns: 1fr; gap: 36px; } .methodology-toc { position: static; } }
-  </style>
+  <link rel="stylesheet" href="assets/v3.css?v=3.1.0">
+  <title>Methodology · US–PRC Critical Minerals Record</title>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#main">Skip to methodology</a>
   <header class="site-header">
-    <div class="header-main">
-      <a class="brand" href="records-stage.html" aria-label="Return to Critical Minerals V3">
-        <span class="brand-mark" aria-hidden="true">V3</span>
-        <span><small>Statistical operating picture</small><strong>Critical Minerals, 1993–2026</strong></span>
-      </a>
-      <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation">
-        <a href="records-stage.html#explorer">Explorer</a>
-        <a href="records-stage.html#coverage">Coverage</a>
-        <a href="records-stage.html#sources">Sources</a>
-        <a href="records-stage.html">Main site</a>
-      </nav>
-      <div class="header-actions">
-        <button class="header-button nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">☰</span><span class="visually-hidden">Menu</span></button>
-        <button class="header-button" id="themeToggle" type="button" aria-pressed="false"><span aria-hidden="true">◐</span><span class="visually-hidden">Toggle color theme</span></button>
-      </div>
+    <div class="masthead wrap">
+      <a class="brand" href="./"><span class="brand-kicker">Strategic Resources</span><span class="brand-title">US–PRC Critical Minerals Record</span></a>
+      <nav aria-label="Methodology navigation"><a href="./#disparity">Disparity</a><a href="./#sources">New sources</a><a href="./#explorer">Explorer</a><a href="./#method">Provenance</a></nav>
     </div>
-    <p class="status-line">Methodology · Official U.S. Government statistics only · Independent public research demonstrator</p>
+    <div class="status-strip"><div class="wrap status-inner"><span><span class="status-dot" aria-hidden="true"></span> Methodology note</span><span>Revision 3.1.0</span><span>Source vintage: 10 July 2026</span></div></div>
   </header>
 
-  <main id="main-content">
-    <header class="methodology-hero">
-      <p class="eyebrow">Evidence and comparison rules</p>
-      <h1>Methodology for a statistics-only V3</h1>
-      <p class="hero-deck">V3 treats access as a set of source-defined indicator lanes. It preserves where a statistic was measured, who reported it, what period and unit it covers, and what it cannot prove.</p>
-      <div class="methodology-links">
-        <a class="button-link" href="records-stage.html#explorer">Return to the explorer</a>
-        <a class="button-link secondary" href="docs/data-contract.md">Read the data contract</a>
+  <main id="main">
+    <section class="hero">
+      <div class="wrap" style="padding:5rem 0 4rem;max-width:980px;margin-inline:auto">
+        <p class="eyebrow">Method &amp; provenance</p>
+        <h1>How the statistical record is built</h1>
+        <p class="hero-deck">The analytical boundary is simple: no claim outruns its reporter, product scope, denominator, period, or source vintage.</p>
       </div>
-    </header>
+    </section>
 
-    <div class="methodology-layout section">
-      <nav class="methodology-toc" aria-label="Methodology contents">
-        <strong>On this page</strong>
-        <a href="#scope">1. Scope and break from V2</a>
-        <a href="#source">2. Current source layer</a>
-        <a href="#period">3. Time and revision</a>
-        <a href="#geography">4. Geography roles</a>
-        <a href="#products">5. Product categories</a>
-        <a href="#measurement">6. Values and gaps</a>
-        <a href="#comparison">7. Comparison permission</a>
-        <a href="#derivation">8. Derived indicators</a>
-        <a href="#verification">9. Reproducibility</a>
-      </nav>
+    <section class="record-section">
+      <div class="wrap" style="max-width:980px">
+        <div class="section-heading"><p class="section-number">01 · Evidentiary model</p><h2>Statistics first; FRUS de-emphasized</h2></div>
+        <article class="chart-card">
+          <p>V3 covers 1993–2026 and does not use FRUS as evidence. Its U.S. layer comes from frozen USITC DataWeb workbooks. Its China sourcing layer comes from frozen China-reporter UN Comtrade API responses.</p>
+          <p>Trade statistics are treated as access signals. They do not directly measure reserves, mine ownership, beneficial ownership, processing capacity, control of third-country assets, or policy intent.</p>
+        </article>
+      </div>
+    </section>
 
-      <article class="methodology-article">
-        <section id="scope">
-          <p class="eyebrow">01 · Scope</p>
-          <h2>1993–2026 is a new evidence regime</h2>
-          <p>V2 is a FRUS-led historical portal covering 1861–1992. V3 begins in 1993 and does not use FRUS documents, diplomatic narrative, archive leads, or model-generated prose as evidence. The only live claims in V3 come from official U.S. Government statistical source files retained by the project.</p>
-          <div class="rule-box"><strong>Core rule:</strong> if the source does not support a value or relationship, the interface shows a gap. It does not generate a placeholder statistic.</div>
-          <p>The words “U.S. access” and “PRC access” therefore label a framework, not a precomputed score. Trade, mine production, processing capacity, reserves, recycling, consumption, and stockpiles remain distinct.</p>
-        </section>
+    <section class="record-section tint-section">
+      <div class="wrap" style="max-width:980px">
+        <div class="section-heading"><p class="section-number">02 · USITC DataWeb</p><h2>The U.S. reporter view</h2><p>Two workbooks, three measures per period, and one deliberately narrow denominator.</p></div>
+        <div class="method-grid">
+          <article><span class="method-tag">Imports</span><h3>Country of origin</h3><p>Imports for consumption use customs value. Origin is not assumed to be mine origin or ownership.</p></article>
+          <article><span class="method-tag">Exports</span><h3>Ultimate destination</h3><p>Domestic exports use FAS value. Exports to China are never substituted for China’s total imports.</p></article>
+          <article><span class="method-tag">Scope</span><h3>18 selected partners</h3><p>The source has no World row. U.S. China shares use China divided by the selected-partner sum.</p></article>
+          <article><span class="method-tag">Products</span><h3>25 HTS4 headings</h3><p>Four-digit categories are traded-product proxies; several are chemically or technologically broad.</p></article>
+        </div>
+        <article class="chart-card" style="margin-top:1.5rem">
+          <h3>Period treatment</h3>
+          <p>Full-year data end in 2025. Every 2026 cell on the annual sheets is a structural zero while the YTD sheets contain January–April trade. The ETL replaces annual 2026 with an explicit unavailable state and publishes January–April as a separate comparable 1993–2026 series.</p>
+          <h3>Quantity treatment</h3>
+          <p>Value and first quantity join exactly by flow, period, partner, heading, description, and normalized source quantity bucket. Second quantities do not expose a lossless key to a first-unit value bucket at HTS4. They remain independent rows; they are never copied across value buckets.</p>
+          <p>Numeric DataWeb suppression indicators are preserved as counts. A positive count marks quantity incomplete and prevents average-unit-value calculation for that bucket.</p>
+        </article>
+      </div>
+    </section>
 
-        <section id="source">
-          <p class="eyebrow">02 · Current source layer</p>
-          <h2>USITC DataWeb release 01</h2>
-          <p>The first release freezes two workbooks exported from USITC DataWeb on July 10, 2026. DataWeb republishes official U.S. merchandise-trade statistics originating with the Census Bureau.</p>
-          <ul>
-            <li><strong>Imports:</strong> imports for consumption, customs-value basis, reported country of origin.</li>
-            <li><strong>Exports:</strong> domestic exports, F.A.S.-value basis, reported destination.</li>
-            <li><strong>Query scope:</strong> 18 selected partners and 25 four-digit HTS traded-product categories.</li>
-            <li><strong>Years:</strong> 1993 through 2026, with both mixed annual/current-YTD and matched January–April tables.</li>
-          </ul>
-          <p>The workbooks are committed unchanged. Their query-parameter worksheets, byte sizes, access dates, and SHA-256 hashes are retained in the public source register.</p>
-        </section>
+    <section class="record-section">
+      <div class="wrap" style="max-width:980px">
+        <div class="section-heading"><p class="section-number">03 · UN Comtrade</p><h2>The China reporter view</h2><p>All reported origins for annual China imports of HS 2846, 1993–2024.</p></div>
+        <article class="chart-card">
+          <p>The downloader makes one public-preview request per year for China-reporter imports of rare-earth compounds, with the primary partner interpreted as origin. Each raw JSON response is frozen byte-for-byte with its request URL, retrieval timestamp, classification code, publication metadata, and SHA-256 digest.</p>
+          <p>Acquisition fails if the API reports an error, omits the requested period, returns 500 rows, or does not reconcile the sum of non-World partner values to the World record. All 32 years reconcile exactly in this vintage.</p>
+          <p>China has no comparable annual 2025–2026 record in the frozen Comtrade series. The site does not interpolate those years. It marks HS revision bands and the change from China’s Special to General trade system in 2000.</p>
+          <p>The defensible finding is that new origins became major reported sources. Trade values alone do not prove that the PRC cultivated those sources through state action or investment.</p>
+        </article>
+      </div>
+    </section>
 
-        <section id="period">
-          <p class="eyebrow">03 · Time</p>
-          <h2>Partial periods do not masquerade as full years</h2>
-          <p>DataWeb supplies a main value sheet with full annual values through 2025 and January–April 2026, plus a year-to-date sheet containing January–April for every year. The explorer defaults to the latter.</p>
-          <div class="rule-box"><strong>Chart break:</strong> in the mixed view, V3 breaks the line before 2026 and labels the year as January–April YTD. It does not connect a full 2025 directly to a partial 2026 as one continuous annual series.</div>
-          <p>Future sources must preserve observation year separately from edition or publication year. A “2026” publication may report 2025 production; V3 will not infer a 2026 observation from the cover date. Revisions create a new source vintage instead of overwriting the earlier file.</p>
-        </section>
+    <section class="record-section tint-section">
+      <div class="wrap" style="max-width:980px">
+        <div class="section-heading"><p class="section-number">04 · Proxy boundaries</p><h2>Rare earths are not one clean tariff line</h2></div>
+        <div class="method-grid" style="grid-template-columns:repeat(3,1fr)">
+          <article><span class="method-tag">HTS 2846</span><h3>Rare-earth compounds</h3><p>The cleanest four-digit heading used in this build; also covers yttrium and scandium compounds.</p></article>
+          <article><span class="method-tag">HTS 2805</span><h3>Broad metals heading</h3><p>Includes products beyond rare-earth metals, so it is a proxy rather than a chemically pure series.</p></article>
+          <article><span class="method-tag">HTS 8505</span><h3>Broad magnet heading</h3><p>Includes non-rare-earth magnets, electromagnets, holding devices, couplings, brakes, and parts.</p></article>
+        </div>
+        <article class="chart-card" style="margin-top:1.5rem">
+          <p>General HS revision years—1996, 2002, 2007, 2012, 2017, and 2022—are shown as continuity-review checkpoints, not assumed product breaks. HTS 8505 has a source-evident quantity-regime break in 2019, when value shifts sharply from “no units collected” into kilogram-denominated buckets.</p>
+        </article>
+      </div>
+    </section>
 
-        <section id="geography">
-          <p class="eyebrow">04 · Geography</p>
-          <h2>Every country appears in a statistical role</h2>
-          <p>A country name alone is insufficient. V3 records whether a geography is the reporter, importer, exporter, reported origin, destination, production location, reserve location, processing location, asset location, or owner/controller.</p>
-          <div class="table-scroll role-table">
-            <table>
-              <thead><tr><th>Loaded series</th><th>Reporter / focal role</th><th>Partner role</th><th>Not established</th></tr></thead>
-              <tbody>
-                <tr><th>U.S. imports from China</th><td>United States · importer and reporting economy</td><td>China · reported country of origin</td><td>Mine origin, processing, ownership, route, end use</td></tr>
-                <tr><th>U.S. domestic exports to China</th><td>United States · exporter and reporting economy</td><td>China · reported destination</td><td>PRC total imports, third-country supply, ownership, control</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p>China and Hong Kong remain separate source-reported statistical/customs areas. Macao and Taiwan would also remain separate if later sources include them. A combined geography would require a visible project derivation with dated membership.</p>
-        </section>
-
-        <section id="products">
-          <p class="eyebrow">05 · Product scope</p>
-          <h2>HTS4 is a trade category, not a mine</h2>
-          <p>The selected four-digit headings include named ores and materials, broad chemical baskets, mixed metal groups, and manufactured products. V3 labels these scopes in the selector. For example, HTS 2846 is a named rare-earth-compound category, while HTS 8112 combines several minor metals and HTS 8505 includes permanent magnets, electromagnets, and parts.</p>
-          <p>A product code cannot by itself establish the source deposit, mineral content, owner, processing path, final use, or strategic importance. Classification changes and mapping breaks will create separate series segments rather than being smoothed away.</p>
-        </section>
-
-        <section id="measurement">
-          <p class="eyebrow">06 · Measurement</p>
-          <h2>Zero, blank, suppressed, and absent are different</h2>
-          <p>The normalizer retains literal zero values and suppression flags. A missing cell stays null. A partner/category combination absent from the export is shown as “not reported in export,” not zero.</p>
-          <p>Value sheets may divide one HTS4 category into several rows because the underlying products use different quantity descriptions. V3 sums the dollar values within the same flow, partner, HTS4 category, and period. It does not sum physical quantities across incompatible units.</p>
-          <ul>
-            <li>Imports keep the source's customs-value basis.</li>
-            <li>Domestic exports keep the source's F.A.S.-value basis.</li>
-            <li>Both are nominal dollars; V3 does not present them as constant-dollar trends.</li>
-          </ul>
-        </section>
-
-        <section id="comparison">
-          <p class="eyebrow">07 · Comparison</p>
-          <h2>Only like measures share a chart</h2>
-          <p>A full U.S.–PRC comparison will require multiple source families. Before two observations can be overlaid or used in arithmetic, they must share a declared comparison group covering the same metric, material form and scope, supply-chain stage, period, frequency, quantity or valuation basis, normalized unit, and geography role.</p>
-          <h3>Prohibited examples</h3>
-          <ul>
-            <li>China mine production versus U.S. import value.</li>
-            <li>Gross product weight versus rare-earth-oxide-equivalent content.</li>
-            <li>Reserves versus resources.</li>
-            <li>Annual values versus unmatched year-to-date values.</li>
-            <li>Country of origin versus ownership or control.</li>
-            <li>Imports for consumption versus general imports without a method note.</li>
-          </ul>
-        </section>
-
-        <section id="derivation">
-          <p class="eyebrow">08 · Derivation</p>
-          <h2>Calculated values must be reproducible</h2>
-          <p>Future shares, concentration measures, or ratios will be marked as project-derived. They must expose the formula, version, source observation IDs, missing-value rule, denominator rule, and rounding rule. Missing inputs propagate null.</p>
-          <div class="rule-box"><strong>Prohibited output:</strong> V3 does not calculate an “access score,” “strategic advantage score,” or weighted “who is winning” index that blends unlike statistical lanes.</div>
-        </section>
-
-        <section id="verification">
-          <p class="eyebrow">09 · Verification</p>
-          <h2>The public build is reproducible from frozen files</h2>
-          <p>The repository's ingestion script reads the value sheets, validates the exact 1993–2026 query period and trade-flow labels, normalizes compact browser series, and writes the dataset registry. The validator then checks:</p>
-          <ul>
-            <li>year boundaries, periods, geography roles, value bases, and array lengths;</li>
-            <li>distinct China and Hong Kong identities;</li>
-            <li>source-file presence and SHA-256 hashes;</li>
-            <li>source-manifest and normalized-series counts;</li>
-            <li>visible public caveats and comparison status;</li>
-            <li>absence of V2 FRUS-era data artifacts.</li>
-          </ul>
-          <p>Continuous integration rebuilds the JSON and fails if it differs from the committed output.</p>
-          <div class="methodology-links">
-            <a class="button-link" href="records-stage.html#sources">Inspect source files</a>
-            <a class="button-link secondary" href="https://github.com/therealjameswilson/critical-minerals-records-stage-v3">View the repository</a>
-          </div>
-        </section>
-      </article>
-    </div>
+    <section class="record-section">
+      <div class="wrap" style="max-width:980px">
+        <div class="section-heading"><p class="section-number">05 · Reproduction</p><h2>Frozen inputs, deterministic outputs</h2></div>
+        <article class="chart-card">
+          <pre style="overflow:auto"><code>python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
+python scripts/build_trade_data.py
+python scripts/validate_data.py
+python -m pytest -q</code></pre>
+          <p>Validation independently recomputes China shares and supplier HHI, checks audited headline values, enforces annual/YTD separation, verifies quantity-slot and suppression rules, validates every Comtrade digest and World reconciliation, and keeps browser payloads within their size budgets.</p>
+        </article>
+        <div class="source-links">
+          <a href="README.md">Reproduction guide</a>
+          <a href="docs/data-contract.md">Data contract</a>
+          <a href="data/processed/query_manifest.json">Query manifest</a>
+          <a href="data/raw/un_comtrade_china/2846/manifest.json">Comtrade manifest</a>
+          <a href="data/processed/data_dictionary.csv">Data dictionary</a>
+          <a href="./#method">Public provenance panel</a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer">
-    <div><strong>V3 statistical methodology</strong><p>Independent public research demonstrator · Not an official U.S. Government product</p></div>
-    <nav aria-label="Footer navigation"><a href="records-stage.html">Main site</a><a href="docs/methodology.md">Markdown method</a><a href="schemas/observation.schema.json">Observation schema</a></nav>
-  </footer>
-
-  <script>
-    const root = document.documentElement;
-    const toggle = document.getElementById('themeToggle');
-    const navToggle = document.getElementById('navToggle');
-    const nav = document.getElementById('primaryNav');
-    const saved = localStorage.getItem('critical-minerals-v3-theme');
-    root.dataset.theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    toggle.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));
-    toggle.addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('critical-minerals-v3-theme', root.dataset.theme); toggle.setAttribute('aria-pressed', String(root.dataset.theme === 'dark')); });
-    navToggle.addEventListener('click', () => { const open = nav.classList.toggle('is-open'); navToggle.setAttribute('aria-expanded', String(open)); });
-  </script>
+  <footer class="site-footer"><div class="wrap footer-grid"><div><p class="brand-kicker">Strategic Resources</p><p>Methodology revision 3.1.0.</p></div><p>Use the frozen source vintage and repository commit when citing a result.</p><p><a href="./">Return to the records stage</a></p></div></footer>
 </body>
 </html>

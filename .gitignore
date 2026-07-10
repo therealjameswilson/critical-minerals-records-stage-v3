@@ -8,5 +8,3 @@ __pycache__/
 *.swp
 .env
 .env.*
-!data/source-files/*.xlsx
-!data/v3/*.json

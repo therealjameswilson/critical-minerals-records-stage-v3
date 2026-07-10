@@ -1,97 +1,85 @@
 # V3 statistical data contract
 
-V3 is observation-first. “Access” is a dashboard of separately sourced
-indicators, not a single score and not a synonym for production location.
+The canonical public table is `data/processed/trade_long.csv`. It is source-bucket long rather than one-row-per-mineral total, because USITC quantity units are not freely additive.
 
-The compact `dataweb-series.json` file is a public build artifact optimized for
-the browser. Future ingesters should first produce normalized observation rows
-using the contract below, then generate browser series only after comparability
-checks pass.
+## Required fields
 
-## Geography roles
+The CSV begins with the requested contract, in this order:
 
-Every observation names geography by role rather than using an ambiguous
-`country_id`:
+| Field | Meaning |
+|---|---|
+| `reporter` | `US` for both DataWeb workbooks |
+| `flow` | `imports_for_consumption` or `domestic_exports` |
+| `partner` / `partner_iso` | Country of origin for imports; ultimate destination for exports |
+| `hts` / `hts_desc` | Four-digit HTS heading and source description |
+| `mineral` | Analytical proxy family |
+| `processing_stage` | `ore`, `metal`, `compound`, `magnet`, or `alloy` |
+| `year` | 1993–2026 |
+| `ytd_flag` | `false` for full-year annual; `true` for January–April YTD |
+| `value_usd` | Customs value or FAS value; blank on independent Q2 rows |
+| `qty1` / `qty1_unit` | First quantity in its losslessly matched source bucket |
+| `qty2` / `qty2_unit` | Independent second-quantity measure row |
+| `source` / `retrieved_at` | DataWeb and the frozen retrieval vintage |
 
-- `focal_geography_id` and `focal_role`
-- `reporting_area_id`
-- `partner_geography_id` and `partner_role`
-- `mine_origin_geography_id`
-- `processing_geography_id`
-- `asset_location_geography_id`
-- `owner_controller_geography_id`
+`data/processed/data_dictionary.csv` describes all appended provenance, quality, and break fields.
 
-Fields unsupported by the source remain null. A production-location statistic
-does not establish ownership. A country-of-origin trade statistic does not
-establish mine origin. A destination statistic does not establish total imports.
+## Quantity slots
 
-USITC DataWeb mappings used in the first release:
+Value and first quantity have an exact source join:
 
-- U.S. imports from China: focal `usa` as importer; reporting area `usa`;
-  partner `chn` as country of origin. Mine origin, processing location, and
-  ownership are null.
-- U.S. exports to China: focal `usa` as reporting exporter; partner `chn` as
-  reported destination. The result is never labeled “PRC total imports.”
-- China, Hong Kong, Macao, and Taiwan are never silently combined.
+```text
+(flow, period, partner, hts4, description, normalized first-unit bucket)
+```
+
+Second quantities have only:
+
+```text
+(flow, period, partner, hts4, description, normalized second unit)
+```
+
+At HTS4, the second row does not identify which first-unit/value bucket it belongs to. V3 therefore emits Q2 as `quantity_measure_slot=second` with `value_usd` and `qty1` blank. It never duplicates Q2 across first-unit rows.
+
+Compatible first- and second-slot kilograms can be summed for a carefully labeled “reported mass coverage” chart. They are not represented as complete physical tonnage. Component-content units are not treated as product mass.
 
 ## Measurement states
 
-Allowed measurement states are:
+- `reported`: positive source number
+- `reported_zero`: literal source zero
+- `source_blank`: empty source cell
+- `not_available`: annual 2026 structural placeholder converted to a labeled gap
 
-- `reported`
-- `reported-zero`
-- `less-than`
-- `greater-than`
-- `range`
-- `suppressed`
-- `not-available`
-- `not-published`
-- `not-applicable`
-- `source-blank`
+Numeric quantity suppression fields are preserved as `suppression_raw`. Any positive count sets `quantity_incomplete=true`. Suppressed quantity remains visible as a quality state but is excluded from unit-value calculations.
 
-Suppressed or missing values have no numeric value. A literal zero in the
-source is `reported-zero`, not missing. Bounds preserve the reported inequality.
-Physical quantities require a `quantity_basis`; currency observations require
-the currency, price basis, and valuation basis.
+## Time basis
 
-## Comparability
+Annual and YTD observations are separate rows:
 
-No arithmetic or chart overlay is allowed unless observations belong to a
-declared comparison group. Members must agree on:
+- annual: 1993–2025;
+- January–April YTD: 1993–2026.
 
-- metric and material scope;
-- material form and supply-chain stage;
-- period and frequency;
-- quantity basis or valuation basis;
-- normalized unit;
-- geographic role;
-- classification system or reviewed crosswalk.
+The source’s annual 2026 cells are zero placeholders, not full-year observations. V3 publishes them as `not_available` with blank numeric measures.
 
-Examples of prohibited comparisons include China mine production versus U.S.
-import value, gross-weight trade versus rare-earth-oxide-equivalent production,
-reserves versus resources, and annual versus year-to-date values.
+## Geographic scope
 
-## Source artifacts
+The workbooks contain 18 selected partners and no World row. U.S. share calculations use:
 
-Every downloaded file or API response receives a frozen source-artifact record
-with agency, title, edition/version, publication and vintage dates, landing and
-download URLs, retrieval timestamp, media type, byte size, SHA-256, and an exact
-source locator. A later revision creates a new artifact and vintage; it does not
-overwrite the earlier source.
+```text
+China / sum(the 18 selected origins)
+```
+
+Every derived U.S. share carries `denominator_scope=selected_18_partners`. China and Hong Kong remain separate. U.S. domestic exports to China are never recast as China’s total imports or total resource access.
+
+## Classification and product scope
+
+HTS4 categories are traded-product proxies, not deposits or ownership. HTS 2805 and 8505 are broad; 2846 is the cleanest rare-earth-compounds heading used here.
+
+General HS revision years—1996, 2002, 2007, 2012, 2017, and 2022—are flagged as continuity-review boundaries rather than assumed breaks. The observed 8505 shift from “no units collected” to kilogram-denominated buckets is marked at 2019 as a measurement-regime break.
 
 ## Derivations
 
-Project-derived observations identify their formula, version, input observation
-IDs, missing-value rule, zero-denominator rule, and rounding rule. Missing
-inputs propagate null. Composite “access,” “advantage,” or “who is winning”
-scores are prohibited.
+- China share: China value divided by selected-partner value sum.
+- Supplier count: selected non-China partners with value greater than zero.
+- HHI: sum of squared value shares among those positive non-China suppliers.
+- Unit value: value divided by a positive, strictly matched, unsuppressed first quantity, grouped by its retained unit basis.
 
-## Coverage
-
-Coverage status distinguishes source absence from unfinished project work:
-
-`available`, `published-null`, `suppressed`, `not-published`, `outside-series`,
-`not-yet-acquired`, `not-applicable`, and `unknown`.
-
-The public interface must show the role, unit, scope, status, period, and source
-for each displayed statistic.
+Missing denominators return null. Unlike units are not combined. Derived outputs preserve period, scope, and status.

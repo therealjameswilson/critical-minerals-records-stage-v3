@@ -16,12 +16,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           cache: pip
       - run: python -m pip install --upgrade pip && pip install -r requirements.txt
       - run: python -m compileall -q scripts tests
-      - run: python scripts/ingest_dataweb_exports.py
-      - run: git diff --exit-code -- data/v3
-      - run: python scripts/validate_v3_data.py
+      - run: python scripts/build_trade_data.py
+      - run: git diff --exit-code -- data/processed
+      - run: python scripts/validate_data.py
       - run: python -m pytest tests -q
       - run: node --check assets/v3.js

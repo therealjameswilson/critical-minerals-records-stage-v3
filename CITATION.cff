@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use this research demonstrator, cite the repository and the underlying U.S. Government datasets shown in the source register."
-title: "U.S. and PRC Access to Critical Minerals, 1993-2026"
+message: "If you use this statistical record, cite the repository and the frozen USITC DataWeb and UN Comtrade source vintages."
+title: "US-PRC Critical Minerals Record, 1993-2026"
 type: software
 authors:
   - family-names: Wilson
@@ -8,5 +8,5 @@ authors:
 year: 2026
 license: MIT
 repository-code: "https://github.com/therealjameswilson/critical-minerals-records-stage-v3"
-url: "https://therealjameswilson.github.io/critical-minerals-records-stage-v3/records-stage.html"
-version: 3.0.0
+url: "https://therealjameswilson.github.io/critical-minerals-records-stage-v3/"
+version: 3.1.0
