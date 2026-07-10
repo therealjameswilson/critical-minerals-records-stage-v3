@@ -1,283 +1,80 @@
-# The United States and Strategic Resources, 1861–1992
+# U.S. and PRC Access to Critical Minerals, 1993–2026
 
-A static, FRUS-led historical decision-support and orientation platform for
-understanding how the United States sought access to critical minerals and
-strategic resources. It is designed for Department of State employees, Foreign
-Service Officers, historians, policy researchers, and students.
+V3 is a public, statistics-only research demonstrator for comparing separately
+defined indicators of U.S. and People's Republic of China access to rare-earth
+elements, critical minerals, and strategic resources from 1993 through 2026.
 
 **Live site:**
-[therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html](https://therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html)
+[therealjameswilson.github.io/critical-minerals-records-stage-v3/records-stage.html](https://therealjameswilson.github.io/critical-minerals-records-stage-v3/records-stage.html)
 
-> **Statutory standard:** FRUS is to be “a thorough, accurate, and reliable
-> documentary record.” See [22 U.S.C. § 4351(a)](https://uscode.house.gov/view.xhtml?req=%28title%3A22%20section%3A4351%20edition%3Aprelim%29).
+## What makes V3 different
 
-The main historical experience is hard-bounded to 1861–1992. Post-1992 material
-appears only in a separately labeled Modern Context layer.
+The [V2 site](https://therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html)
+is a FRUS-led history of U.S. strategic-resource access from 1861 through 1992.
+V3 starts in 1993 and does not use FRUS or narrative records as evidence. Every
+displayed value must come from a frozen U.S. Government statistical source,
+retain its unit and period, and expose a source locator and caveat.
 
-## What v2 Provides
+V3 does not produce a composite “access score.” Mine production, reserves,
+processing, trade, import reliance, recycling, and stockpiles describe different
+parts of access and remain separate indicator lanes.
 
-- A historical homepage organized by atlas, mineral, country, period, episode,
-  agreement, law, archive, stockpile case, and FRUS record.
-- Reusable History Stack pages that connect an entity to twelve layers: FRUS,
-  timeline, official statistics, agreements, geography, law, stockpiles,
-  archives, decision process, outcomes, provenance, and Modern Context.
-- A complete metadata-only FRUS Subjects discovery index for 1861–1992:
-  16,811 document links across 545 volumes.
-- A pilot with 10 minerals, including uranium and rare earth elements; 9
-  countries or territories; 8 periods; 15 typed agreements or policy
-  instruments; 3 laws; 5 administrations; 32 linked FRUS records; and 30 NARA
-  query plans.
-- 1,222 unit-defined historical observations extracted from official USGS Data
-  Series 140 workbooks without project interpolation.
-- 1,476 source-defined long-run trade records covering every selectable year,
-  plus 294 contemporaneous rare-earth category rows for 1970-1990 and 3,669
-  USITC DataWeb partner-product rows for 1989-1992.
-- A Historical Geostrategic Atlas with a 1861–1992 year control, historical
-  names, documentary access lines, agreements, stockpile policy, NARA query
-  plans, an optional cited DataWeb import-value layer for 1989-1992,
-  synchronized evidence panels, and an accessible table alternative.
-- A visible atlas layer registry that keeps bilateral trade-flow, production,
-  supplier-share, infrastructure, alliance, boundary, and risk map views locked
-  until compatible official data and citations exist.
-- A source-visible NARA discovery layer that can use a secret-bearing serverless
-  proxy without exposing the API key to GitHub Pages.
+## First public data release
 
-This is a public research demonstrator, not an official Department of State or
-U.S. Government product.
+The initial release ingests two official USITC DataWeb workbooks downloaded on
+July 10, 2026:
 
-## Trust Model
+- U.S. imports for consumption, reported country of origin, selected partners
+  and 25 HTS4 categories, 1993–2026.
+- U.S. domestic exports, reported destination, the same selected partners and
+  categories, 1993–2026.
 
-FRUS is the narrative spine, not the entire archive. The interface distinguishes:
+The workbooks include both a mixed series (full years through 2025 plus
+January–April 2026) and a comparable January–April series for every year. The
+site defaults to the comparable series.
 
-- **Reviewed FRUS document:** document-level pilot metadata has been checked.
-- **FRUS discovery lead:** only subject-authority and volume or chapter context
-  are known; open the document before making a claim.
-- **Official statistic:** value, unit, year, publication, workbook location,
-  source URL, extraction method, and confidence are retained.
-- **Partial coverage:** at least one evidence layer is linked and named gaps remain.
-- **Research queue:** the schema or discovery route exists but needs verification.
+These workbooks support a U.S. access lens and a U.S.-reported bilateral lens.
+They do **not** measure total PRC imports, PRC access to third-country supply,
+mine ownership, processing control, or end use. The PRC comparison lane remains
+visibly unfilled until a compatible U.S. Government series is loaded.
 
-The project never embeds full FRUS or NARA document text. Missing values are not
-invented, estimated, or converted to zero. Historical country names are stored
-by period. Formal treaties are distinguished from negotiations, concessions,
-purchasing agreements, and domestic policy instruments.
-
-Read the [full methodology](methodology.html) or
-[`docs/methodology.md`](docs/methodology.md).
-
-## Repository Structure
-
-- `records-stage.html`: historical portal entry point
-- `history-stack.html`: reusable entity and document detail route
-- `methodology.html`: public methodology page
-- `assets/portal.js`: homepage rendering, filters, search, and FRUS index
-- `assets/atlas.js`: MapLibre atlas state, layers, synchronization, and URL state
-- `assets/vendor/maplibre-gl/`: pinned MapLibre GL JS 5.24.0 runtime and license
-- `assets/history-stack.js`: reusable twelve-layer entity rendering
-- `assets/history-data.js`: shared loaders, escaping, badges, links, and cards
-- `assets/portal.css`: responsive, accessible archival interface
-- `assets/frus-subjects-index.js`: full metadata-only FRUS discovery index
-- `data/history-stack/`: normalized pilot JSON modules
-- `data/atlas/`: generated atlas layer registry, overlays, and orientation geometry
-- `schemas/`: JSON schemas for core entity types
-- `scripts/build_history_pilot.py`: reproducible editorial pilot builder
-- `scripts/build_atlas_data.py`: reproducible atlas overlays and basemap builder
-- `scripts/ingest_usgs_ds140.py`: official XLSX extractor
-- `scripts/ingest_trade_data.py`: official Census and USGS trade extractor
-- `scripts/ingest_usitc_dataweb.py`: official 1989-1992 partner-trade importer
-- `scripts/validate_history_data.py`: dates, references, provenance, and secret checks
-- `connectors/nara.py`: server-side, metadata-only NARA API client
-- `nara_proxy_worker.js`: deployable serverless proxy for the static site
-- `local_server.py`: optional local NARA proxy
-
-The original parser, scorer, taxonomy, compact event-cache, Records Studio, and
-NARA image-support code remain available for compatible metadata workflows, but
-the v2 homepage no longer uses the old post-1992 demonstration cache.
-
-## Run Locally
+## Rebuild and validate
 
 ```bash
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
-python scripts/build_history_pilot.py
-python scripts/ingest_usgs_ds140.py
-python scripts/ingest_trade_data.py
-python scripts/ingest_usitc_dataweb.py --cache-dir .cache/usitc-dataweb
-python scripts/build_atlas_data.py
-python scripts/validate_history_data.py
-python -m http.server 8000
-open http://localhost:8000/records-stage.html
-```
-
-The site must be served over HTTP because browsers do not allow modular JSON
-`fetch()` calls from a `file://` page.
-
-To test only with the committed datasets:
-
-```bash
+python scripts/ingest_dataweb_exports.py
+python scripts/validate_v3_data.py
+python -m pytest tests -q
 python -m http.server 8000
 ```
 
-## Rebuild Official USGS Statistics
+Then open <http://localhost:8000/records-stage.html>.
 
-The extractor downloads nine official Data Series 140 workbooks and writes
-human-readable JSON. It selects benchmark years through 1992, preserves USGS
-units, and skips missing, withheld, estimated-text, and nonnumeric cells.
+## Repository map
 
-```bash
-python scripts/ingest_usgs_ds140.py --access-date YYYY-MM-DD
-python scripts/validate_history_data.py
-```
+- `records-stage.html` — public comparison workbench
+- `methodology.html` — public evidence and comparison rules
+- `assets/v3.css`, `assets/v3.js` — accessible responsive interface
+- `data/source-files/` — frozen official source workbooks
+- `data/v3/dataweb-series.json` — generated compact trade-value series
+- `data/v3/dataset-registry.json` — source artifacts, hashes, gaps, and status
+- `scripts/ingest_dataweb_exports.py` — reproducible XLSX normalizer
+- `scripts/validate_v3_data.py` — provenance and semantic validator
+- `docs/data-contract.md` — observation-first contract for future datasets
+- `schemas/` — machine-readable build and observation contracts
 
-Use `--cache-dir <path>` to retain downloaded XLSX files outside the repository.
+## Trust rules
 
-## Rebuild USITC DataWeb Partner Trade
+- No unpublished, model-generated, interpolated, or demo values.
+- Missing, suppressed, blank, and reported zero states stay distinct.
+- China and Hong Kong remain separate statistical/customs areas.
+- U.S. imports use reported origin; U.S. exports use reported destination.
+- Publication year never substitutes for observation year.
+- Annual and year-to-date values are not overlaid unless month coverage matches.
+- Product codes are trade categories, not claims about mine origin or ownership.
+- Derived values must identify their inputs and formula.
 
-DataWeb supplies the portal's official bilateral statistical layer for the four
-years in which its electronic series overlaps this project: 1989-1992. The
-importer uses the public anonymous query session, writes a sanitized static JSON
-cache for GitHub Pages, and does not require or store an API token.
-
-```bash
-python scripts/ingest_usitc_dataweb.py \
-  --access-date YYYY-MM-DD \
-  --cache-dir .cache/usitc-dataweb
-python scripts/build_atlas_data.py
-python scripts/validate_history_data.py
-```
-
-The checked-in query manifest preserves years, six-digit HTS/Schedule B
-headings, result counts, and a payload hash. Partner country is the reported
-origin or destination; it is not presented as mine origin, route, ownership,
-end use, import dependence, or strategic importance. FRUS remains the
-documentary and narrative spine throughout the interface.
-
-## Rebuild Historical U.S. Trade
-
-The trade extractor writes a source-bounded record for every selected year.
-For 1861-1899 it uses published Census multi-year averages for the broad
-economic class "crude materials." For 1900-1992 it extracts exact-year imports
-and exports from the available USGS Data Series 140 commodity workbooks.
-
-```bash
-python scripts/ingest_trade_data.py --access-date YYYY-MM-DD
-python scripts/validate_history_data.py
-```
-
-The two series are not merged. The Census rows are not mineral-specific, and
-the USGS rows are national totals without partner-country attribution. Uranium
-remains available as a FRUS-led mineral profile, but the trade tab labels its
-annual series unavailable because no compatible uranium workbook is currently
-normalized. See [`docs/historical-trade-data-model.md`](docs/historical-trade-data-model.md).
-
-## Rebuild the Historical Atlas
-
-The atlas builder derives relationships, instruments, events, stockpile-policy
-markers, and NARA discovery overlays from the normalized History Stack IDs. It
-does not infer production, supplier shares, route volume, alliance membership,
-facility coordinates, or strategic risk.
-
-```bash
-python scripts/build_atlas_data.py
-python scripts/validate_history_data.py
-```
-
-The builder also downloads and trims the public-domain Natural Earth 1:110m
-country polygons used for modern spatial orientation. Use `--skip-basemap` when
-only regenerating documentary overlays. Historical names and status come from
-dated project records; these polygons are not historical boundary evidence.
-
-The site vendors MapLibre GL JS 5.24.0 so GitHub Pages does not depend on a
-runtime map CDN. Its BSD license is retained at
-`assets/vendor/maplibre-gl/LICENSE.txt`.
-
-## Configure NARA Safely
-
-Create an ignored local file from the empty example:
-
-```bash
-cp .env.example .env.local
-```
-
-Set `NARA_API_KEY` in `.env.local` or export it in the environment. Never place
-the key in `records-stage.html`, `assets/runtime-config.js`, browser JavaScript,
-screenshots, logs, documentation, or a committed file.
-
-Local proxy:
-
-```bash
-pip install flask flask-cors
-python local_server.py --no-browser-open
-```
-
-When the site itself is served from `localhost` or `127.0.0.1`, the browser
-automatically uses `http://localhost:5757` for NARA requests.
-
-GitHub Pages cannot hold a server-side secret. Deploy `nara_proxy_worker.js` as a
-serverless Worker, store the key as a secret named `NARA_API_KEY`, and put only
-the public Worker URL in `assets/runtime-config.js`:
-
-```js
-window.HISTORY_RUNTIME_CONFIG = Object.freeze({
-  naraProxyUrl: "https://your-worker.example"
-});
-```
-
-NARA’s current API terms say not to cache or store returned API content, so v2
-uses on-demand, `no-store` responses instead of a GitHub Actions cache. Static
-query plans and authoritative Catalog links remain available if the API fails.
-See [`docs/nara-integration.md`](docs/nara-integration.md).
-
-## Add or Correct Historical Data
-
-1. Add the official source to `data/history-stack/sources.json` through
-   `scripts/build_history_pilot.py`.
-2. Add or update the normalized entity and link existing IDs rather than copying
-   descriptions into multiple files.
-3. Preserve historical names, dates, units, official URLs, and completeness.
-4. Leave unavailable fields empty and add a precise `data_gaps` note.
-5. Rebuild statistics only from official machine-readable files or reviewed
-   page-level transcriptions.
-6. Run validation and tests before publication.
-
-Core schemas are under `schemas/`. Crosswalks for aliases, HS codes, agencies,
-countries, and supply-chain terms remain under `data/crosswalks/`. HS-code
-mappings must retain confidence and caveats because product codes may not
-identify mined origin.
-
-## Rebuild the FRUS Subject Index
-
-The index combines the subject mappings in
-[`therealjameswilson/frus-subjects`](https://github.com/therealjameswilson/frus-subjects)
-with official lightweight TOC files from
-[`HistoryAtState/frus`](https://github.com/HistoryAtState/frus). It contains no
-document body text.
-
-```bash
-python build_frus_subject_index.py \
-  --subjects-root ../frus-subjects \
-  --toc-root ../frus/frus-toc
-```
-
-See [`docs/frus-subject-index.md`](docs/frus-subject-index.md).
-
-## Tests
-
-```bash
-. .venv/bin/activate
-python -m pytest tests/ -v
-python scripts/validate_history_data.py
-```
-
-Validation checks entity minimums, unique IDs, cross-file references, the
-1861–1992 boundary, year-by-year trade coverage, statistical provenance, atlas
-layer semantics, `.env.example`, and tracked-file secret patterns.
-
-## Provenance
-
-This repository is a standalone v2 adaptation of
-[`therealjameswilson/toolkit-template`](https://github.com/therealjameswilson/toolkit-template),
-which descends from the FRUS On This Day toolkit. The v1 repository remains
-preserved at
-[`therealjameswilson/critical-minerals-records-stage`](https://github.com/therealjameswilson/critical-minerals-records-stage).
+This is an independent public research demonstrator, not an official U.S.
+Department of State, USITC, Census Bureau, USGS, or U.S. Government product.

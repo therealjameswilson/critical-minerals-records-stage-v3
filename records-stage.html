@@ -3,298 +3,301 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore how U.S. diplomacy, trade, law, geography, and national security shaped access to strategic resources from 1861 through 1992, with FRUS as the documentary spine.">
-  <meta name="theme-color" content="#153650">
-  <title>The United States and Strategic Resources, 1861–1992</title>
-  <link rel="stylesheet" href="assets/vendor/maplibre-gl/maplibre-gl.css?v=5.24.0">
-  <link rel="stylesheet" href="assets/portal.css?v=2.6.0">
+  <meta name="description" content="Compare official U.S. Government statistical indicators bearing on U.S. and PRC access to rare earths, critical minerals, and strategic resources, 1993–2026.">
+  <meta name="theme-color" content="#17354d">
+  <link rel="canonical" href="https://therealjameswilson.github.io/critical-minerals-records-stage-v3/records-stage.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="U.S. and PRC Access to Critical Minerals, 1993–2026">
+  <meta property="og:description" content="A source-visible, statistics-only comparison built from official U.S. Government data.">
+  <meta property="og:url" content="https://therealjameswilson.github.io/critical-minerals-records-stage-v3/records-stage.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>U.S. and PRC Access to Critical Minerals, 1993–2026</title>
+  <link rel="stylesheet" href="assets/v3.css?v=3.0.0">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "U.S. and PRC Access to Critical Minerals, 1993–2026",
+    "description": "Official U.S. Government statistical indicators bearing on U.S. and PRC access to rare earths, critical minerals, and strategic resources.",
+    "temporalCoverage": "1993/2026",
+    "creator": {"@type": "Person", "name": "James Graham Wilson"},
+    "license": "https://opensource.org/license/mit",
+    "url": "https://therealjameswilson.github.io/critical-minerals-records-stage-v3/records-stage.html",
+    "isBasedOn": "https://dataweb.usitc.gov/"
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header">
     <div class="header-main">
-      <a class="brand" href="#purpose" aria-label="The United States and Strategic Resources home">
-        <span class="brand-mark" aria-hidden="true">FRUS</span>
-        <span><small>Historical decision support</small><strong>Strategic Resources, 1861–1992</strong></span>
+      <a class="brand" href="#purpose" aria-label="Critical Minerals V3 home">
+        <span class="brand-mark" aria-hidden="true">V3</span>
+        <span><small>Statistical operating picture</small><strong>Critical Minerals, 1993–2026</strong></span>
       </a>
       <nav class="primary-nav" id="primaryNav" aria-label="Primary navigation">
-        <a href="#purpose">Purpose</a>
-        <a href="#minerals">Minerals</a>
-        <a href="#countries">Countries</a>
-        <a href="#periods">Periods</a>
-        <a href="#episode">Episode</a>
-        <a href="#map">Atlas</a>
-        <a href="#instruments">Treaties &amp; Law</a>
-        <a href="#archives">Archives</a>
-        <a href="#frus">FRUS Index</a>
+        <a href="#explorer">Explorer</a>
+        <a href="#coverage">Coverage</a>
+        <a href="#sources">Sources</a>
         <a href="#method">Method</a>
+        <a href="methodology.html">Full methodology</a>
+        <a href="https://therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html">V2: 1861–1992</a>
       </nav>
       <div class="header-actions">
-        <button class="header-button nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">☰</span><span class="visually-hidden">Menu</span></button>
-        <button class="header-button" id="themeToggle" type="button"><span aria-hidden="true">◐</span><span class="visually-hidden">Toggle color theme</span></button>
+        <button class="header-button nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav">
+          <span aria-hidden="true">☰</span><span class="visually-hidden">Menu</span>
+        </button>
+        <button class="header-button" id="themeToggle" type="button" aria-pressed="false">
+          <span aria-hidden="true">◐</span><span class="visually-hidden">Toggle color theme</span>
+        </button>
       </div>
     </div>
-    <p class="status-line">Public research demonstrator · Metadata, selected statistics, and source links only · Not an official Department of State product</p>
+    <p class="status-line">Official U.S. Government statistics only · Source files and caveats visible · Independent public research demonstrator</p>
   </header>
 
   <main id="main-content">
     <section class="hero" id="purpose" aria-labelledby="page-title">
       <div class="hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">FRUS historical operating picture · 1861–1992</p>
-          <h1 id="page-title">The United States and Strategic Resources, 1861–1992</h1>
-          <p class="hero-deck">Explore how diplomacy, trade, law, geography, and national security shaped American access to critical minerals, with <em>Foreign Relations of the United States</em> as the documentary spine.</p>
-          <form class="search-form" id="globalSearchForm" role="search">
-            <label for="globalQuery">Search the historical pilot</label>
-            <div class="search-row">
-              <input id="globalQuery" name="q" type="search" autocomplete="off" placeholder="Mineral, historical country, treaty, law, episode, or FRUS concept">
-              <button type="submit">Search</button>
-            </div>
-          </form>
-          <div class="quick-links" aria-label="Suggested searches">
-            <button type="button" data-search="Bolivian tin">Bolivian tin</button>
-            <button type="button" data-search="accessible foreign sources">Accessible foreign sources</button>
-            <button type="button" data-search="bauxite protection">Bauxite protection</button>
-            <button type="button" data-search="stockpile objectives">Stockpile objectives</button>
+          <p class="eyebrow">Comparative statistical platform · 1993–2026</p>
+          <h1 id="page-title">U.S. and PRC access to critical minerals</h1>
+          <p class="hero-deck">Compare separately defined indicators of access to rare-earth elements, critical minerals, and strategic resources—without collapsing trade, production, processing, reserves, or stockpiles into one score.</p>
+          <div class="hero-actions">
+            <a class="button-link" href="#explorer">Open the live data</a>
+            <a class="button-link secondary" href="#sources">Inspect the source register</a>
           </div>
+          <p class="method-break"><strong>Break from V2:</strong> No FRUS-derived narrative evidence is used. V3 displays statistics from frozen U.S. Government source files and leaves unsupported comparison lanes visibly empty.</p>
         </div>
-        <aside class="source-principle" aria-labelledby="source-principle-title">
-          <span class="folio">Statutory standard</span>
-          <h2 id="source-principle-title"><q>A thorough, accurate, and reliable documentary record</q></h2>
-          <p>of major United States foreign policy decisions and significant United States diplomatic activity.</p>
-          <p class="statute-citation"><cite>Foreign Relations of the United States</cite> · 22 U.S.C. § 4351(a)</p>
-          <a class="button-link inverse" href="https://uscode.house.gov/view.xhtml?req=%28title%3A22%20section%3A4351%20edition%3Aprelim%29" target="_blank" rel="noopener">Read the FRUS statute <span aria-hidden="true">↗</span></a>
+
+        <aside class="release-card" aria-labelledby="release-title">
+          <p class="folio">Evidence release 01 · July 10, 2026</p>
+          <h2 id="release-title">What can be compared today?</h2>
+          <div class="lane-list">
+            <div class="lane-row">
+              <span class="lane-icon us" aria-hidden="true">US</span>
+              <div><strong>U.S. access signal</strong><span>Live · imports for consumption by reported origin</span></div>
+            </div>
+            <div class="lane-row">
+              <span class="lane-icon prc" aria-hidden="true">PRC</span>
+              <div><strong>PRC access signal</strong><span>Awaiting a comparable PRC-reporter or USG series</span></div>
+            </div>
+            <div class="lane-row">
+              <span class="lane-icon bilateral" aria-hidden="true">↔</span>
+              <div><strong>U.S.–PRC bilateral lens</strong><span>Live · U.S.-reported imports and domestic exports</span></div>
+            </div>
+          </div>
+          <p class="release-caveat">The current bilateral lens does not measure total PRC access, third-country supply, ownership, or control.</p>
         </aside>
       </div>
-      <div class="scope-strip" id="metricsStrip" aria-label="Pilot coverage"></div>
-    </section>
 
-    <section class="search-results section is-hidden" id="searchResultsSection" aria-labelledby="search-results-title">
-      <div class="section-heading inline-heading">
-        <div><p class="eyebrow">Unified metadata search</p><h2 id="search-results-title">Historical pilot results</h2></div>
-        <button class="quiet-button" id="closeSearch" type="button">Close results</button>
+      <div class="scope-strip" id="metricsStrip" aria-label="Current statistical coverage">
+        <div class="metric-skeleton" aria-hidden="true"></div>
+        <div class="metric-skeleton" aria-hidden="true"></div>
+        <div class="metric-skeleton" aria-hidden="true"></div>
+        <div class="metric-skeleton" aria-hidden="true"></div>
       </div>
-      <p class="result-summary" id="globalResultsSummary" aria-live="polite"></p>
-      <div class="search-result-grid" id="globalResults"></div>
     </section>
 
-    <section class="atlas-band" id="map" aria-labelledby="map-title">
-      <div class="section atlas-heading">
+    <section class="evidence-contract section" aria-labelledby="contract-title">
+      <div class="section-heading compact-heading">
+        <div><p class="eyebrow">Evidence contract</p><h2 id="contract-title">Access is a set of indicator lanes, not a verdict</h2></div>
+        <p>Each lane keeps its own geography role, unit, period, source, and caveat. Unlike measures are never blended into a “who is winning” score.</p>
+      </div>
+      <div class="contract-grid">
+        <article><span>01</span><h3>Role before country</h3><p>Importer, origin, exporter, destination, production location, and owner are different facts.</p></article>
+        <article><span>02</span><h3>Like periods only</h3><p>January–April values compare with January–April. A partial 2026 is never presented as a full year.</p></article>
+        <article><span>03</span><h3>Gaps stay visible</h3><p>Not loaded, blank, suppressed, and reported zero remain distinct states.</p></article>
+        <article><span>04</span><h3>Source at the point of use</h3><p>Every live layer resolves to a frozen workbook, query definition, access date, and SHA-256.</p></article>
+      </div>
+    </section>
+
+    <section class="explorer-band" id="explorer" aria-labelledby="explorer-title">
+      <div class="section explorer-heading">
         <div>
-          <p class="eyebrow">Historical Geostrategic Atlas</p>
-          <h2 id="map-title">See the documentary geography of strategic-resource diplomacy</h2>
+          <p class="eyebrow">Release 01 · U.S.-reporter trade evidence</p>
+          <h2 id="explorer-title">Explore the first 1993–2026 statistical layer</h2>
         </div>
-          <p>Select a year and material to connect historical names, FRUS activity, agreements, archives, and verified U.S. trade evidence. The Trade tab distinguishes broad nineteenth-century Census categories, annual USGS series, recovered 1970–1990 rare-earth tables, and USITC DataWeb partner records for 1989–1992.</p>
+        <p>Choose a traded-product category, period basis, and focus year. The line chart tracks U.S.-reported flows with China; the supplier view ranks the selected origins in the U.S. import query.</p>
       </div>
 
-      <div class="atlas-shell">
-        <div class="atlas-timebar" aria-label="Atlas time and material controls">
-          <button class="atlas-icon-button" id="atlasPlay" type="button" aria-pressed="false" title="Play timeline"><span aria-hidden="true">▶</span><span class="visually-hidden">Play timeline</span></button>
-          <button class="atlas-icon-button" id="atlasPrevYear" type="button" title="Previous year"><span aria-hidden="true">−</span><span class="visually-hidden">Previous year</span></button>
-          <div class="atlas-year-control">
-            <label for="mapYear">Historical year <output id="mapYearValue" for="mapYear">1942</output></label>
-            <input id="mapYear" type="range" min="1861" max="1992" value="1942" step="1">
-            <div class="atlas-era-labels" aria-hidden="true"><span>1861</span><span>1914</span><span>1941</span><span>1960</span><span>1992</span></div>
+      <div class="explorer-shell">
+        <form class="control-bar" id="explorerControls">
+          <div class="control wide-control">
+            <label for="materialSelect">Traded-product category</label>
+            <select id="materialSelect" name="commodity" disabled>
+              <option>Loading official data…</option>
+            </select>
           </div>
-          <button class="atlas-icon-button" id="atlasNextYear" type="button" title="Next year"><span aria-hidden="true">+</span><span class="visually-hidden">Next year</span></button>
-          <div class="control atlas-mineral-control"><label for="mapMineral">Material</label><select id="mapMineral"></select></div>
-          <div class="control atlas-mode-control"><label for="atlasMode">Analytical lens</label><select id="atlasMode"></select></div>
+          <div class="control">
+            <label for="periodSelect">Period basis</label>
+            <select id="periodSelect" name="period" disabled>
+              <option value="comparable_jan_apr_ytd">January–April, every year</option>
+              <option value="annual_or_current_ytd">Full year; 2026 Jan–Apr</option>
+            </select>
+          </div>
+          <div class="control year-control">
+            <label for="yearSelect">Focus year <output id="yearOutput" for="yearSelect">2026</output></label>
+            <input id="yearSelect" name="year" type="range" min="1993" max="2026" value="2026" step="1" disabled>
+            <div class="range-labels" aria-hidden="true"><span>1993</span><span>2000</span><span>2010</span><span>2020</span><span>2026</span></div>
+          </div>
+          <a class="download-link" href="data/v3/dataweb-series.json" download>Download normalized JSON</a>
+        </form>
+
+        <div class="selection-banner" id="selectionBanner" role="status" aria-live="polite">
+          <span class="loading-dot" aria-hidden="true"></span> Loading the frozen source series…
         </div>
 
-        <div class="atlas-workbench">
-          <aside class="atlas-layer-rail" aria-labelledby="atlas-layers-title">
-            <div class="atlas-rail-heading"><span class="atlas-folio">Layers</span><h3 id="atlas-layers-title">Build the view</h3></div>
-            <div id="atlasLayerControls"></div>
-            <div class="atlas-layer-note" id="atlasLayerNote" aria-live="polite"></div>
-          </aside>
+        <div class="kpi-grid" aria-label="Selected U.S.–PRC values">
+          <article class="kpi-card us-card">
+            <p>U.S. imports from China</p>
+            <strong id="importKpi">—</strong>
+            <span id="importKpiNote">Reported origin · customs value</span>
+          </article>
+          <article class="kpi-card outbound-card">
+            <p>U.S. domestic exports to China</p>
+            <strong id="exportKpi">—</strong>
+            <span id="exportKpiNote">Reported destination · F.A.S. value</span>
+          </article>
+          <article class="kpi-card pending-card">
+            <p>PRC-reporter access statistic</p>
+            <strong>Not loaded</strong>
+            <span>Deliberately blank until a compatible USG series is ingested</span>
+          </article>
+        </div>
 
-          <div class="atlas-map-column">
-            <div class="atlas-map" id="atlasMap" aria-label="Interactive world atlas for historical strategic-resource evidence"></div>
-            <div class="atlas-map-fallback" id="atlasMapFallback" hidden>
-              <strong>The vector atlas could not load.</strong>
-              <span>The synchronized evidence panels and accessible table remain available below.</span>
+        <div class="chart-grid">
+          <article class="chart-card line-card">
+            <div class="chart-heading">
+              <div><p class="chart-kicker">Bilateral signal</p><h3 id="lineChartTitle">U.S.-reported flows with China</h3></div>
+              <div class="legend" aria-label="Line chart legend">
+                <span><i class="legend-line imports"></i>U.S. imports from China</span>
+                <span><i class="legend-line exports"></i>U.S. domestic exports to China</span>
+              </div>
             </div>
-            <button class="atlas-reset-view" id="atlasResetView" type="button" title="Reset to world view"><span aria-hidden="true">⌖</span><span class="visually-hidden">Reset atlas to world view</span></button>
-            <div class="atlas-map-status" id="atlasMapStatus" role="status" aria-live="polite"></div>
-            <div class="atlas-legend" id="atlasLegend" aria-label="Atlas legend"></div>
+            <div class="canvas-wrap">
+              <canvas id="lineChart" role="img" aria-label="Loading U.S.-reported trade series with China"></canvas>
+              <div class="chart-tooltip" id="lineTooltip" hidden></div>
+            </div>
+            <p class="chart-note" id="lineChartNote">Values are nominal U.S. dollars. The comparable view uses January–April in every year.</p>
+            <details class="table-disclosure">
+              <summary>View accessible time-series table</summary>
+              <div class="table-scroll"><table id="lineDataTable"><caption>U.S.-reported trade with China</caption><thead><tr><th>Year</th><th>U.S. imports from China</th><th>U.S. domestic exports to China</th><th>Period</th></tr></thead><tbody></tbody></table></div>
+            </details>
+          </article>
+
+          <article class="chart-card bar-card">
+            <div class="chart-heading">
+              <div><p class="chart-kicker">U.S. supplier lens</p><h3 id="barChartTitle">Selected reported origins</h3></div>
+              <span class="year-pill" id="barYearPill">2026 YTD</span>
+            </div>
+            <div class="canvas-wrap bar-wrap">
+              <canvas id="barChart" role="img" aria-label="Loading selected U.S. import origins"></canvas>
+            </div>
+            <p class="chart-note">Ranks only the 18 partners selected in the source query. It is not a world total or a complete import-share calculation.</p>
+          </article>
+        </div>
+
+        <article class="data-desk" aria-labelledby="table-title">
+          <div class="data-desk-heading">
+            <div><p class="chart-kicker">Exact values</p><h3 id="table-title">All source-selected partners</h3></div>
+            <p id="tableScope">Reported origin and destination values for the selected category and period.</p>
           </div>
-
-          <aside class="atlas-drawer" id="mapInspector" aria-live="polite" aria-label="Selected country evidence"></aside>
-        </div>
-
-        <div class="atlas-evidence-desk">
-          <div class="atlas-tabs" role="tablist" aria-label="Synchronized atlas evidence">
-            <button type="button" role="tab" id="atlasTabSummary" data-atlas-tab="summary" aria-controls="atlasPanel" aria-selected="true">At a glance</button>
-            <button type="button" role="tab" id="atlasTabFrus" data-atlas-tab="frus" aria-controls="atlasPanel" aria-selected="false">FRUS</button>
-            <button type="button" role="tab" id="atlasTabTrade" data-atlas-tab="trade" aria-controls="atlasPanel" aria-selected="false">U.S. Trade</button>
-            <button type="button" role="tab" id="atlasTabNumbers" data-atlas-tab="numbers" aria-controls="atlasPanel" aria-selected="false">Policy in Numbers</button>
-            <button type="button" role="tab" id="atlasTabInstruments" data-atlas-tab="instruments" aria-controls="atlasPanel" aria-selected="false">Agreements</button>
-            <button type="button" role="tab" id="atlasTabArchives" data-atlas-tab="archives" aria-controls="atlasPanel" aria-selected="false">NARA</button>
+          <div class="table-scroll">
+            <table id="partnerTable">
+              <caption class="visually-hidden">U.S. imports and domestic exports by partner</caption>
+              <thead><tr><th scope="col">Source-reported partner</th><th scope="col">U.S. imports for consumption</th><th scope="col">U.S. domestic exports</th><th scope="col">Statistical role</th></tr></thead>
+              <tbody></tbody>
+            </table>
           </div>
-          <div class="atlas-panel" id="atlasPanel" role="tabpanel" aria-labelledby="atlasTabSummary"></div>
-        </div>
+        </article>
 
-        <details class="accessible-table atlas-accessible-table">
-          <summary>Open accessible atlas table and layer definitions</summary>
-          <p>The table presents the same selected-year evidence without requiring the map. Counts are documentary coverage, not production or strategic weight.</p>
-          <div class="table-scroll"><table><thead><tr><th>Country or territory</th><th>Historical name</th><th>Selected-year evidence</th><th>Linked materials</th><th>FRUS records</th><th>Precision</th></tr></thead><tbody id="mapTableBody"></tbody></table></div>
-          <div class="atlas-layer-table" id="atlasLayerTable"></div>
-        </details>
-
-        <p class="atlas-basemap-note"><strong>Map-reading note:</strong> Modern generalized country geometry is used only for spatial orientation. It does not reconstruct historical borders. Historical names and status come from dated project records. Natural Earth orientation geometry is public domain; all substantive overlays link to the portal’s official-source registry.</p>
-      </div>
-    </section>
-
-    <section class="section" id="minerals" aria-labelledby="minerals-title">
-      <div class="section-heading">
-        <div><p class="eyebrow">Explore by mineral</p><h2 id="minerals-title">State of the Mineral</h2></div>
-        <p>An expanding set of profiles opens a reusable History Stack. Coverage depth varies by the official evidence available: some materials are FRUS-rich, while others begin with verified statistical context and a visible research queue.</p>
-      </div>
-      <div class="entity-grid mineral-grid" id="mineralGrid"></div>
-    </section>
-
-    <section class="section-band" id="countries">
-      <div class="section" aria-labelledby="countries-title">
-        <div class="section-heading">
-          <div><p class="eyebrow">Explore by country or territory</p><h2 id="countries-title">Historical resource relationships</h2></div>
-          <p>Historical names and sovereignty changes are preserved by date. Counts describe pilot evidence, not geopolitical importance.</p>
-        </div>
-        <div class="country-list" id="countryGrid"></div>
-      </div>
-    </section>
-
-    <section class="section" id="periods" aria-labelledby="periods-title">
-      <div class="section-heading">
-        <div><p class="eyebrow">Explore by period</p><h2 id="periods-title">A changing strategic-resource system</h2></div>
-        <p>The historical experience ends in 1992. Later material appears only in the separately labeled Modern Context panel.</p>
-      </div>
-      <div class="period-rail" id="periodRail"></div>
-      <div class="period-detail" id="periodDetail" aria-live="polite"></div>
-      <div class="admin-strip" id="administrationStrip" aria-label="Pilot administration profiles"></div>
-    </section>
-
-    <section class="feature-band" id="episode" aria-labelledby="episode-title">
-      <div class="section feature-grid">
-        <div class="feature-copy">
-          <p class="eyebrow">Featured historical episode</p>
-          <h2 id="episode-title">Bolivian tin in 1942</h2>
-          <p>The pilot brings together a FRUS purchasing pathway and contemporaneous U.S. mineral statistics without treating chapter-level discovery metadata as document-level fact.</p>
-          <div class="evidence-labels"><span>FRUS narrative</span><span>USGS statistical context</span><span>Research gaps visible</span></div>
-          <div id="featuredFrus"></div>
-        </div>
-        <aside class="numbers-panel" aria-labelledby="numbers-title">
-          <div class="panel-heading"><p class="eyebrow">Policy in Numbers</p><h3 id="numbers-title">Tin, United States, 1942</h3></div>
-          <div class="number-grid" id="policyNumbers"></div>
-          <p class="panel-note">Values retain USGS units and definitions. This pilot does not yet calculate Bolivia’s share of U.S. imports or route-level volumes.</p>
-          <a class="button-link" href="history-stack.html?type=mineral&amp;id=tin">Open full tin profile</a>
+        <aside class="interpretation-rail" aria-labelledby="interpret-title">
+          <div><p class="chart-kicker">Read before interpreting</p><h3 id="interpret-title">What this layer can support</h3></div>
+          <ul>
+            <li>It can show U.S.-reported imports from China and other selected origins.</li>
+            <li>It can show U.S. domestic exports to China and other selected destinations.</li>
+            <li>It cannot show the PRC's total imports from the world.</li>
+            <li>It cannot identify mine origin, processing control, ownership, route, end use, or strategic importance.</li>
+            <li>HTS4 categories are product baskets; broad or mixed baskets are labeled in the selector.</li>
+          </ul>
         </aside>
       </div>
     </section>
 
-    <section class="section-band" id="instruments">
-      <div class="section" aria-labelledby="instruments-title">
-        <div class="section-heading">
-          <div><p class="eyebrow">Treaties, agreements, and law</p><h2 id="instruments-title">Instruments of access and preparedness</h2></div>
-          <p>Formal treaties are distinguished from purchasing negotiations, concessions, interagency reviews, and other policy instruments.</p>
-        </div>
-        <div class="instrument-controls">
-          <div class="control"><label for="instrumentType">Record type</label><select id="instrumentType"></select></div>
-          <div class="control"><label for="instrumentMineral">Mineral</label><select id="instrumentMineral"></select></div>
-          <strong id="instrumentCount" aria-live="polite"></strong>
-        </div>
-        <div class="split-layout">
-          <div><h3 class="subheading">Treaties, agreements, and policy instruments</h3><div class="record-list" id="agreementList"></div></div>
-          <aside><h3 class="subheading">Legislative foundations</h3><div class="record-list" id="lawList"></div></aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="archives" aria-labelledby="archives-title">
+    <section class="section coverage-section" id="coverage" aria-labelledby="coverage-title">
       <div class="section-heading">
-        <div><p class="eyebrow">NARA archival discovery</p><h2 id="archives-title">Move from FRUS to the wider archive</h2></div>
-        <p>Structured query plans target relevant record groups. Returned descriptions remain leads until a researcher reviews their substantive relevance.</p>
+        <div><p class="eyebrow">Comparison runway</p><h2 id="coverage-title">What is live, partial, and still needed</h2></div>
+        <p>The matrix is a work plan and a guardrail. A blank lane is not evidence of zero access.</p>
       </div>
-      <div class="archive-shell">
-        <div class="archive-controls">
-          <div class="control grow"><label for="naraQuery">Structured query plan</label><select id="naraQuery"></select></div>
-          <button id="runNaraQuery" type="button">Search NARA</button>
-        </div>
-        <div class="archive-status" id="naraStatus"></div>
-        <div class="record-list nara-results" id="naraResults" aria-live="polite"></div>
-        <p class="nara-attribution">This product uses the National Archives Catalog API but is not endorsed or certified by the National Archives and Records Administration.</p>
-      </div>
-    </section>
-
-    <section class="stockpile-band" id="stockpile" aria-labelledby="stockpile-title">
-      <div class="section">
-        <div class="section-heading light-heading">
-          <div><p class="eyebrow">Strategic stockpile</p><h2 id="stockpile-title">Planning, authority, and accessible foreign sources</h2></div>
-          <p>The pilot exposes policy pathways and statutory foundations while leaving unverified material-level goals and holdings blank.</p>
-        </div>
-        <div class="stockpile-grid" id="stockpileGrid"></div>
+      <div class="table-scroll coverage-table-wrap">
+        <table class="coverage-table" id="coverageTable">
+          <caption>V3 comparison-layer readiness</caption>
+          <thead><tr><th>Indicator lane</th><th>United States</th><th>PRC</th><th>Comparison permission</th></tr></thead>
+          <tbody>
+            <tr><th>Trade access</th><td><span class="status-badge live">Live, partial</span><small>Selected-partner DataWeb imports</small></td><td><span class="status-badge pending">Not loaded</span><small>No PRC-reporter series</small></td><td>U.S. lane and bilateral signal only</td></tr>
+            <tr><th>Mine production</th><td><span class="status-badge pending">Not loaded</span></td><td><span class="status-badge pending">Not loaded</span></td><td>Only if material form and unit match</td></tr>
+            <tr><th>Processing &amp; refining</th><td><span class="status-badge pending">Not loaded</span></td><td><span class="status-badge pending">Not loaded</span></td><td>Capacity and output must remain separate</td></tr>
+            <tr><th>Reserves &amp; resources</th><td><span class="status-badge pending">Not loaded</span></td><td><span class="status-badge pending">Not loaded</span></td><td>Reserves cannot be compared with resources</td></tr>
+            <tr><th>Government stockpiles</th><td><span class="status-badge pending">Not loaded</span></td><td><span class="status-badge pending">Not loaded</span></td><td>Source must define material, date, and unit</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <section class="section" id="frus" aria-labelledby="frus-title">
+    <section class="source-band" id="sources" aria-labelledby="sources-title">
+      <div class="section source-heading">
+        <div><p class="eyebrow">Source register</p><h2 id="sources-title">Start with the official files</h2></div>
+        <p>Every live value in release 01 resolves to one of these unchanged DataWeb workbooks. The public copy retains the query parameters and a project-verified SHA-256.</p>
+      </div>
+      <div class="section source-grid" id="sourceGrid">
+        <article class="source-card loading-card"><p>Loading source register…</p></article>
+      </div>
+      <div class="section source-limit">
+        <strong>Upstream provenance</strong>
+        <p>USITC DataWeb republishes official U.S. merchandise-trade statistics originating with the U.S. Census Bureau. “Downloaded from DataWeb” does not mean every underlying statistic was originally collected by USITC.</p>
+        <a href="https://dataweb.usitc.gov/" target="_blank" rel="noopener">Open USITC DataWeb <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="section method-section" id="method" aria-labelledby="method-title">
       <div class="section-heading">
-        <div><p class="eyebrow">Narrative spine and advanced discovery</p><h2 id="frus-title">FRUS strategic-resources index</h2></div>
-        <p>The full 1861–1992 subject-authority index is searchable here. Volume dates and chapter headings are navigation context, not document dates or titles.</p>
+        <div><p class="eyebrow">Statistical method</p><h2 id="method-title">Rules that prevent an attractive chart from becoming a false claim</h2></div>
+        <a class="text-link" href="methodology.html">Read the full methodology <span aria-hidden="true">→</span></a>
       </div>
-      <div class="frus-shell">
-        <div class="frus-controls">
-          <div class="control grow"><label for="frusQuery">Filter indexed metadata</label><input id="frusQuery" type="search" placeholder="Strategic materials, Belgian Congo, bauxite, or d395"></div>
-          <div class="control"><label for="frusSubject">Subject authority</label><select id="frusSubject"></select></div>
-          <div class="control"><label for="frusFromYear">From year</label><select id="frusFromYear"></select></div>
-          <div class="control"><label for="frusToYear">To year</label><select id="frusToYear"></select></div>
-          <button class="quiet-button" id="frusClear" type="button">Clear</button>
-        </div>
-        <div class="frus-summary"><strong id="frusResultsCount">Loading index</strong><span id="frusCorpusNote"></span></div>
-        <div class="record-list frus-list" id="frusRecords" aria-live="polite"></div>
-        <button class="button-link load-more" id="frusLoadMore" type="button">Show more FRUS records</button>
+      <div class="method-grid">
+        <article><h3>Period integrity</h3><p>The default view compares January–April in every year. The alternate view mixes full years through 2025 with January–April 2026 and labels the break.</p></article>
+        <article><h3>Geography integrity</h3><p>China and Hong Kong remain separate. Origin, destination, mine location, processing location, and ownership are never treated as synonyms.</p></article>
+        <article><h3>Product integrity</h3><p>HTS4 categories are shown as traded-product categories. Mixed baskets such as ferroalloys or minor metals are not silently assigned to one mineral.</p></article>
+        <article><h3>Measurement integrity</h3><p>Customs value and F.A.S. value retain their source bases. Physical quantities are not added across unlike units.</p></article>
+        <article><h3>Gap integrity</h3><p>Absent source rows, source blanks, suppression flags, and reported zeros are distinct. V3 does not interpolate or impute.</p></article>
+        <article><h3>Derivation integrity</h3><p>Any future calculated share or concentration measure must expose its formula, inputs, coverage, and missing-value rule.</p></article>
       </div>
     </section>
 
-    <section class="method-band" id="method" aria-labelledby="method-title">
-      <div class="section method-grid">
-        <div>
-          <p class="eyebrow">Methodology and source transparency</p>
-          <h2 id="method-title">How to read this portal</h2>
-          <p>FRUS is selected and edited, not the complete archive. Subject mappings identify potentially relevant documents but do not prove centrality. Absence from FRUS does not prove absence of U.S. interest or activity.</p>
-          <a class="button-link" href="methodology.html">Open full methodology</a>
-        </div>
-        <div class="method-rules">
-          <div><strong>Historical boundary</strong><span>Main data ends in 1992.</span></div>
-          <div><strong>No invented values</strong><span>Missing statistics remain missing.</span></div>
-          <div><strong>Original units</strong><span>Conversions are disclosed or avoided.</span></div>
-          <div><strong>Historical geography</strong><span>Names are preserved by date.</span></div>
-          <div><strong>Visible uncertainty</strong><span>Partial coverage and research queues stay labeled.</span></div>
-          <div><strong>Authoritative links</strong><span>Every pilot claim points back to an official source layer.</span></div>
-        </div>
+    <section class="predecessor section" aria-labelledby="predecessor-title">
+      <div>
+        <p class="eyebrow">The longer record</p>
+        <h2 id="predecessor-title">Looking for 1861–1992?</h2>
+        <p>V2 remains the FRUS-led historical portal. V3 begins in 1993 and deliberately changes both evidence base and analytical method.</p>
       </div>
+      <a class="button-link inverse" href="https://therealjameswilson.github.io/critical-minerals-records-stage-v2/records-stage.html">Open the V2 historical portal</a>
     </section>
-
-    <aside class="modern-context" id="modernContext" aria-labelledby="modern-context-title">
-      <div class="section modern-inner">
-        <span class="boundary-label">Outside the historical dataset</span>
-        <div><p class="eyebrow">Modern Context</p><h2 id="modern-context-title">Why revisit this record now?</h2></div>
-        <div id="modernContextContent"></div>
-      </div>
-    </aside>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div><strong>The United States and Strategic Resources, 1861–1992</strong><p>Adapted from the <a href="https://github.com/therealjameswilson/toolkit-template" target="_blank" rel="noopener">Records Toolkit Template</a>. Public demonstrator; not an official U.S. Government product.</p></div>
-      <a href="https://github.com/therealjameswilson/critical-minerals-records-stage-v2" target="_blank" rel="noopener">Source repository <span aria-hidden="true">↗</span></a>
+    <div>
+      <strong>U.S. and PRC Access to Critical Minerals, 1993–2026</strong>
+      <p>Independent public research demonstrator · Not an official U.S. Government product</p>
     </div>
+    <nav aria-label="Footer navigation">
+      <a href="methodology.html">Methodology</a>
+      <a href="data/v3/dataweb-series.json">Normalized data</a>
+      <a href="https://github.com/therealjameswilson/critical-minerals-records-stage-v3">Repository</a>
+    </nav>
   </footer>
 
-  <script src="assets/runtime-config.js?v=2.1.3"></script>
-  <script src="assets/vendor/maplibre-gl/maplibre-gl.js?v=5.24.0"></script>
-  <script src="assets/frus-subjects-index.js?v=2.0.0"></script>
-  <script src="assets/history-data.js?v=2.5.0"></script>
-  <script src="assets/atlas.js?v=2.7.0"></script>
-  <script src="assets/portal.js?v=2.5.0"></script>
+  <noscript><p class="noscript">JavaScript is required for the interactive charts. The frozen source workbooks and normalized JSON remain available in the source register.</p></noscript>
+  <script src="assets/v3.js?v=3.0.0" defer></script>
 </body>
 </html>

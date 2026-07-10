@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://therealjameswilson.github.io/critical-minerals-records-stage-v3/sitemap.xml

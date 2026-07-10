@@ -1,8 +1,5 @@
 name: test
 
-# Runs the historical data, Python, and static JavaScript checks on every push
-# and pull request.
-
 on:
   push:
     branches: [main]
@@ -13,40 +10,18 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Compile-check every Python file
-        # Catches syntax errors before pytest even loads. Excludes .venv and
-        # the cache directory so we don't waste cycles on third-party code.
-        run: |
-          python -m compileall -q -x '(\.venv|__pycache__|\.pytest_)' .
-
-      - name: Run pytest
-        run: |
-          python -m pytest tests/ -v
-
-      - name: Validate History Stack data and tracked secrets
-        run: |
-          python scripts/validate_history_data.py
-
-      - name: Check browser JavaScript syntax
-        run: |
-          node --check assets/history-data.js
-          node --check assets/atlas.js
-          node --check assets/portal.js
-          node --check assets/history-stack.js
-          node --check nara_proxy_worker.js
+      - run: python -m pip install --upgrade pip && pip install -r requirements.txt
+      - run: python -m compileall -q scripts tests
+      - run: python scripts/ingest_dataweb_exports.py
+      - run: git diff --exit-code -- data/v3
+      - run: python scripts/validate_v3_data.py
+      - run: python -m pytest tests -q
+      - run: node --check assets/v3.js

@@ -1,38 +1,54 @@
 # Methodology
 
-The public methodology is maintained in [`methodology.html`](../methodology.html)
-so the same guidance is available on GitHub Pages.
+## Scope
 
-The statutory standard is:
+V3 covers 1993–2026 and uses only official U.S. Government statistical
+publications, workbooks, and query exports. It is not a continuation of the
+FRUS evidentiary method used by V2.
 
-> A thorough, accurate, and reliable documentary record.
+## Current layer
 
-See [22 U.S.C. § 4351(a)](https://uscode.house.gov/view.xhtml?req=%28title%3A22%20section%3A4351%20edition%3Aprelim%29).
+The first release freezes two USITC DataWeb XLSX exports. DataWeb republishes
+official U.S. merchandise-trade statistics originating with the Census Bureau.
+The imported sheet reports imports for consumption on a customs-value basis;
+the exported sheet reports domestic exports on an F.A.S.-value basis.
 
-Core rules:
+The source query selects 18 partners and 25 four-digit HTS categories. Those
+partners are not the world total. Product categories are not the same as mined
+materials, and several categories contain multiple materials or manufactured
+goods.
 
-1. The main historical dataset is bounded to 1861–1992.
-2. FRUS is a selected, edited documentary record and is not the full archive.
-3. FRUS subject mappings are discovery signals, not document-level findings.
-4. Volume years and chapter headings are navigation context unless the document
-   itself has been reviewed.
-5. No missing statistical value is invented, silently interpolated, or treated
-   as zero.
-6. Units, dates, publication locations, extraction methods, and confidence are
-   retained for every statistic.
-7. Historical country names are displayed by period.
-8. Negotiations and purchasing records are not labeled formal treaties without
-   verified official citations.
-9. NARA results remain unreviewed archival leads until substantive inspection.
-10. Post-1992 information is confined to Modern Context and does not control the
-    historical narrative.
-11. Atlas FRUS shading and line widths measure documentary coverage, never
-    production, import dependence, trade volume, or strategic importance.
-12. Modern generalized Natural Earth geometry is orientation only; historical
-    names come from dated project records and historical boundaries are not yet
-    reconstructed.
-13. Quantitative and infrastructure atlas layers stay locked until their
-    required official fields and citations are present.
+## Time treatment
 
-See the HTML methodology for the full treatment of source hierarchy, USGS
-ingestion, NARA relevance, OCR review, uncertainty, and citation practice.
+The source provides:
+
+1. full annual values through 2025 plus January–April 2026; and
+2. January–April year-to-date values for every year from 1993 through 2026.
+
+The public explorer defaults to the second series because its month coverage is
+consistent. When the mixed annual/current-YTD series is selected, 2026 is marked
+partial and is not presented as directly comparable with prior full years.
+
+## Aggregation
+
+DataWeb's HTS4 value sheets sometimes split one partner/category across source
+rows with different quantity descriptions. V3 sums the value rows within the
+same flow, partner, HTS4 category, and period. It does not combine physical
+quantities across unlike units.
+
+## Interpretation
+
+- Import partner means reported country of origin, not mine origin, ownership,
+  route, processing location, or end use.
+- Export partner means reported destination, not the partner's total imports.
+- Domestic exports exclude foreign exports and are not interchangeable with
+  total exports.
+- China and Hong Kong remain separate source-reported partners.
+- No loaded series currently uses the PRC as reporting economy.
+
+## Verification
+
+The raw files are committed unchanged and identified by SHA-256. Rebuilding the
+browser data from those files must produce no Git diff. Validation checks year
+bounds, roles, units, array lengths, hashes, query metadata, public caveats, and
+the absence of FRUS-era data artifacts.

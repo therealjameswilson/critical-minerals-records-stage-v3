@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://therealjameswilson.github.io/critical-minerals-records-stage-v3/schemas/trade-series.schema.json",
+  "title": "V3 compact DataWeb trade-value series",
+  "type": "object",
+  "required": ["schema_version", "coverage", "periods", "years", "partners", "materials", "series"],
+  "properties": {
+    "schema_version": {"const": "3.0.0"},
+    "years": {
+      "type": "array",
+      "minItems": 34,
+      "maxItems": 34,
+      "items": {"type": "integer", "minimum": 1993, "maximum": 2026}
+    },
+    "series": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "flow", "value_basis", "reporting_economy_id", "partner_country_id",
+          "partner_role", "hts4", "annual_or_current_ytd", "comparable_jan_apr_ytd", "source_id"
+        ],
+        "properties": {
+          "flow": {"enum": ["imports_for_consumption", "domestic_exports"]},
+          "value_basis": {"enum": ["customs_value_usd", "fas_value_usd"]},
+          "reporting_economy_id": {"const": "usa"},
+          "partner_role": {"enum": ["reported_origin", "reported_destination"]},
+          "hts4": {"type": "string", "pattern": "^[0-9]{4}$"},
+          "annual_or_current_ytd": {"$ref": "#/$defs/measureArray"},
+          "comparable_jan_apr_ytd": {"$ref": "#/$defs/measureArray"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "$defs": {
+    "measureArray": {
+      "type": "array",
+      "minItems": 34,
+      "maxItems": 34,
+      "items": {"type": ["number", "null"], "minimum": 0}
+    }
+  },
+  "additionalProperties": true
+}
