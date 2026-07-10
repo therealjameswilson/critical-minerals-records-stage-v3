@@ -11,7 +11,7 @@ pathways, then opens into a conceptual timeline, country and mineral histories,
 the full FRUS subject index, and a filterable official-source evidence set.
 
 Live site:
-[therealjameswilson.github.io/critical-minerals-records-stage](https://therealjameswilson.github.io/critical-minerals-records-stage/)
+[therealjameswilson.github.io/critical-minerals-records-stage-v2](https://therealjameswilson.github.io/critical-minerals-records-stage-v2/)
 
 ## Historical Operating Picture
 

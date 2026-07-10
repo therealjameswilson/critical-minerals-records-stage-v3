@@ -361,7 +361,7 @@ window.CRITICAL_MINERALS_PORTAL = {
   presentContext: {
     report: {
       title: "Deputy Secretary Landau and the Critical Minerals Imperative",
-      url: "https://github.com/therealjameswilson/critical-minerals-records-stage/blob/main/research/Landau-Critical-Minerals-2026.md",
+      url: "https://github.com/therealjameswilson/critical-minerals-records-stage-v2/blob/main/research/Landau-Critical-Minerals-2026.md",
       lines: 191,
       references: 31,
       tier: "Analytical synthesis",

@@ -555,7 +555,7 @@
     "date": "2026-07-09",
     "date_display": "Report ingested July 9, 2026",
     "title": "Deputy Secretary Landau and the Critical Minerals Imperative: State Department Priorities in 2026",
-    "url": "https://github.com/therealjameswilson/critical-minerals-records-stage/blob/main/research/Landau-Critical-Minerals-2026.md",
+    "url": "https://github.com/therealjameswilson/critical-minerals-records-stage-v2/blob/main/research/Landau-Critical-Minerals-2026.md",
     "description": "Analytical synthesis of Deputy Secretary Christopher Landau's 2025-2026 critical-minerals diplomacy, bilateral engagements, investment frameworks, and implications for State Department operations.",
     "subjects": ["Ministerial follow-up", "Historical diplomacy", "Infrastructure and finance"],
     "minerals": ["critical minerals", "rare earth elements", "cobalt", "copper", "lithium", "tungsten", "vanadium", "graphite"],
@@ -567,7 +567,7 @@
     "fso_use_case": ["historical_context", "meeting_prep", "reporting", "supply_chain_mapping"],
     "hs_codes": [],
     "retrieved_at": "2026-07-09",
-    "citation_url": "https://github.com/therealjameswilson/critical-minerals-records-stage/blob/main/research/Landau-Critical-Minerals-2026.md",
+    "citation_url": "https://github.com/therealjameswilson/critical-minerals-records-stage-v2/blob/main/research/Landau-Critical-Minerals-2026.md",
     "caveat": "Analytical report with 31 references across mixed source tiers. Validate each operational claim against the linked official or primary source before reuse.",
     "confidence": "medium"
   }
