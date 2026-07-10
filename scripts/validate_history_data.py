@@ -25,8 +25,8 @@ EXPECTED_MINIMUMS = {
     "stockpile-cases": 2,
     "country-briefs": 4,
     "trade": 1400,
-    "trade-details": 14,
-    "trade-research": 1,
+    "trade-details": 294,
+    "trade-research": 21,
 }
 
 
@@ -148,7 +148,7 @@ def main() -> None:
         errors.append(f"trade: no verified record covers years {uncovered_trade_years}")
 
     required_trade_detail_fields = {
-        "year", "mineral_id", "direction", "category", "quantity", "trade_value",
+        "year", "mineral_id", "direction", "category", "source_category_label", "quantity", "trade_value",
         "is_total", "source_id", "source_origin_agency", "publication_title",
         "table_or_page", "source_url", "access_date", "transcription_status",
         "classification_note", "confidence"
@@ -166,12 +166,24 @@ def main() -> None:
             errors.append(f"{owner}: invalid direction {row.get('direction')}")
         for measure_name in ("quantity", "trade_value"):
             measure = row.get(measure_name, {})
-            if not {"value", "display", "unit", "status"} <= set(measure):
+            if not {"value", "display", "unit", "status", "source_symbol"} <= set(measure):
                 errors.append(f"{owner}: malformed {measure_name}")
-            if measure.get("value") is None and measure.get("status") != "not-available":
-                errors.append(f"{owner}: null {measure_name} must be not-available")
+            if measure.get("status") not in {"reported", "not-available", "published-dash", "less-than", "not-published"}:
+                errors.append(f"{owner}: invalid {measure_name} status {measure.get('status')}")
+            if measure.get("value") is None and measure.get("status") == "reported":
+                errors.append(f"{owner}: reported {measure_name} must have a value")
+            if measure.get("value") is not None and measure.get("status") != "reported":
+                errors.append(f"{owner}: numeric {measure_name} must be reported")
 
     detail_ids = ids["trade-details"]
+    detail_years = {row.get("year") for row in datasets["trade-details"]}
+    if detail_years != set(range(1970, 1991)):
+        errors.append(f"trade-details: expected annual coverage 1970-1990, found {sorted(detail_years)}")
+    for year in range(1970, 1991):
+        year_rows = [row for row in datasets["trade-details"] if row.get("year") == year]
+        if len(year_rows) != 14:
+            errors.append(f"trade-details: {year} expected 14 category rows, found {len(year_rows)}")
+
     for row in datasets["trade-research"]:
         owner = f"trade-research/{row.get('id')}"
         if row.get("mineral_id") not in ids["minerals"]:
@@ -183,6 +195,9 @@ def main() -> None:
         for reference in row.get("control_total_ids", []):
             if reference not in detail_ids:
                 errors.append(f"{owner}: missing control total {reference}")
+    research_years = {row.get("year") for row in datasets["trade-research"]}
+    if research_years != set(range(1970, 1991)):
+        errors.append(f"trade-research: expected annual queues 1970-1990, found {sorted(research_years)}")
 
     fact_statuses = {"verified", "estimated", "unknown"}
     for brief in datasets["country-briefs"]:

@@ -43,37 +43,47 @@ compatible annual U.S. imports-and-exports workbook is currently normalized.
 The interface reports that gap instead of omitting uranium from the mineral
 system or treating missing values as zero.
 
-## 1983 Rare-Earth Census Recovery Pilot
+## 1970-1990 Rare-Earth Census Recovery Series
 
-The atlas includes a bounded pilot showing how legacy Census trade reporting
-can be recovered without projecting modern HS categories backward.
+The atlas includes a year-selectable series showing how legacy Census trade
+reporting can be recovered without projecting modern HS categories backward.
 
-The reviewed category rows in `trade-details.json` reproduce the 1983 columns
-of the official Rare Earths Statistical Compendium tables. Those tables name
-the Bureau of the Census as their source:
+The importer downloads and parses both official Rare Earths Statistical
+Compendium text tables. Those tables name the Bureau of the Census as their
+source:
 
-- Table 3 reports 822 metric tons of rare-earth imports for consumption,
-  valued at 15,826 thousand current dollars, across eight published product
-  categories.
-- Table 4 reports 2,743 metric tons of exports, including 2,684 metric tons of
-  thorium ore and concentrates and 59 metric tons of ferrocerium and other
-  pyrophoric alloys.
+- Table 3 supplies annual import quantity and current-dollar value for eight
+  published product categories and a published total from 1970 through 1990.
+- Table 4 supplies annual export quantity for four published product
+  categories and a published total over the same years.
 
-These totals are displayed beside, but never merged with, the later USGS Data
-Series 140 standardized values for 1983. Data Series 140 uses rare-earth-oxide
-equivalent; the contemporaneous export table includes thorium ore. The scopes
-are therefore materially different.
+This produces 294 normalized detail rows: fourteen rows for each of twenty-one
+years. Values retain the source's `NA`, dash, and footnote states. A published
+dash is not converted to zero, a less-than value is not rounded upward, and a
+category that was not separately available remains null.
+
+The contemporaneous totals are displayed beside, but never merged with, the
+later USGS Data Series 140 standardized values. Data Series 140 uses
+rare-earth-oxide equivalent; the contemporaneous export table includes thorium
+ore and concentrates. The scopes are therefore materially different. The
+source also warns that 1989 and 1990 categories are not necessarily comparable
+with earlier years after implementation of the Harmonized Tariff System.
 
 `trade-research.json` records the next acquisition step rather than inventing
-supplier countries. The 1983 annual reports needed are:
+supplier countries. Each year from 1970 through 1990 has a separate queue for:
 
 - FT 246, *U.S. Imports for Consumption and General Imports, TSUSA Commodity
   by Country of Origin*; and
 - FT 446, *U.S. Exports, Schedule B Commodity by Country*.
 
-No country flow is drawn on the atlas until those rows, classifications,
+No country flow is drawn on the atlas until those annual rows, classifications,
 quantities, valuation bases, and report locations have been reviewed. The
-published category totals serve as controls for that future transcription.
+published year-and-direction totals serve as controls for that future
+transcription.
+
+The generated detail row retains both a normalized category and the source
+label, quantity and value measurement objects, original source symbol, table
+URL, access date, extraction status, and applicable classification caveats.
 
 ## Record Shape
 
@@ -117,7 +127,7 @@ JSON and official workbook control if the source series is refreshed.
 
 ```bash
 python scripts/ingest_trade_data.py --access-date YYYY-MM-DD
-python scripts/build_trade_pilot.py --access-date YYYY-MM-DD
+python scripts/build_trade_pilot.py --access-date YYYY-MM-DD --cache-dir .cache/rare-earth-trade
 python scripts/validate_history_data.py
 python -m pytest tests/ -q
 ```

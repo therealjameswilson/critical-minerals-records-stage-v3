@@ -1,16 +1,16 @@
 [
   {
-    "id": "census-ft-1983-rare-earth-partners",
-    "year": 1983,
+    "id": "census-ft-1970-rare-earth-partners",
+    "year": 1970,
     "mineral_id": "rare-earth-elements",
-    "title": "Recover the 1983 rare-earth country breakdown",
+    "title": "Recover the 1970 rare-earth country breakdown",
     "status": "source-acquisition",
     "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
     "reports": [
       {
         "series": "FT 246",
         "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
-        "role": "Import quantity and value by contemporaneous TSUSA commodity and country of origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
         "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
       },
       {
@@ -21,8 +21,8 @@
       }
     ],
     "control_total_ids": [
-      "census-usgs-rare-earth-1983-import-9",
-      "census-usgs-rare-earth-1983-export-5"
+      "census-usgs-rare-earth-1970-imports-published-total",
+      "census-usgs-rare-earth-1970-exports-published-total"
     ],
     "required_fields": [
       "classification system and code",
@@ -34,7 +34,927 @@
       "human-review status"
     ],
     "classification_notes": [
-      "Do not map 1983 TSUSA or Schedule B categories directly to current HS codes without a reviewed concordance.",
+      "Do not map 1970 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1971-rare-earth-partners",
+    "year": 1971,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1971 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1971-imports-published-total",
+      "census-usgs-rare-earth-1971-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1971 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1972-rare-earth-partners",
+    "year": 1972,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1972 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1972-imports-published-total",
+      "census-usgs-rare-earth-1972-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1972 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1973-rare-earth-partners",
+    "year": 1973,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1973 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1973-imports-published-total",
+      "census-usgs-rare-earth-1973-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1973 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1974-rare-earth-partners",
+    "year": 1974,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1974 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1974-imports-published-total",
+      "census-usgs-rare-earth-1974-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1974 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1975-rare-earth-partners",
+    "year": 1975,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1975 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1975-imports-published-total",
+      "census-usgs-rare-earth-1975-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1975 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1976-rare-earth-partners",
+    "year": 1976,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1976 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1976-imports-published-total",
+      "census-usgs-rare-earth-1976-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1976 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1977-rare-earth-partners",
+    "year": 1977,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1977 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1977-imports-published-total",
+      "census-usgs-rare-earth-1977-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1977 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1978-rare-earth-partners",
+    "year": 1978,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1978 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1978-imports-published-total",
+      "census-usgs-rare-earth-1978-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1978 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1979-rare-earth-partners",
+    "year": 1979,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1979 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1979-imports-published-total",
+      "census-usgs-rare-earth-1979-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1979 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1980-rare-earth-partners",
+    "year": 1980,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1980 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1980-imports-published-total",
+      "census-usgs-rare-earth-1980-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1980 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1981-rare-earth-partners",
+    "year": 1981,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1981 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1981-imports-published-total",
+      "census-usgs-rare-earth-1981-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1981 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1982-rare-earth-partners",
+    "year": 1982,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1982 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1982-imports-published-total",
+      "census-usgs-rare-earth-1982-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1982 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1983-rare-earth-partners",
+    "year": 1983,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1983 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1983-imports-published-total",
+      "census-usgs-rare-earth-1983-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1983 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1984-rare-earth-partners",
+    "year": 1984,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1984 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1984-imports-published-total",
+      "census-usgs-rare-earth-1984-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1984 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1985-rare-earth-partners",
+    "year": 1985,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1985 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1985-imports-published-total",
+      "census-usgs-rare-earth-1985-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1985 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1986-rare-earth-partners",
+    "year": 1986,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1986 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1986-imports-published-total",
+      "census-usgs-rare-earth-1986-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1986 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1987-rare-earth-partners",
+    "year": 1987,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1987 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1987-imports-published-total",
+      "census-usgs-rare-earth-1987-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1987 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1988-rare-earth-partners",
+    "year": 1988,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1988 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, TSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1988-imports-published-total",
+      "census-usgs-rare-earth-1988-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1988 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1989-rare-earth-partners",
+    "year": 1989,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1989 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, HTSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1989-imports-published-total",
+      "census-usgs-rare-earth-1989-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1989 commodity categories directly to current HS codes without a reviewed concordance.",
+      "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
+      "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
+    ],
+    "source_ids": [
+      "census-historical-trade",
+      "usgs-statistical-compendium"
+    ],
+    "official_request_url": "https://www2.census.gov/programs-surveys/trade/reference/products/orderform.html",
+    "completeness": "research-queue"
+  },
+  {
+    "id": "census-ft-1990-rare-earth-partners",
+    "year": 1990,
+    "mineral_id": "rare-earth-elements",
+    "title": "Recover the 1990 rare-earth country breakdown",
+    "status": "source-acquisition",
+    "objective": "Transcribe country-of-origin imports and country-of-destination exports without inferring bilateral flows from national totals.",
+    "reports": [
+      {
+        "series": "FT 246",
+        "title": "U.S. Imports for Consumption and General Imports, HTSUSA Commodity by Country of Origin",
+        "role": "Import quantity and value by contemporaneous commodity classification and country of origin",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      },
+      {
+        "series": "FT 446",
+        "title": "U.S. Exports, Schedule B Commodity by Country",
+        "role": "Export quantity and value by contemporaneous Schedule B commodity and country of destination",
+        "official_description_url": "https://www2.census.gov/library/publications/economic-census/1982/Guide_to_the_1982_Economic_Censuses.pdf"
+      }
+    ],
+    "control_total_ids": [
+      "census-usgs-rare-earth-1990-imports-published-total",
+      "census-usgs-rare-earth-1990-exports-published-total"
+    ],
+    "required_fields": [
+      "classification system and code",
+      "published commodity description",
+      "country code and historical country name",
+      "quantity and original unit",
+      "customs or f.a.s. value basis",
+      "report page or table",
+      "human-review status"
+    ],
+    "classification_notes": [
+      "Do not map 1990 commodity categories directly to current HS codes without a reviewed concordance.",
       "Reconcile country rows to the corresponding published category total, not to the differently standardized Data Series 140 aggregate.",
       "Do not draw atlas trade-flow lines until the partner rows and their units have been reviewed."
     ],

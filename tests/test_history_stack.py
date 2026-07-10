@@ -42,8 +42,8 @@ def test_pilot_meets_minimum_entity_counts():
         "nara-queries": 30,
         "country-briefs": 4,
         "trade": 1400,
-        "trade-details": 14,
-        "trade-research": 1,
+        "trade-details": 294,
+        "trade-research": 21,
     }
     for name, minimum in expected.items():
         assert len(load(name)) >= minimum
@@ -131,7 +131,15 @@ def test_usgs_trade_rows_preserve_exact_year_units_and_provenance():
     assert all(row["source_id"] == "usgs-ds140" for row in rows)
 
 
-def test_1983_rare_earth_census_recovery_pilot_preserves_published_categories():
+def test_rare_earth_census_recovery_covers_every_published_year():
+    rows = [row for row in load("trade-details") if row["mineral_id"] == "rare-earth-elements"]
+    assert len(rows) == 294
+    assert {row["year"] for row in rows} == set(range(1970, 1991))
+    assert all(sum(row["year"] == year for row in rows) == 14 for year in range(1970, 1991))
+    assert all(row["transcription_status"] == "machine-parsed-reviewed-official-table" for row in rows)
+
+
+def test_1983_rare_earth_census_recovery_preserves_published_categories():
     rows = [row for row in load("trade-details") if row["year"] == 1983 and row["mineral_id"] == "rare-earth-elements"]
     totals = {(row["direction"], row["category"]): row for row in rows}
     imports = totals[("imports", "Published total")]
@@ -142,22 +150,35 @@ def test_1983_rare_earth_census_recovery_pilot_preserves_published_categories():
     thorium = totals[("exports", "Thorium ore and concentrates")]
     assert thorium["quantity"]["value"] == 2684
     assert all(row["source_origin_agency"] == "Bureau of the Census" for row in rows)
-    assert all(row["transcription_status"] == "manually-reviewed-published-table" for row in rows)
 
 
-def test_1983_rare_earth_partner_rows_remain_an_explicit_acquisition_queue():
-    queue = load("trade-research")[0]
-    assert queue["status"] == "source-acquisition"
-    assert {row["series"] for row in queue["reports"]} == {"FT 246", "FT 446"}
-    assert len(queue["control_total_ids"]) == 2
-    assert any("Do not draw atlas trade-flow lines" in note for note in queue["classification_notes"])
+def test_rare_earth_importer_preserves_missing_symbols_and_hts_break():
+    rows = {(row["year"], row["direction"], row["category"]): row for row in load("trade-details")}
+    assert rows[(1970, "imports", "Cerium salts")]["quantity"]["status"] == "published-dash"
+    assert rows[(1970, "exports", "Cerium compounds")]["quantity"]["status"] == "not-available"
+    assert rows[(1975, "imports", "Other rare-earth metals")]["quantity"]["status"] == "less-than"
+    assert "Harmonized Tariff System" in rows[(1989, "imports", "Published total")]["classification_note"]
+    assert rows[(1990, "imports", "Published total")]["quantity"]["value"] == 7155
+    assert rows[(1990, "imports", "Published total")]["trade_value"]["value"] == 64741
+
+
+def test_rare_earth_partner_rows_remain_year_specific_acquisition_queues():
+    queues = load("trade-research")
+    assert len(queues) == 21
+    assert {queue["year"] for queue in queues} == set(range(1970, 1991))
+    assert all(queue["status"] == "source-acquisition" for queue in queues)
+    assert all({row["series"] for row in queue["reports"]} == {"FT 246", "FT 446"} for queue in queues)
+    assert all(len(queue["control_total_ids"]) == 2 for queue in queues)
+    assert all(any("Do not draw atlas trade-flow lines" in note for note in queue["classification_notes"]) for queue in queues)
 
 
 def test_atlas_renders_census_recovery_pilot_separately_from_standardized_trade():
     atlas = (ROOT / "assets" / "atlas.js").read_text(encoding="utf-8")
+    portal = (ROOT / "assets" / "portal.js").read_text(encoding="utf-8")
     assert "renderTradeDetailPilot" in atlas
-    assert "1983 Census recovery pilot" in atlas
+    assert "Census recovery pilot" in atlas
     assert "They are displayed side by side and are not merged" in atlas
+    assert 'data.trade.length + data["trade-details"].length' in portal
 
 
 def test_history_stack_page_exposes_all_layers():
