@@ -40,6 +40,16 @@
     "trust_note": "Commodity uses in the pilot are high-level orientation; page-level extraction remains a research task."
   },
   {
+    "id": "usgs-circular-1141",
+    "label": "Uranium: Its Impact on the National and Global Energy Mix",
+    "agency": "U.S. Geological Survey",
+    "source_type": "official-publication",
+    "tier": 1,
+    "url": "https://pubs.usgs.gov/circ/1997/1141/report.pdf",
+    "scope": "Official historical context and world uranium production coverage through 1992.",
+    "trust_note": "The uranium profile links this publication for context; its tables have not yet been normalized into the portal statistics dataset."
+  },
+  {
     "id": "nara-catalog-api",
     "label": "National Archives Catalog API",
     "agency": "National Archives and Records Administration",

@@ -549,35 +549,41 @@
     "series": "Foreign Relations of the United States",
     "volume": "frus1944v02",
     "document_number": "886",
-    "title": null,
-    "date": null,
+    "title": "The Belgian Minister for Foreign Affairs (Spaak) to the American Ambassador in the United Kingdom (Winant)",
+    "date": "1944-09-26",
     "participants": [],
     "country_ids": [
       "belgian-congo"
     ],
-    "mineral_ids": [],
+    "mineral_ids": [
+      "uranium"
+    ],
     "policy_themes": [
       "uranium control",
-      "allied agreement"
+      "contracted delivery",
+      "mine redevelopment",
+      "first refusal"
     ],
     "source_note": null,
     "stable_url": "https://history.state.gov/historicaldocuments/frus1944v02/d886",
     "volume_context": "Agreements between the United States and the United Kingdom and between the United States, the United Kingdom, and Belgium regarding the acquisition and control of uranium",
     "volume_year_start": 1944,
     "volume_year_end": 1944,
-    "contextual_summary": null,
+    "contextual_summary": "The transmittal and enclosed agreement documented allied control of uranium and thorium ores, contracted Congo uranium delivery, assistance to reopen and develop the mine, and first-refusal rights.",
     "statistic_ids": [],
     "agreement_ids": [
       "us-uk-uranium-acquisition-1944",
       "tripartite-uranium-control-1944"
     ],
     "law_ids": [],
-    "nara_query_ids": [],
+    "nara_query_ids": [
+      "nara-rg218-congo-uranium",
+      "nara-rg59-congo-uranium-agreement"
+    ],
     "outcome": null,
-    "metadata_status": "subject-index-lead",
+    "metadata_status": "verified-document",
     "source_ids": [
-      "frus-history-at-state",
-      "frus-subject-index"
+      "frus-history-at-state"
     ]
   },
   {
@@ -627,6 +633,86 @@
     ]
   },
   {
+    "id": "frus-1947v01-d431",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1947v01",
+    "document_number": "431",
+    "title": "Memorandum of Conversation, by Mr. Theodore C. Achilles of the Division of Western European Affairs",
+    "date": "1947-10-03",
+    "participants": [],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "mineral_ids": [
+      "uranium"
+    ],
+    "policy_themes": [
+      "agreement secrecy",
+      "industrial atomic energy",
+      "Belgian participation"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1947v01/d431",
+    "volume_context": "Foreign policy aspects of United States development of atomic energy",
+    "volume_year_start": 1947,
+    "volume_year_end": 1947,
+    "contextual_summary": "Belgian Prime Minister Spaak discussed secrecy surrounding the uranium agreement and Belgium's claim to equitable participation in future industrial uses of atomic energy derived from Congo uranium.",
+    "statistic_ids": [],
+    "agreement_ids": [
+      "tripartite-uranium-control-1944"
+    ],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-congo-uranium-agreement",
+      "nara-rg84-brussels-uranium"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1949v01-d204",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1949v01",
+    "document_number": "204",
+    "title": "Memorandum of Conversation, by Mr. R. Gordon Arneson, Special Assistant to the Under Secretary of State (Webb)",
+    "date": "1949-10-05",
+    "participants": [],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "mineral_ids": [
+      "uranium"
+    ],
+    "policy_themes": [
+      "uranium allocation",
+      "technical cooperation",
+      "agreement implementation"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1949v01/d204",
+    "volume_context": "Foreign policy aspects of United States development of atomic energy",
+    "volume_year_start": 1949,
+    "volume_year_end": 1949,
+    "contextual_summary": "State and the Belgian Ambassador discussed Belgian participation in uranium-allocation consultations and technical cooperation under the 1944 agreement.",
+    "statistic_ids": [],
+    "agreement_ids": [
+      "tripartite-uranium-control-1944"
+    ],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-congo-uranium-agreement",
+      "nara-rg84-brussels-uranium"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
     "id": "frus-1950v01-d95",
     "series": "Foreign Relations of the United States",
     "volume": "frus1950v01",
@@ -668,6 +754,129 @@
     "nara_query_ids": [
       "nara-rg59-nsc68-strategic-materials",
       "nara-rg353-stockpile-objectives"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1950v01-d167",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1950v01",
+    "document_number": "167",
+    "title": "The Secretary of State to the Embassy in Belgium",
+    "date": "1950-02-22",
+    "participants": [],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "mineral_ids": [
+      "uranium"
+    ],
+    "policy_themes": [
+      "collective security",
+      "ore delivery",
+      "technical assistance",
+      "commercial atomic energy"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1950v01/d167",
+    "volume_context": "Foreign policy aspects of United States development of atomic energy",
+    "volume_year_start": 1950,
+    "volume_year_end": 1950,
+    "contextual_summary": "The Secretary linked Belgian ore deliveries to U.S. atomic-weapons strength and addressed consultation, technical assistance, and the deferred commercial-use provisions of the 1944 agreement.",
+    "statistic_ids": [],
+    "agreement_ids": [
+      "tripartite-uranium-control-1944"
+    ],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-congo-uranium-agreement",
+      "nara-rg84-brussels-uranium"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1950v01-d200",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1950v01",
+    "document_number": "200",
+    "title": "Memorandum by Mr. R. Gordon Arneson to the Secretary of State",
+    "date": "1950-12-14",
+    "participants": [],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "mineral_ids": [
+      "uranium"
+    ],
+    "policy_themes": [
+      "export tax",
+      "processing",
+      "production expansion",
+      "atomic-energy negotiations"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1950v01/d200",
+    "volume_context": "Foreign policy aspects of United States development of atomic energy",
+    "volume_year_start": 1950,
+    "volume_year_end": 1950,
+    "contextual_summary": "The memorandum reviewed Belgian atomic-energy negotiations, an export-tax proposal, a proposed Congo processing plant, and measures intended to accelerate uranium production.",
+    "statistic_ids": [],
+    "agreement_ids": [
+      "tripartite-uranium-control-1944"
+    ],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-congo-uranium-agreement",
+      "nara-rg84-brussels-uranium"
+    ],
+    "outcome": null,
+    "metadata_status": "verified-document",
+    "source_ids": [
+      "frus-history-at-state"
+    ]
+  },
+  {
+    "id": "frus-1951v01-d242",
+    "series": "Foreign Relations of the United States",
+    "volume": "frus1951v01",
+    "document_number": "242",
+    "title": "Statement of the Position of the United States and the United Kingdom",
+    "date": "1951-04-05",
+    "participants": [],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "mineral_ids": [
+      "uranium"
+    ],
+    "policy_themes": [
+      "strategic valuation",
+      "technical assistance",
+      "development finance",
+      "agreement implementation"
+    ],
+    "source_note": null,
+    "stable_url": "https://history.state.gov/historicaldocuments/frus1951v01/d242",
+    "volume_context": "Foreign policy aspects of United States development of atomic energy",
+    "volume_year_start": 1951,
+    "volume_year_end": 1951,
+    "contextual_summary": "The statement distinguished uranium from other strategic materials while addressing Belgian requests for atomic-energy assistance and broader Congo development and defense programs.",
+    "statistic_ids": [],
+    "agreement_ids": [
+      "tripartite-uranium-control-1944"
+    ],
+    "law_ids": [],
+    "nara_query_ids": [
+      "nara-rg59-congo-uranium-agreement",
+      "nara-rg84-brussels-uranium"
     ],
     "outcome": null,
     "metadata_status": "verified-document",

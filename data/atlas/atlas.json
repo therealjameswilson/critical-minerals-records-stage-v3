@@ -203,8 +203,10 @@
         "cobalt",
         "copper",
         "manganese",
+        "rare-earth-elements",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1914supp-d423",
@@ -224,7 +226,12 @@
         "frus-1942v05-d564",
         "frus-1944v02-d886",
         "frus-1947v01-d395",
+        "frus-1947v01-d431",
+        "frus-1949v01-d204",
         "frus-1950v01-d95",
+        "frus-1950v01-d167",
+        "frus-1950v01-d200",
+        "frus-1951v01-d242",
         "frus-1952-54v11p1-d27",
         "frus-1964-68v09-d344",
         "frus-1969-76v21-d250",
@@ -356,12 +363,18 @@
       "mineral_ids": [
         "cobalt",
         "copper",
-        "tin"
+        "tin",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1942v02-d3",
         "frus-1942v02-d14",
         "frus-1944v02-d886",
+        "frus-1947v01-d431",
+        "frus-1949v01-d204",
+        "frus-1950v01-d167",
+        "frus-1950v01-d200",
+        "frus-1951v01-d242",
         "frus-1952-54v11p1-d27"
       ],
       "agreement_ids": [
@@ -370,6 +383,7 @@
       ],
       "episode_ids": [
         "world-war-ii-procurement",
+        "early-cold-war-mobilization",
         "decolonization-and-resource-access"
       ],
       "source_ids": [
@@ -709,24 +723,30 @@
     },
     {
       "id": "atlas-tripartite-uranium-control-1944-belgian-congo",
-      "title": "U.S.-U.K.-Belgium uranium control agreement",
+      "title": "U.S.-U.K.-Belgium agreement regarding control of uranium",
       "year": 1944,
-      "date_precision": "FRUS-volume-context",
+      "date_precision": "document-date",
       "country_id": "belgian-congo",
-      "mineral_ids": [],
+      "mineral_ids": [
+        "uranium"
+      ],
       "agreement_id": "tripartite-uranium-control-1944",
       "record_type": "executive-agreement",
       "frus_document_ids": [
-        "frus-1944v02-d886"
+        "frus-1944v02-d886",
+        "frus-1947v01-d431",
+        "frus-1949v01-d204",
+        "frus-1950v01-d167",
+        "frus-1950v01-d200",
+        "frus-1951v01-d242"
       ],
       "source_ids": [
-        "frus-history-at-state",
-        "frus-subject-index"
+        "frus-history-at-state"
       ],
-      "completeness": "partial",
+      "completeness": "verified-pilot",
       "from_country_id": "belgian-congo",
       "to_country_id": "united-states",
-      "line_value": 1,
+      "line_value": 6,
       "line_value_semantics": "linked pilot FRUS records"
     },
     {
@@ -747,8 +767,7 @@
         "frus-1969-76ve16-d87"
       ],
       "source_ids": [
-        "frus-history-at-state",
-        "frus-subject-index"
+        "frus-history-at-state"
       ],
       "completeness": "verified-pilot",
       "from_country_id": "chile",
@@ -868,21 +887,27 @@
     },
     {
       "id": "atlas-tripartite-uranium-control-1944-belgian-congo",
-      "title": "U.S.-U.K.-Belgium uranium control agreement",
+      "title": "U.S.-U.K.-Belgium agreement regarding control of uranium",
       "year": 1944,
-      "date_precision": "FRUS-volume-context",
+      "date_precision": "document-date",
       "country_id": "belgian-congo",
-      "mineral_ids": [],
+      "mineral_ids": [
+        "uranium"
+      ],
       "agreement_id": "tripartite-uranium-control-1944",
       "record_type": "executive-agreement",
       "frus_document_ids": [
-        "frus-1944v02-d886"
+        "frus-1944v02-d886",
+        "frus-1947v01-d431",
+        "frus-1949v01-d204",
+        "frus-1950v01-d167",
+        "frus-1950v01-d200",
+        "frus-1951v01-d242"
       ],
       "source_ids": [
-        "frus-history-at-state",
-        "frus-subject-index"
+        "frus-history-at-state"
       ],
-      "completeness": "partial"
+      "completeness": "verified-pilot"
     },
     {
       "id": "atlas-chile-copper-compensation-1971-chile",
@@ -902,8 +927,7 @@
         "frus-1969-76ve16-d87"
       ],
       "source_ids": [
-        "frus-history-at-state",
-        "frus-subject-index"
+        "frus-history-at-state"
       ],
       "completeness": "verified-pilot"
     }
@@ -963,7 +987,8 @@
         "cobalt",
         "copper",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1941v02-d805",
@@ -998,7 +1023,8 @@
         "cobalt",
         "copper",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1941v02-d805",
@@ -1033,7 +1059,8 @@
         "cobalt",
         "copper",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1941v02-d805",
@@ -1068,7 +1095,8 @@
         "cobalt",
         "copper",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1941v02-d805",
@@ -1103,7 +1131,8 @@
         "cobalt",
         "copper",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1941v02-d805",
@@ -1138,11 +1167,17 @@
         "copper",
         "manganese",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1947v01-d395",
+        "frus-1947v01-d431",
+        "frus-1949v01-d204",
         "frus-1950v01-d95",
+        "frus-1950v01-d167",
+        "frus-1950v01-d200",
+        "frus-1951v01-d242",
         "frus-1952-54v11p1-d27"
       ],
       "source_ids": [
@@ -1165,11 +1200,17 @@
         "copper",
         "manganese",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1947v01-d395",
+        "frus-1947v01-d431",
+        "frus-1949v01-d204",
         "frus-1950v01-d95",
+        "frus-1950v01-d167",
+        "frus-1950v01-d200",
+        "frus-1951v01-d242",
         "frus-1952-54v11p1-d27"
       ],
       "source_ids": [
@@ -1192,11 +1233,17 @@
         "copper",
         "manganese",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1947v01-d395",
+        "frus-1947v01-d431",
+        "frus-1949v01-d204",
         "frus-1950v01-d95",
+        "frus-1950v01-d167",
+        "frus-1950v01-d200",
+        "frus-1951v01-d242",
         "frus-1952-54v11p1-d27"
       ],
       "source_ids": [
@@ -1219,11 +1266,17 @@
         "copper",
         "manganese",
         "tin",
-        "tungsten"
+        "tungsten",
+        "uranium"
       ],
       "frus_document_ids": [
         "frus-1947v01-d395",
+        "frus-1947v01-d431",
+        "frus-1949v01-d204",
         "frus-1950v01-d95",
+        "frus-1950v01-d167",
+        "frus-1950v01-d200",
+        "frus-1951v01-d242",
         "frus-1952-54v11p1-d27"
       ],
       "source_ids": [
@@ -1674,7 +1727,69 @@
       "country_ids": [
         "belgian-congo"
       ],
-      "mineral_ids": [],
+      "mineral_ids": [
+        "uranium"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-congo-uranium-agreement",
+      "title": "Belgian Congo uranium agreement atomic energy",
+      "query": "Belgian Congo uranium agreement atomic energy",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1944,
+      "end": 1956,
+      "country_ids": [
+        "belgian-congo"
+      ],
+      "mineral_ids": [
+        "uranium"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg84-brussels-uranium",
+      "title": "Belgium Congo uranium atomic energy",
+      "query": "Belgium Congo uranium atomic energy",
+      "record_groups": [
+        "84"
+      ],
+      "start": 1944,
+      "end": 1956,
+      "country_ids": [
+        "belgian-congo"
+      ],
+      "mineral_ids": [
+        "uranium"
+      ],
+      "source_ids": [
+        "nara-catalog-api"
+      ],
+      "result_status": "live-query-plan"
+    },
+    {
+      "id": "nara-rg59-rare-earths",
+      "title": "rare earths monazite strategic materials",
+      "query": "rare earths monazite strategic materials",
+      "record_groups": [
+        "59"
+      ],
+      "start": 1945,
+      "end": 1992,
+      "country_ids": [
+        "united-states"
+      ],
+      "mineral_ids": [
+        "rare-earth-elements"
+      ],
       "source_ids": [
         "nara-catalog-api"
       ],

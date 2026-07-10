@@ -31,15 +31,15 @@ def walk_years(node):
 
 def test_pilot_meets_minimum_entity_counts():
     expected = {
-        "minerals": 8,
+        "minerals": 10,
         "countries": 9,
         "episodes": 8,
         "agreements": 15,
-        "frus-documents": 27,
+        "frus-documents": 32,
         "administrations": 5,
         "laws": 3,
         "stockpile-cases": 2,
-        "nara-queries": 27,
+        "nara-queries": 30,
         "country-briefs": 4,
     }
     for name, minimum in expected.items():
@@ -79,6 +79,20 @@ def test_policy_in_numbers_uses_expected_official_tin_values():
     assert rows["U.S. apparent consumption"]["value"] == 96400
     assert rows["World production"]["value"] == 124000
     assert rows["Unit value"]["price_basis"] == "nominal"
+
+
+def test_uranium_and_rare_earth_profiles_preserve_different_evidence_depth():
+    minerals = {row["id"]: row for row in load("minerals")}
+    documents = {row["id"]: row for row in load("frus-documents")}
+    statistics = load("statistics")
+
+    uranium = minerals["uranium"]
+    rare_earths = minerals["rare-earth-elements"]
+    assert len(uranium["frus_document_ids"]) == 6
+    assert all(documents[identifier]["metadata_status"] == "verified-document" for identifier in uranium["frus_document_ids"])
+    assert rare_earths["frus_document_ids"] == []
+    assert any(row["mineral_id"] == "rare-earth-elements" and row["year"] == 1900 for row in statistics)
+    assert any("FRUS" in gap for gap in rare_earths["data_gaps"])
 
 
 def test_history_stack_page_exposes_all_layers():

@@ -344,6 +344,49 @@
     ]
   },
   {
+    "id": "rare-earth-elements",
+    "canonical_name": "Rare earth elements",
+    "alternate_names": [
+      "rare earths",
+      "rare-earth elements",
+      "REE",
+      "monazite"
+    ],
+    "chemical_symbol": "REE",
+    "category": "mineral group",
+    "historical_scope": {
+      "start": 1900,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "twentieth century",
+        "use": "The official USGS historical series provides production, trade, consumption, price, and world-production context in rare-earth-oxide equivalent. No reviewed FRUS document has yet been linked to this profile.",
+        "source_ids": [
+          "usgs-ds140"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "united-states"
+    ],
+    "frus_document_ids": [],
+    "agreement_ids": [],
+    "law_ids": [],
+    "episode_ids": [],
+    "source_ids": [
+      "usgs-ds140"
+    ],
+    "completeness": "partial",
+    "data_gaps": [
+      "FRUS terminology and document pathways require review; modern rare-earth categories are not projected backward without evidence.",
+      "Country-level extraction, processing, and supplier-share series remain to be added."
+    ]
+  },
+  {
     "id": "tin",
     "canonical_name": "Tin",
     "alternate_names": [],
@@ -462,6 +505,63 @@
     "completeness": "partial",
     "data_gaps": [
       "Supplier-country and price-contract histories remain to be linked."
+    ]
+  },
+  {
+    "id": "uranium",
+    "canonical_name": "Uranium",
+    "alternate_names": [
+      "uranium ore",
+      "uranium oxide",
+      "radioactive ores"
+    ],
+    "chemical_symbol": "U",
+    "category": "nuclear fuel and strategic material",
+    "historical_scope": {
+      "start": 1944,
+      "end": 1992
+    },
+    "strategic_uses": [
+      {
+        "period": "World War II and early Cold War",
+        "use": "Reviewed FRUS records document allied control, contracted delivery, mine redevelopment, first-refusal rights, production expansion, technical assistance, and bargaining over Congo uranium.",
+        "source_ids": [
+          "frus-history-at-state"
+        ]
+      }
+    ],
+    "military_uses_by_period": [],
+    "industrial_uses_by_period": [],
+    "substitutes": [],
+    "country_ids": [
+      "belgian-congo",
+      "united-states"
+    ],
+    "frus_document_ids": [
+      "frus-1944v02-d886",
+      "frus-1947v01-d431",
+      "frus-1949v01-d204",
+      "frus-1950v01-d167",
+      "frus-1950v01-d200",
+      "frus-1951v01-d242"
+    ],
+    "agreement_ids": [
+      "us-uk-uranium-acquisition-1944",
+      "tripartite-uranium-control-1944"
+    ],
+    "law_ids": [],
+    "episode_ids": [
+      "world-war-ii-procurement",
+      "early-cold-war-mobilization"
+    ],
+    "source_ids": [
+      "frus-history-at-state",
+      "usgs-circular-1141"
+    ],
+    "completeness": "verified-pilot",
+    "data_gaps": [
+      "Country production, price, contract-delivery, processing, and import-dependence series are not yet normalized.",
+      "Atomic Energy Commission and additional supplier-country records require expansion beyond this Congo-centered pilot."
     ]
   }
 ]

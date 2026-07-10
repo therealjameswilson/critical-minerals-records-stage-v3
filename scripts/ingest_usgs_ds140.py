@@ -30,6 +30,7 @@ SOURCES = {
     "cobalt": ("Cobalt", "ds140-cobalt-2021.xlsx", 2021),
     "copper": ("Copper", "ds140-copper-2020.xlsx", 2020),
     "manganese": ("Manganese", "ds140-manganese-2022.xlsx", 2022),
+    "rare-earth-elements": ("Rare Earths", "ds140-rare-earths-2020.xlsx", 2020),
     "tin": ("Tin", "ds140-tin-2021.xlsx", 2021),
     "tungsten": ("Tungsten", "ds140-tungsten-2019.xlsx", 2019),
 }
@@ -95,6 +96,8 @@ def extract_file(mineral_id: str, cache_dir: Path, access_date: str) -> list[dic
     source_url = f"https://www.usgs.gov/media/files/{mineral_id.replace('-', '-')}-historical-statistics-data-series-140"
     if mineral_id == "bauxite":
         source_url = "https://www.usgs.gov/media/files/bauxite-and-alumina-historical-statistics-data-series-140"
+    elif mineral_id == "rare-earth-elements":
+        source_url = "https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140"
 
     rows: list[dict] = []
     for row_number, values in enumerate(worksheet.iter_rows(min_row=6, values_only=True), start=6):

@@ -15,11 +15,11 @@ HISTORICAL_START = 1861
 HISTORICAL_END = 1992
 
 EXPECTED_MINIMUMS = {
-    "minerals": 8,
+    "minerals": 10,
     "countries": 9,
     "episodes": 8,
     "agreements": 15,
-    "frus-documents": 27,
+    "frus-documents": 32,
     "administrations": 5,
     "laws": 3,
     "stockpile-cases": 2,

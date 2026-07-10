@@ -41,7 +41,8 @@
       "cobalt",
       "copper",
       "tin",
-      "tungsten"
+      "tungsten",
+      "uranium"
     ],
     "country_ids": [
       "bolivia",
@@ -91,7 +92,7 @@
     "president": "Harry S. Truman",
     "start": 1945,
     "end": 1953,
-    "summary": "Reviewed FRUS records connect recovery planning, stockpile objectives, foreign-source assumptions, and African strategic materials.",
+    "summary": "Reviewed FRUS records connect recovery planning, stockpile objectives, foreign-source assumptions, African strategic materials, and continuing Congo uranium negotiations.",
     "mineral_ids": [
       "aluminum",
       "chromium",
@@ -99,7 +100,8 @@
       "copper",
       "manganese",
       "tin",
-      "tungsten"
+      "tungsten",
+      "uranium"
     ],
     "country_ids": [
       "belgian-congo",
@@ -109,10 +111,16 @@
     ],
     "frus_document_ids": [
       "frus-1947v01-d395",
+      "frus-1947v01-d431",
+      "frus-1949v01-d204",
       "frus-1950v01-d95",
+      "frus-1950v01-d167",
+      "frus-1950v01-d200",
+      "frus-1951v01-d242",
       "frus-1952-54v11p1-d27"
     ],
     "agreement_ids": [
+      "tripartite-uranium-control-1944",
       "erp-strategic-materials-provisions-1947",
       "nsc68-materials-program-1950"
     ],

@@ -118,9 +118,77 @@
     "date_start": 1943,
     "date_end": 1955,
     "available_online": true,
-    "mineral_ids": [],
+    "mineral_ids": [
+      "uranium"
+    ],
     "country_ids": [
       "belgian-congo"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-congo-uranium-agreement",
+    "label": "Belgian Congo uranium agreement atomic energy",
+    "query": "Belgian Congo uranium agreement atomic energy",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1944,
+    "date_end": 1956,
+    "available_online": true,
+    "mineral_ids": [
+      "uranium"
+    ],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg84-brussels-uranium",
+    "label": "Belgium Congo uranium atomic energy",
+    "query": "Belgium Congo uranium atomic energy",
+    "record_groups": [
+      "84"
+    ],
+    "date_start": 1944,
+    "date_end": 1956,
+    "available_online": true,
+    "mineral_ids": [
+      "uranium"
+    ],
+    "country_ids": [
+      "belgian-congo"
+    ],
+    "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
+    "result_status": "live-query-plan",
+    "source_ids": [
+      "nara-catalog-api"
+    ]
+  },
+  {
+    "id": "nara-rg59-rare-earths",
+    "label": "rare earths monazite strategic materials",
+    "query": "rare earths monazite strategic materials",
+    "record_groups": [
+      "59"
+    ],
+    "date_start": 1945,
+    "date_end": 1992,
+    "available_online": true,
+    "mineral_ids": [
+      "rare-earth-elements"
+    ],
+    "country_ids": [
+      "united-states"
     ],
     "relevance_method": "Structured discovery query only. Rank returned descriptions as direct, probable, contextual, or broad archival leads after review.",
     "result_status": "live-query-plan",

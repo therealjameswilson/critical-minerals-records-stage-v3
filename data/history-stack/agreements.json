@@ -298,12 +298,13 @@
   },
   {
     "id": "us-uk-uranium-acquisition-1944",
-    "official_title": "U.S.-U.K. uranium acquisition agreement",
-    "short_title": "U.S.-U.K. uranium acquisition agreement",
-    "record_type": "executive-agreement",
+    "official_title": "Combined Development Trust Congo uranium purchasing pathway",
+    "short_title": "Combined Development Trust Congo uranium purchasing pathway",
+    "record_type": "purchasing-agreement",
     "parties": [
-      "United States",
-      "United Kingdom"
+      "Combined Development Trust",
+      "African Metals Corporation",
+      "Union Miniere du Haut Katanga"
     ],
     "signature_date": null,
     "entry_into_force_date": null,
@@ -311,51 +312,58 @@
     "treaty_series_citation": null,
     "statutes_at_large_citation": null,
     "tias_number": null,
-    "mineral_ids": [],
+    "mineral_ids": [
+      "uranium"
+    ],
     "country_ids": [],
     "frus_document_ids": [
       "frus-1944v02-d886"
     ],
     "official_text_url": "https://history.state.gov/historicaldocuments/frus1944v02/d886",
-    "summary": "FRUS chapter context identifies an agreement regarding uranium acquisition and control; formal citation remains to be added.",
+    "summary": "The reviewed tripartite agreement states that a separate contract would be entered into between the Combined Development Trust and African Metals Corporation, acting for Union Miniere du Haut Katanga. This pathway does not assert the separate contract's date or full terms.",
     "implementation_consequences": [],
     "source_ids": [
-      "frus-history-at-state",
-      "frus-subject-index"
+      "frus-history-at-state"
     ],
     "completeness": "partial"
   },
   {
     "id": "tripartite-uranium-control-1944",
-    "official_title": "U.S.-U.K.-Belgium uranium control agreement",
-    "short_title": "U.S.-U.K.-Belgium uranium control agreement",
+    "official_title": "U.S.-U.K.-Belgium agreement regarding control of uranium",
+    "short_title": "U.S.-U.K.-Belgium agreement regarding control of uranium",
     "record_type": "executive-agreement",
     "parties": [
       "United States",
       "United Kingdom",
       "Belgium"
     ],
-    "signature_date": null,
+    "signature_date": "1944-09-26",
     "entry_into_force_date": null,
     "termination_date": null,
     "treaty_series_citation": null,
     "statutes_at_large_citation": null,
     "tias_number": null,
-    "mineral_ids": [],
+    "mineral_ids": [
+      "uranium"
+    ],
     "country_ids": [
       "belgian-congo"
     ],
     "frus_document_ids": [
-      "frus-1944v02-d886"
+      "frus-1944v02-d886",
+      "frus-1947v01-d431",
+      "frus-1949v01-d204",
+      "frus-1950v01-d167",
+      "frus-1950v01-d200",
+      "frus-1951v01-d242"
     ],
     "official_text_url": "https://history.state.gov/historicaldocuments/frus1944v02/d886",
-    "summary": "FRUS chapter context identifies a tripartite uranium agreement; formal citation remains to be added.",
+    "summary": "The reviewed FRUS agreement and follow-on records document control, delivery, first-refusal rights, production expansion, technical assistance, and negotiations over commercial and developmental benefits.",
     "implementation_consequences": [],
     "source_ids": [
-      "frus-history-at-state",
-      "frus-subject-index"
+      "frus-history-at-state"
     ],
-    "completeness": "partial"
+    "completeness": "verified-pilot"
   },
   {
     "id": "erp-strategic-materials-provisions-1947",
@@ -390,8 +398,7 @@
     "summary": "A reviewed FRUS circular connected recovery planning, overseas production, and U.S. stockpiling; this row does not assert a separate treaty.",
     "implementation_consequences": [],
     "source_ids": [
-      "frus-history-at-state",
-      "frus-subject-index"
+      "frus-history-at-state"
     ],
     "completeness": "verified-pilot"
   },
@@ -428,8 +435,7 @@
     "summary": "A reviewed FRUS memorandum discusses strategic stockpile objectives and foreign-source assumptions; this is a policy-process record, not an international agreement.",
     "implementation_consequences": [],
     "source_ids": [
-      "frus-history-at-state",
-      "frus-subject-index"
+      "frus-history-at-state"
     ],
     "completeness": "verified-pilot"
   },
@@ -465,8 +471,7 @@
     "summary": "A reviewed FRUS memorandum records interagency assessment of politically and economically dependable foreign sources; this is a policy-process record, not a treaty.",
     "implementation_consequences": [],
     "source_ids": [
-      "frus-history-at-state",
-      "frus-subject-index"
+      "frus-history-at-state"
     ],
     "completeness": "verified-pilot"
   },
@@ -501,8 +506,7 @@
     "summary": "Reviewed FRUS documents describe nationalization, compensation, diplomatic representations, and policy review. This row is a negotiation pathway, not a treaty.",
     "implementation_consequences": [],
     "source_ids": [
-      "frus-history-at-state",
-      "frus-subject-index"
+      "frus-history-at-state"
     ],
     "completeness": "verified-pilot"
   }

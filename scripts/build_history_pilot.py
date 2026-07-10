@@ -2,9 +2,9 @@
 """Build the normalized, source-bounded 1861-1992 History Stack pilot.
 
 FRUS discovery records are derived from the checked-in FRUS Subjects index.
-Only the four records explicitly reviewed for the earlier demonstrator receive
-document-level titles, dates, and summaries. All other FRUS rows remain clearly
-marked subject-index leads and retain only volume-level navigation context.
+Only records explicitly reviewed against HistoryAtState receive document-level
+titles, dates, and summaries. All other FRUS rows remain clearly marked
+subject-index leads and retain only volume-level navigation context.
 """
 
 from __future__ import annotations
@@ -73,6 +73,16 @@ SOURCES = [
         "url": "https://www.usgs.gov/centers/national-minerals-information-center/statistical-compendium",
         "scope": "Official commodity chapters and historical statistical context through 1990.",
         "trust_note": "Commodity uses in the pilot are high-level orientation; page-level extraction remains a research task."
+    },
+    {
+        "id": "usgs-circular-1141",
+        "label": "Uranium: Its Impact on the National and Global Energy Mix",
+        "agency": "U.S. Geological Survey",
+        "source_type": "official-publication",
+        "tier": 1,
+        "url": "https://pubs.usgs.gov/circ/1997/1141/report.pdf",
+        "scope": "Official historical context and world uranium production coverage through 1992.",
+        "trust_note": "The uranium profile links this publication for context; its tables have not yet been normalized into the portal statistics dataset."
     },
     {
         "id": "nara-catalog-api",
@@ -204,6 +214,15 @@ MINERALS = [
         "data_gaps": ["World War I import dependence and supplier-country statistics remain to be added."]
     },
     {
+        "id": "rare-earth-elements", "canonical_name": "Rare earth elements", "alternate_names": ["rare earths", "rare-earth elements", "REE", "monazite"], "chemical_symbol": "REE",
+        "category": "mineral group", "historical_scope": {"start": 1900, "end": 1992},
+        "strategic_uses": [{"period": "twentieth century", "use": "The official USGS historical series provides production, trade, consumption, price, and world-production context in rare-earth-oxide equivalent. No reviewed FRUS document has yet been linked to this profile.", "source_ids": ["usgs-ds140"]}],
+        "military_uses_by_period": [], "industrial_uses_by_period": [], "substitutes": [],
+        "country_ids": ["united-states"], "frus_document_ids": [], "agreement_ids": [], "law_ids": [], "episode_ids": [],
+        "source_ids": ["usgs-ds140"], "completeness": "partial",
+        "data_gaps": ["FRUS terminology and document pathways require review; modern rare-earth categories are not projected backward without evidence.", "Country-level extraction, processing, and supplier-share series remain to be added."]
+    },
+    {
         "id": "tin", "canonical_name": "Tin", "alternate_names": [], "chemical_symbol": "Sn",
         "category": "base and strategic metal", "historical_scope": {"start": 1900, "end": 1992},
         "strategic_uses": [{"period": "World War II", "use": "FRUS indexes strategic-material purchasing from Bolivia and an international tin-control agreement; USGS provides a long-run quantitative series.", "source_ids": ["frus-history-at-state", "frus-subject-index", "usgs-ds140"]}],
@@ -228,6 +247,18 @@ MINERALS = [
         "episode_ids": ["world-war-ii-procurement", "early-cold-war-mobilization"],
         "source_ids": ["frus-history-at-state", "usgs-ds140"], "completeness": "partial",
         "data_gaps": ["Supplier-country and price-contract histories remain to be linked."]
+    },
+    {
+        "id": "uranium", "canonical_name": "Uranium", "alternate_names": ["uranium ore", "uranium oxide", "radioactive ores"], "chemical_symbol": "U",
+        "category": "nuclear fuel and strategic material", "historical_scope": {"start": 1944, "end": 1992},
+        "strategic_uses": [{"period": "World War II and early Cold War", "use": "Reviewed FRUS records document allied control, contracted delivery, mine redevelopment, first-refusal rights, production expansion, technical assistance, and bargaining over Congo uranium.", "source_ids": ["frus-history-at-state"]}],
+        "military_uses_by_period": [], "industrial_uses_by_period": [], "substitutes": [],
+        "country_ids": ["belgian-congo", "united-states"],
+        "frus_document_ids": [frus_id("frus1944v02", "d886"), frus_id("frus1947v01", "d431"), frus_id("frus1949v01", "d204"), frus_id("frus1950v01", "d167"), frus_id("frus1950v01", "d200"), frus_id("frus1951v01", "d242")],
+        "agreement_ids": ["us-uk-uranium-acquisition-1944", "tripartite-uranium-control-1944"], "law_ids": [],
+        "episode_ids": ["world-war-ii-procurement", "early-cold-war-mobilization"],
+        "source_ids": ["frus-history-at-state", "usgs-circular-1141"], "completeness": "verified-pilot",
+        "data_gaps": ["Country production, price, contract-delivery, processing, and import-dependence series are not yet normalized.", "Atomic Energy Commission and additional supplier-country records require expansion beyond this Congo-centered pilot."]
     }
 ]
 
@@ -241,7 +272,10 @@ PILOT_FRUS_KEYS = [
     ("frus1942v02", "d3"), ("frus1942v02", "d14"),
     ("frus1942v05", "d493"), ("frus1942v01", "d440"),
     ("frus1942v05", "d564"), ("frus1944v02", "d886"),
-    ("frus1947v01", "d395"), ("frus1950v01", "d95"),
+    ("frus1947v01", "d395"), ("frus1947v01", "d431"),
+    ("frus1949v01", "d204"), ("frus1950v01", "d95"),
+    ("frus1950v01", "d167"), ("frus1950v01", "d200"),
+    ("frus1951v01", "d242"),
     ("frus1952-54v11p1", "d27"), ("frus1964-68v09", "d344"),
     ("frus1969-76v21", "d250"), ("frus1969-76v21", "d256"),
     ("frus1969-76v21", "d261"), ("frus1969-76ve16", "d87"),
@@ -289,10 +323,10 @@ COUNTRIES = [
         "alternate_historical_names": ["Congo (Leopoldville)", "Republic of the Congo", "Zaire", "Democratic Republic of the Congo"],
         "names_by_period": [{"name": "Belgian Congo", "start": 1908, "end": 1960}, {"name": "Republic of the Congo (Leopoldville)", "start": 1960, "end": 1964}, {"name": "Democratic Republic of the Congo", "start": 1964, "end": 1971}, {"name": "Zaire", "start": 1971, "end": 1992}],
         "sovereignty_changes": [{"year": 1960, "note": "Independence from Belgium; subsequent names are preserved by period."}],
-        "mineral_ids": ["cobalt", "copper", "tin"],
-        "frus_document_ids": [frus_id("frus1942v02", "d3"), frus_id("frus1942v02", "d14"), frus_id("frus1944v02", "d886"), frus_id("frus1952-54v11p1", "d27")],
+        "mineral_ids": ["cobalt", "copper", "tin", "uranium"],
+        "frus_document_ids": [frus_id("frus1942v02", "d3"), frus_id("frus1942v02", "d14"), frus_id("frus1944v02", "d886"), frus_id("frus1947v01", "d431"), frus_id("frus1949v01", "d204"), frus_id("frus1950v01", "d167"), frus_id("frus1950v01", "d200"), frus_id("frus1951v01", "d242"), frus_id("frus1952-54v11p1", "d27")],
         "agreement_ids": ["congo-tripartite-trade-negotiations-1942", "tripartite-uranium-control-1944"],
-        "episode_ids": ["world-war-ii-procurement", "decolonization-and-resource-access"],
+        "episode_ids": ["world-war-ii-procurement", "early-cold-war-mobilization", "decolonization-and-resource-access"],
         "ports": [], "mines": [], "smelters": [], "rail_corridors": [],
         "marker": {"latitude": -2.9, "longitude": 23.7, "precision": "country"},
         "source_ids": ["frus-history-at-state", "frus-subject-index"], "completeness": "partial",
@@ -381,7 +415,7 @@ EPISODES = [
     {
         "id": "world-war-ii-procurement", "title": "World War II procurement and access", "start": 1941, "end": 1945,
         "summary": "FRUS pathways connect resource access to purchasing, allied coordination, mine protection, trade control, and uranium agreements.",
-        "mineral_ids": ["aluminum", "bauxite", "chromium", "cobalt", "copper", "tin", "tungsten"],
+        "mineral_ids": ["aluminum", "bauxite", "chromium", "cobalt", "copper", "tin", "tungsten", "uranium"],
         "country_ids": ["bolivia", "belgian-congo", "surinam", "turkey", "united-states"],
         "frus_document_ids": [frus_id("frus1941v02", "d805"), frus_id("frus1941v02", "d821"), frus_id("frus1941v03", "d1006"), frus_id("frus1941v03", "d1038"), frus_id("frus1942v01", "d440"), frus_id("frus1942v02", "d3"), frus_id("frus1942v02", "d14"), frus_id("frus1942v05", "d493"), frus_id("frus1942v05", "d564"), frus_id("frus1944v02", "d886")],
         "agreement_ids": ["surinam-bauxite-protection-1941", "turkish-chrome-negotiations-1941", "international-tin-control-agreement-1942", "congo-tripartite-trade-negotiations-1942", "bolivian-strategic-materials-purchase-1942", "us-bolivia-economic-cooperation-1942", "us-uk-uranium-acquisition-1944", "tripartite-uranium-control-1944"],
@@ -389,11 +423,11 @@ EPISODES = [
     },
     {
         "id": "early-cold-war-mobilization", "title": "Early Cold War mobilization and permanent stockpiling", "start": 1946, "end": 1960,
-        "summary": "Reviewed FRUS records connect foreign-source assumptions, economic recovery, African raw materials, and stockpile requirements.",
-        "mineral_ids": ["aluminum", "chromium", "cobalt", "copper", "manganese", "tin", "tungsten"],
+        "summary": "Reviewed FRUS records connect foreign-source assumptions, economic recovery, African raw materials, uranium diplomacy, and stockpile requirements.",
+        "mineral_ids": ["aluminum", "chromium", "cobalt", "copper", "manganese", "tin", "tungsten", "uranium"],
         "country_ids": ["belgian-congo", "northern-rhodesia", "south-africa", "united-states"],
-        "frus_document_ids": [frus_id("frus1947v01", "d395"), frus_id("frus1950v01", "d95"), frus_id("frus1952-54v11p1", "d27")],
-        "agreement_ids": ["erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950"],
+        "frus_document_ids": [frus_id("frus1947v01", "d395"), frus_id("frus1947v01", "d431"), frus_id("frus1949v01", "d204"), frus_id("frus1950v01", "d95"), frus_id("frus1950v01", "d167"), frus_id("frus1950v01", "d200"), frus_id("frus1951v01", "d242"), frus_id("frus1952-54v11p1", "d27")],
+        "agreement_ids": ["erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950", "tripartite-uranium-control-1944"],
         "law_ids": ["stock-piling-act-1946", "defense-production-act-1950"], "source_ids": ["frus-history-at-state", "govinfo-statutes"],
         "outcome": None, "completeness": "verified-pilot"
     },
@@ -442,8 +476,8 @@ AGREEMENTS = [
     ("congo-tripartite-trade-negotiations-1942", "U.S.-U.K.-Belgium negotiations on Belgian Congo trade", "negotiation-record", ["United States", "United Kingdom", "Belgium"], None, ["cobalt", "copper", "tin"], ["belgian-congo"], [frus_id("frus1942v02", "d3"), frus_id("frus1942v02", "d14")], "https://history.state.gov/historicaldocuments/frus1942v02/d3", "FRUS chapter context identifies negotiations for a tripartite agreement relating to Belgian Congo imports and exports."),
     ("bolivian-strategic-materials-purchase-1942", "Negotiations for U.S. purchase of strategic materials from Bolivia", "purchasing-agreement", ["United States", "Bolivia"], None, ["tin", "tungsten", "copper"], ["bolivia"], [frus_id("frus1942v05", "d493")], "https://history.state.gov/historicaldocuments/frus1942v05/d493", "FRUS chapter context identifies purchase negotiations; exact contract title and terms require document-level review."),
     ("us-bolivia-economic-cooperation-1942", "U.S.-Bolivia economic cooperation program", "negotiation-record", ["United States", "Bolivia"], None, ["tin"], ["bolivia"], [frus_id("frus1942v05", "d564")], "https://history.state.gov/historicaldocuments/frus1942v05/d564", "FRUS chapter context identifies a program of economic cooperation; legal form and implementation consequences remain under review."),
-    ("us-uk-uranium-acquisition-1944", "U.S.-U.K. uranium acquisition agreement", "executive-agreement", ["United States", "United Kingdom"], None, [], [], [frus_id("frus1944v02", "d886")], "https://history.state.gov/historicaldocuments/frus1944v02/d886", "FRUS chapter context identifies an agreement regarding uranium acquisition and control; formal citation remains to be added."),
-    ("tripartite-uranium-control-1944", "U.S.-U.K.-Belgium uranium control agreement", "executive-agreement", ["United States", "United Kingdom", "Belgium"], None, [], ["belgian-congo"], [frus_id("frus1944v02", "d886")], "https://history.state.gov/historicaldocuments/frus1944v02/d886", "FRUS chapter context identifies a tripartite uranium agreement; formal citation remains to be added."),
+    ("us-uk-uranium-acquisition-1944", "Combined Development Trust Congo uranium purchasing pathway", "purchasing-agreement", ["Combined Development Trust", "African Metals Corporation", "Union Miniere du Haut Katanga"], None, ["uranium"], [], [frus_id("frus1944v02", "d886")], "https://history.state.gov/historicaldocuments/frus1944v02/d886", "The reviewed tripartite agreement states that a separate contract would be entered into between the Combined Development Trust and African Metals Corporation, acting for Union Miniere du Haut Katanga. This pathway does not assert the separate contract's date or full terms."),
+    ("tripartite-uranium-control-1944", "U.S.-U.K.-Belgium agreement regarding control of uranium", "executive-agreement", ["United States", "United Kingdom", "Belgium"], "1944-09-26", ["uranium"], ["belgian-congo"], [frus_id("frus1944v02", "d886"), frus_id("frus1947v01", "d431"), frus_id("frus1949v01", "d204"), frus_id("frus1950v01", "d167"), frus_id("frus1950v01", "d200"), frus_id("frus1951v01", "d242")], "https://history.state.gov/historicaldocuments/frus1944v02/d886", "The reviewed FRUS agreement and follow-on records document control, delivery, first-refusal rights, production expansion, technical assistance, and negotiations over commercial and developmental benefits."),
     ("erp-strategic-materials-provisions-1947", "European Recovery Program strategic-materials provisions", "negotiation-record", ["United States", "European Recovery Program participants"], None, ["chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], ["united-states"], [frus_id("frus1947v01", "d395")], "https://history.state.gov/historicaldocuments/frus1947v01/d395", "A reviewed FRUS circular connected recovery planning, overseas production, and U.S. stockpiling; this row does not assert a separate treaty."),
     ("nsc68-materials-program-1950", "NSC-68 materials and stockpile program review", "other", ["United States"], None, ["aluminum", "chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], ["united-states"], [frus_id("frus1950v01", "d95")], "https://history.state.gov/historicaldocuments/frus1950v01/d95", "A reviewed FRUS memorandum discusses strategic stockpile objectives and foreign-source assumptions; this is a policy-process record, not an international agreement."),
     ("stockpile-objectives-review-1967", "Interagency stockpile objectives review", "other", ["United States"], "1967-06-27", ["chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], ["united-states"], [frus_id("frus1964-68v09", "d344")], "https://history.state.gov/historicaldocuments/frus1964-68v09/d344", "A reviewed FRUS memorandum records interagency assessment of politically and economically dependable foreign sources; this is a policy-process record, not a treaty."),
@@ -461,8 +495,8 @@ def agreement_rows() -> list[dict]:
             "treaty_series_citation": None, "statutes_at_large_citation": None, "tias_number": None,
             "mineral_ids": minerals, "country_ids": countries, "frus_document_ids": documents,
             "official_text_url": url, "summary": summary, "implementation_consequences": [],
-            "source_ids": ["frus-history-at-state", "frus-subject-index"],
-            "completeness": "verified-pilot" if identifier in {"erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950", "stockpile-objectives-review-1967", "chile-copper-compensation-1971"} else "partial"
+            "source_ids": ["frus-history-at-state"] if identifier in {"us-uk-uranium-acquisition-1944", "tripartite-uranium-control-1944", "erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950", "stockpile-objectives-review-1967", "chile-copper-compensation-1971"} else ["frus-history-at-state", "frus-subject-index"],
+            "completeness": "verified-pilot" if identifier in {"tripartite-uranium-control-1944", "erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950", "stockpile-objectives-review-1967", "chile-copper-compensation-1971"} else "partial"
         })
     return rows
 
@@ -498,8 +532,8 @@ LAWS = [
 
 ADMINISTRATIONS = [
     {"id": "wilson", "president": "Woodrow Wilson", "start": 1913, "end": 1921, "summary": "Pilot coverage currently centers on FRUS discovery leads concerning wartime copper shipments.", "mineral_ids": ["copper"], "country_ids": ["united-states"], "frus_document_ids": [frus_id("frus1914Supp", "d423"), frus_id("frus1914Supp", "d427")], "agreement_ids": ["copper-shipment-correspondence-1914"], "law_ids": [], "episode_ids": ["world-war-i-resource-access"], "source_ids": ["frus-history-at-state", "frus-subject-index"], "completeness": "research-queue"},
-    {"id": "franklin-roosevelt", "president": "Franklin D. Roosevelt", "start": 1933, "end": 1945, "summary": "Pilot FRUS pathways cover stockpile planning, bauxite protection, chrome acquisition, tin purchasing, Congo trade, and uranium agreements.", "mineral_ids": ["aluminum", "bauxite", "chromium", "cobalt", "copper", "tin", "tungsten"], "country_ids": ["bolivia", "belgian-congo", "surinam", "turkey", "united-states"], "frus_document_ids": [frus_id("frus1939v01", "d934"), frus_id("frus1939v01", "d939"), frus_id("frus1941v02", "d805"), frus_id("frus1941v02", "d821"), frus_id("frus1941v03", "d1006"), frus_id("frus1941v03", "d1038"), frus_id("frus1942v01", "d440"), frus_id("frus1942v02", "d3"), frus_id("frus1942v02", "d14"), frus_id("frus1942v05", "d493"), frus_id("frus1942v05", "d564"), frus_id("frus1944v02", "d886")], "agreement_ids": [row[0] for row in AGREEMENTS[2:11]], "law_ids": [], "episode_ids": ["interwar-planning", "world-war-ii-procurement"], "source_ids": ["frus-history-at-state", "frus-subject-index"], "completeness": "partial"},
-    {"id": "truman", "president": "Harry S. Truman", "start": 1945, "end": 1953, "summary": "Reviewed FRUS records connect recovery planning, stockpile objectives, foreign-source assumptions, and African strategic materials.", "mineral_ids": ["aluminum", "chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], "country_ids": ["belgian-congo", "northern-rhodesia", "south-africa", "united-states"], "frus_document_ids": [frus_id("frus1947v01", "d395"), frus_id("frus1950v01", "d95"), frus_id("frus1952-54v11p1", "d27")], "agreement_ids": ["erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950"], "law_ids": ["stock-piling-act-1946", "defense-production-act-1950"], "episode_ids": ["early-cold-war-mobilization"], "source_ids": ["frus-history-at-state", "govinfo-statutes"], "completeness": "verified-pilot"},
+    {"id": "franklin-roosevelt", "president": "Franklin D. Roosevelt", "start": 1933, "end": 1945, "summary": "Pilot FRUS pathways cover stockpile planning, bauxite protection, chrome acquisition, tin purchasing, Congo trade, and uranium agreements.", "mineral_ids": ["aluminum", "bauxite", "chromium", "cobalt", "copper", "tin", "tungsten", "uranium"], "country_ids": ["bolivia", "belgian-congo", "surinam", "turkey", "united-states"], "frus_document_ids": [frus_id("frus1939v01", "d934"), frus_id("frus1939v01", "d939"), frus_id("frus1941v02", "d805"), frus_id("frus1941v02", "d821"), frus_id("frus1941v03", "d1006"), frus_id("frus1941v03", "d1038"), frus_id("frus1942v01", "d440"), frus_id("frus1942v02", "d3"), frus_id("frus1942v02", "d14"), frus_id("frus1942v05", "d493"), frus_id("frus1942v05", "d564"), frus_id("frus1944v02", "d886")], "agreement_ids": [row[0] for row in AGREEMENTS[2:11]], "law_ids": [], "episode_ids": ["interwar-planning", "world-war-ii-procurement"], "source_ids": ["frus-history-at-state", "frus-subject-index"], "completeness": "partial"},
+    {"id": "truman", "president": "Harry S. Truman", "start": 1945, "end": 1953, "summary": "Reviewed FRUS records connect recovery planning, stockpile objectives, foreign-source assumptions, African strategic materials, and continuing Congo uranium negotiations.", "mineral_ids": ["aluminum", "chromium", "cobalt", "copper", "manganese", "tin", "tungsten", "uranium"], "country_ids": ["belgian-congo", "northern-rhodesia", "south-africa", "united-states"], "frus_document_ids": [frus_id("frus1947v01", "d395"), frus_id("frus1947v01", "d431"), frus_id("frus1949v01", "d204"), frus_id("frus1950v01", "d95"), frus_id("frus1950v01", "d167"), frus_id("frus1950v01", "d200"), frus_id("frus1951v01", "d242"), frus_id("frus1952-54v11p1", "d27")], "agreement_ids": ["tripartite-uranium-control-1944", "erp-strategic-materials-provisions-1947", "nsc68-materials-program-1950"], "law_ids": ["stock-piling-act-1946", "defense-production-act-1950"], "episode_ids": ["early-cold-war-mobilization"], "source_ids": ["frus-history-at-state", "govinfo-statutes"], "completeness": "verified-pilot"},
     {"id": "johnson", "president": "Lyndon B. Johnson", "start": 1963, "end": 1969, "summary": "Pilot coverage links a reviewed stockpile-objectives memorandum with three documents on the 1965 Indonesian political crisis. The pilot does not assert a mineral-access motive for the Indonesia policy record.", "mineral_ids": ["chromium", "cobalt", "copper", "manganese", "tin", "tungsten"], "country_ids": ["indonesia", "united-states"], "frus_document_ids": [frus_id("frus1964-68v09", "d344"), frus_id("frus1964-68v26", "d138"), frus_id("frus1964-68v26", "d142"), frus_id("frus1964-68v26", "d148")], "agreement_ids": ["stockpile-objectives-review-1967"], "law_ids": [], "episode_ids": ["indonesia-political-crisis-1965", "decolonization-and-resource-access"], "source_ids": ["frus-history-at-state"], "completeness": "partial"},
     {"id": "nixon", "president": "Richard Nixon", "start": 1969, "end": 1974, "summary": "Reviewed FRUS documents connect Chilean copper nationalization to compensation, diplomatic representations, international credit, and interagency policy review.", "mineral_ids": ["copper"], "country_ids": ["chile"], "frus_document_ids": [frus_id("frus1969-76v21", "d250"), frus_id("frus1969-76v21", "d256"), frus_id("frus1969-76v21", "d261"), frus_id("frus1969-76ve16", "d87")], "agreement_ids": ["chile-copper-compensation-1971"], "law_ids": [], "episode_ids": ["chile-copper-nationalization-1971", "decolonization-and-resource-access"], "source_ids": ["frus-history-at-state"], "completeness": "verified-pilot"}
 ]
@@ -526,6 +560,60 @@ STOCKPILE_CASES = [
 
 
 VERIFIED_FRUS = {
+    ("frus1944v02", "d886"): {
+        "title": "The Belgian Minister for Foreign Affairs (Spaak) to the American Ambassador in the United Kingdom (Winant)", "date": "1944-09-26",
+        "contextual_summary": "The transmittal and enclosed agreement documented allied control of uranium and thorium ores, contracted Congo uranium delivery, assistance to reopen and develop the mine, and first-refusal rights.",
+        "minerals": ["uranium"], "countries": ["belgian-congo"],
+        "themes": ["uranium control", "contracted delivery", "mine redevelopment", "first refusal"],
+        "agreements": ["us-uk-uranium-acquisition-1944", "tripartite-uranium-control-1944"], "laws": [],
+        "nara": ["nara-rg218-congo-uranium", "nara-rg59-congo-uranium-agreement"]
+    },
+    ("frus1947v01", "d431"): {
+        "title": "Memorandum of Conversation, by Mr. Theodore C. Achilles of the Division of Western European Affairs", "date": "1947-10-03",
+        "contextual_summary": "Belgian Prime Minister Spaak discussed secrecy surrounding the uranium agreement and Belgium's claim to equitable participation in future industrial uses of atomic energy derived from Congo uranium.",
+        "minerals": ["uranium"], "countries": ["belgian-congo"],
+        "themes": ["agreement secrecy", "industrial atomic energy", "Belgian participation"],
+        "agreements": ["tripartite-uranium-control-1944"], "laws": [],
+        "nara": ["nara-rg59-congo-uranium-agreement", "nara-rg84-brussels-uranium"],
+        "volume_year_start": 1947, "volume_year_end": 1947,
+        "volume_context": "Foreign policy aspects of United States development of atomic energy"
+    },
+    ("frus1949v01", "d204"): {
+        "title": "Memorandum of Conversation, by Mr. R. Gordon Arneson, Special Assistant to the Under Secretary of State (Webb)", "date": "1949-10-05",
+        "contextual_summary": "State and the Belgian Ambassador discussed Belgian participation in uranium-allocation consultations and technical cooperation under the 1944 agreement.",
+        "minerals": ["uranium"], "countries": ["belgian-congo"],
+        "themes": ["uranium allocation", "technical cooperation", "agreement implementation"],
+        "agreements": ["tripartite-uranium-control-1944"], "laws": [],
+        "nara": ["nara-rg59-congo-uranium-agreement", "nara-rg84-brussels-uranium"],
+        "volume_year_start": 1949, "volume_year_end": 1949,
+        "volume_context": "Foreign policy aspects of United States development of atomic energy"
+    },
+    ("frus1950v01", "d167"): {
+        "title": "The Secretary of State to the Embassy in Belgium", "date": "1950-02-22",
+        "contextual_summary": "The Secretary linked Belgian ore deliveries to U.S. atomic-weapons strength and addressed consultation, technical assistance, and the deferred commercial-use provisions of the 1944 agreement.",
+        "minerals": ["uranium"], "countries": ["belgian-congo"],
+        "themes": ["collective security", "ore delivery", "technical assistance", "commercial atomic energy"],
+        "agreements": ["tripartite-uranium-control-1944"], "laws": [],
+        "nara": ["nara-rg59-congo-uranium-agreement", "nara-rg84-brussels-uranium"],
+        "volume_year_start": 1950, "volume_year_end": 1950,
+        "volume_context": "Foreign policy aspects of United States development of atomic energy"
+    },
+    ("frus1950v01", "d200"): {
+        "title": "Memorandum by Mr. R. Gordon Arneson to the Secretary of State", "date": "1950-12-14",
+        "contextual_summary": "The memorandum reviewed Belgian atomic-energy negotiations, an export-tax proposal, a proposed Congo processing plant, and measures intended to accelerate uranium production.",
+        "minerals": ["uranium"], "countries": ["belgian-congo"],
+        "themes": ["export tax", "processing", "production expansion", "atomic-energy negotiations"],
+        "agreements": ["tripartite-uranium-control-1944"], "laws": [],
+        "nara": ["nara-rg59-congo-uranium-agreement", "nara-rg84-brussels-uranium"]
+    },
+    ("frus1951v01", "d242"): {
+        "title": "Statement of the Position of the United States and the United Kingdom", "date": "1951-04-05",
+        "contextual_summary": "The statement distinguished uranium from other strategic materials while addressing Belgian requests for atomic-energy assistance and broader Congo development and defense programs.",
+        "minerals": ["uranium"], "countries": ["belgian-congo"],
+        "themes": ["strategic valuation", "technical assistance", "development finance", "agreement implementation"],
+        "agreements": ["tripartite-uranium-control-1944"], "laws": [],
+        "nara": ["nara-rg59-congo-uranium-agreement", "nara-rg84-brussels-uranium"]
+    },
     ("frus1947v01", "d395"): {
         "title": "The Acting Secretary of State to Certain Diplomatic and Consular Offices", "date": "1947-12-22",
         "contextual_summary": "A confidential circular airgram connected European Recovery Program planning to overseas production and U.S. stockpiling of a named list of strategic and critical materials.",
@@ -622,9 +710,14 @@ FRUS_SELECTIONS = [
     ("frus1942v05", "d493", ["tin", "tungsten", "copper"], ["bolivia"], ["purchasing", "economic diplomacy"], ["bolivian-strategic-materials-purchase-1942"]),
     ("frus1942v01", "d440", ["tin"], [], ["commodity control"], ["international-tin-control-agreement-1942"]),
     ("frus1942v05", "d564", ["tin"], ["bolivia"], ["economic cooperation"], ["us-bolivia-economic-cooperation-1942"]),
-    ("frus1944v02", "d886", [], ["belgian-congo"], ["uranium control", "allied agreement"], ["us-uk-uranium-acquisition-1944", "tripartite-uranium-control-1944"]),
+    ("frus1944v02", "d886", ["uranium"], ["belgian-congo"], ["uranium control", "allied agreement"], ["us-uk-uranium-acquisition-1944", "tripartite-uranium-control-1944"]),
     ("frus1947v01", "d395", [], [], [], []),
+    ("frus1947v01", "d431", [], [], [], []),
+    ("frus1949v01", "d204", [], [], [], []),
     ("frus1950v01", "d95", [], [], [], []),
+    ("frus1950v01", "d167", [], [], [], []),
+    ("frus1950v01", "d200", [], [], [], []),
+    ("frus1951v01", "d242", [], [], [], []),
     ("frus1952-54v11p1", "d27", [], [], [], []),
     ("frus1964-68v09", "d344", [], [], [], []),
     ("frus1969-76v21", "d250", [], [], [], []),
@@ -692,7 +785,10 @@ NARA_QUERIES = [
     ("nara-rg165-strategic-materials", "strategic materials procurement", ["165"], 1917, 1945, [], ["united-states"]),
     ("nara-rg169-bolivia-tin", "Bolivia tin purchasing", ["169"], 1941, 1945, ["tin"], ["bolivia"]),
     ("nara-rg169-turkish-chrome", "Turkey chrome purchasing", ["169"], 1940, 1945, ["chromium"], ["turkey"]),
-    ("nara-rg218-congo-uranium", "Belgian Congo uranium", ["218"], 1943, 1955, [], ["belgian-congo"]),
+    ("nara-rg218-congo-uranium", "Belgian Congo uranium", ["218"], 1943, 1955, ["uranium"], ["belgian-congo"]),
+    ("nara-rg59-congo-uranium-agreement", "Belgian Congo uranium agreement atomic energy", ["59"], 1944, 1956, ["uranium"], ["belgian-congo"]),
+    ("nara-rg84-brussels-uranium", "Belgium Congo uranium atomic energy", ["84"], 1944, 1956, ["uranium"], ["belgian-congo"]),
+    ("nara-rg59-rare-earths", "rare earths monazite strategic materials", ["59"], 1945, 1992, ["rare-earth-elements"], ["united-states"]),
     ("nara-rg229-rubber-minerals", "rubber strategic materials Latin America", ["229"], 1940, 1946, [], []),
     ("nara-rg234-strategic-materials", "strategic materials production", ["234"], 1939, 1957, [], ["united-states"]),
     ("nara-rg287-stockpile-reports", "strategic critical materials stockpile", ["287"], 1939, 1992, [], ["united-states"]),
