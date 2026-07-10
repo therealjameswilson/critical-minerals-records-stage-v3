@@ -431,6 +431,19 @@ th:first-child, td:first-child { text-align: left; }
   white-space: nowrap;
 }
 .source-chip:hover { border-color: var(--gold); }
+.source-chip-group {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.55rem;
+}
+.source-chip-group .source-chip { text-align: center; }
+.context-status {
+  margin: 1.2rem 0 0;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+}
 .usgs-stat-grid {
   margin: 1.5rem 0;
   display: grid;
@@ -445,6 +458,55 @@ th:first-child, td:first-child { text-align: left; }
 .usgs-stat-grid article p:last-child { margin: 0.45rem 0 0; color: var(--ink-soft); font-size: 0.72rem; }
 .usgs-chart-card { box-shadow: none; }
 .usgs-legend { max-width: 460px; justify-content: flex-end; }
+.usgs-current-context {
+  background: #edf2f0;
+  border-top-color: var(--teal);
+}
+.usgs-current-context .china-stat { color: var(--china); }
+.usgs-current-context .ratio-stat { color: var(--navy); }
+.legend-swatch.mcs-china { background: var(--china); }
+.legend-swatch.mcs-us { background: var(--teal); }
+.source-context-heading {
+  margin: 2.2rem 0 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.72fr);
+  gap: 2rem;
+  align-items: end;
+}
+.source-context-heading h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.45rem, 2.6vw, 2.15rem);
+  font-weight: 500;
+  line-height: 1.12;
+}
+.source-context-heading > p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+}
+.source-context-grid { margin-top: 0; }
+.source-context-caveat {
+  padding-left: 0.85rem;
+  border-left: 3px solid var(--gold);
+}
+.source-notes-disclosure { margin-top: 1.2rem; }
+.source-note-list {
+  margin: 0 0 0.4rem;
+  padding: 0 0 0 1.2rem;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+}
+.source-note-list li + li { margin-top: 0.55rem; }
+.canvas-shell.data-unavailable {
+  min-height: 120px;
+  height: 120px;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 12px, rgb(89 102 109 / 5%) 12px 24px),
+    var(--paper);
+  border: 1px dashed var(--line-dark);
+}
+.canvas-shell.data-unavailable canvas { visibility: hidden; }
 
 .dark-section {
   color: var(--white);
@@ -567,6 +629,8 @@ th:first-child, td:first-child { text-align: left; }
   .supplier-grid, .method-grid { grid-template-columns: repeat(2, 1fr); }
   .usgs-context-header { grid-template-columns: 1fr; gap: 1rem; }
   .source-chip { justify-self: start; }
+  .source-chip-group { align-items: flex-start; }
+  .source-context-heading { grid-template-columns: 1fr; gap: 0.6rem; }
   .explorer-shell { grid-template-columns: 230px minmax(0, 1fr); }
   .explorer-chart-grid { grid-template-columns: 1fr; }
   .provenance-panel { grid-template-columns: 1fr; }

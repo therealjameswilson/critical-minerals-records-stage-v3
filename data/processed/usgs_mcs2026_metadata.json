@@ -1,0 +1,142 @@
+{
+  "caveats": [
+    "MCS 2026 is a 2026 publication whose tabular observations chiefly cover 2021–2025.",
+    "Mine production is upstream supply context, not a measure of national access or control.",
+    "MCS import-source percentages describe direct or shipping sources, not necessarily mine origin.",
+    "Rare-earth imports from Estonia, Japan, and Malaysia may derive from concentrates or intermediates produced in Australia, China, or elsewhere.",
+    "Heavy-rare-earth, scandium, and yttrium source shares exclude material contained in value-added intermediates and finished goods.",
+    "The MCS source does not publish dysprosium or thulium import-source shares; absence is not zero.",
+    "The MCS ScienceBase CSV reflects the initial release; the current view explicitly applies versions 1.1 and 1.3 without changing the raw fields.",
+    "MYB 2022 T8 and MCS 2026 do not provide a comparable 2023 world mine-production table in this ingest; the site must display that year as missing."
+  ],
+  "datasets": {
+    "mcs2026": {
+      "chapter_row_counts": {
+        "RARE EARTHS": 164,
+        "RARE EARTHS (Heavy)": 51,
+        "SCANDIUM": 30,
+        "YTTRIUM": 41
+      },
+      "chapters": [
+        "RARE EARTHS",
+        "RARE EARTHS (Heavy)",
+        "SCANDIUM",
+        "YTTRIUM"
+      ],
+      "current_pdf_file": "data/raw/usgs_mcs2026_rare_earths.pdf",
+      "current_version": "1.3",
+      "current_version_date": "2026-05-27",
+      "data_release_url": "https://data.usgs.gov/datacatalog/data/USGS%3A69837e43b66b01367d7ec7c7",
+      "doi_url": "https://doi.org/10.5066/P1WKQ63T",
+      "publication_date": "2026-02-06",
+      "revision_count": 4,
+      "revision_history_file": "data/raw/usgs_mcs2026_version_history.txt",
+      "revision_policy": "Raw ScienceBase fields are retained. Four audited version-history changes are applied only to separate current-view and parsed fields.",
+      "row_count": 286,
+      "sciencebase_url": "https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7",
+      "source_encoding": "cp1252",
+      "source_id": "usgs_mcs2026_v1_3",
+      "title": "Mineral Commodity Summaries 2026 rare-earth chapters"
+    },
+    "myb2022_t8": {
+      "coverage": "2018–2022",
+      "data_available_through": "2024-04-01",
+      "download_url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/myb1-2022-raree-ert.xlsx",
+      "excluded_tables": "T1–T7 remain in the frozen workbook and are not normalized here, preventing MYB partner-trade tables from being conflated with the DataWeb trade record.",
+      "footnotes": {
+        "1": "Table includes data available through April 1, 2024. All data are reported unless otherwise noted; totals may include estimated data. Totals, U.S. data, and estimated data are rounded to no more than three significant digits; may not add to totals shown.",
+        "2": "Other possible producers are omitted where available information was inadequate for reliable estimates.",
+        "3": "Official production quota. Illegal production could not be quantified.",
+        "4": "India's Department of Atomic Energy did not disclose monazite production data.",
+        "5": "Rare-earth oxide content of exports.",
+        "6": "Includes bastnaesite only. Excludes monazite from heavy mineral sands."
+      },
+      "release_page_url": "https://www.usgs.gov/media/files/rare-earths-2022-tables-only-release",
+      "row_count": 65,
+      "source_id": "usgs_myb2022_t8",
+      "source_sheet": "T8",
+      "table_scope": "World mine production by country or locality, REO equivalent.",
+      "title": "Rare Earths 2022 tables-only release, table T8"
+    }
+  },
+  "outputs": {
+    "data_dictionary": {
+      "file": "data/processed/usgs_publications_data_dictionary.csv"
+    },
+    "mcs_observations": {
+      "file": "data/processed/usgs_mcs2026_observations.csv",
+      "rows": 286
+    },
+    "mcs_revision_audit": {
+      "file": "data/processed/usgs_mcs2026_revision_audit.csv",
+      "rows": 4
+    },
+    "myb_world_production": {
+      "file": "data/processed/usgs_myb2022_world_mine_production.csv",
+      "rows": 65
+    }
+  },
+  "raw_files": [
+    {
+      "bytes": 3189010,
+      "file": "data/raw/usgs_mcs2026_commodities_data.csv",
+      "sha256": "582a0aa231aea53d8a97dc8d1cd3dfa5f885cf3760353e3d029d7f0ae4fbaaf5",
+      "source_key": "mcs_data",
+      "url": "https://www.sciencebase.gov/catalog/file/get/69837e43b66b01367d7ec7c7?f=__disk__d3%2Fac%2F84%2Fd3ac8466552946c5e8caa2c2c6338d9e1aff655d"
+    },
+    {
+      "bytes": 13470,
+      "file": "data/raw/usgs_mcs2026_metadata.xml",
+      "sha256": "0588a74c5257484630cd41dbb60cbd9ef4862bd24b6660a762d1aecf3c73e15a",
+      "source_key": "mcs_metadata",
+      "url": "https://www.sciencebase.gov/catalog/file/get/69837e43b66b01367d7ec7c7?f=__disk__59%2F9f%2F78%2F599f78dcdae6cfc820ec8410e8a0e684c28be9d2"
+    },
+    {
+      "bytes": 1914,
+      "file": "data/raw/usgs_mcs2026_version_history.txt",
+      "sha256": "276d675d1d753697f611c385d0692c865f2c00b8a417c282ff2e8e1f84932e2e",
+      "source_key": "mcs_version_history",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/versionHist.txt"
+    },
+    {
+      "bytes": 639984,
+      "file": "data/raw/usgs_mcs2026_rare_earths.pdf",
+      "sha256": "0116a192336fec41c38d8e11dad553bb7703308c1fbd1f97dc14b75c7e7d9900",
+      "source_key": "mcs_rare_earths_pdf",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf"
+    },
+    {
+      "bytes": 129492,
+      "file": "data/raw/usgs_mcs2026_rare_earths_heavy.pdf",
+      "sha256": "c9bf719946498b8ab90aceb901f94e63f2f5858c0efcba5b0232f3105eea5cc1",
+      "source_key": "mcs_heavy_pdf",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths-heavy.pdf"
+    },
+    {
+      "bytes": 113408,
+      "file": "data/raw/usgs_mcs2026_scandium.pdf",
+      "sha256": "b68e156704a9f38a5f52cd30890901c3cdfe585bbcb7720b5e24238f0824d558",
+      "source_key": "mcs_scandium_pdf",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-scandium.pdf"
+    },
+    {
+      "bytes": 132379,
+      "file": "data/raw/usgs_mcs2026_yttrium.pdf",
+      "sha256": "047b71f4cb3faa57a2c203a98f3b1cf15530b7864e8ff9b61e5f5fa5ff356996",
+      "source_key": "mcs_yttrium_pdf",
+      "url": "https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-yttrium.pdf"
+    },
+    {
+      "bytes": 126478,
+      "file": "data/raw/usgs_myb2022_rare_earths_tables.xlsx",
+      "sha256": "9f04f3418ab259e9565c154bb4833cc356203f79a20fa320b8e28041a0c4ca8e",
+      "source_key": "myb_tables",
+      "url": "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/myb1-2022-raree-ert.xlsx"
+    }
+  ],
+  "retrieved_at": "2026-07-10",
+  "schema_version": "1.0.0",
+  "source_hub_url": "https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information",
+  "source_id": "usgs_rare_earths_publications",
+  "title": "USGS rare-earth statistics and information hub ingest"
+}

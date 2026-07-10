@@ -1,6 +1,6 @@
 "use strict";
 
-const SUMMARY_URL = "data/processed/site-summary.json?v=3.2.0";
+const SUMMARY_URL = "data/processed/site-summary.json?v=3.3.0";
 const state = {
   summary: null,
   charts: new Map(),
@@ -31,6 +31,7 @@ const compactMoney = new Intl.NumberFormat("en-US", { style: "currency", currenc
 const compactNumber = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 });
 const integer = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 const decimal = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
+const oneDecimal = new Intl.NumberFormat("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const pct = new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 1 });
 
 const MINERAL_LABELS = {
@@ -83,6 +84,16 @@ function displayNumber(value, compact = false) {
 function displayPercent(value) {
   const parsed = finite(value);
   return parsed === null ? "Not available" : pct.format(parsed);
+}
+
+function contextShare(value) {
+  const parsed = finite(value);
+  if (parsed === null) return null;
+  return parsed > 1 ? parsed / 100 : parsed;
+}
+
+function displayContextPercent(value) {
+  return displayPercent(contextShare(value));
 }
 
 function destroyChart(key) {
@@ -381,6 +392,135 @@ function renderUsgsContext() {
   </tr>`).join("");
 }
 
+function renderMcs2026Context() {
+  const context = state.summary.usgs_mcs2026_context;
+  const status = el("mcsContextStatus");
+  const tableBody = el("mcsProductionTable").querySelector("tbody");
+  const chartShell = el("mcsProductionShareChart").closest(".canvas-shell");
+
+  if (!context || context.status !== "loaded" || !Array.isArray(context.series) || !context.series.length) {
+    destroyChart("mcs-production-share");
+    chartShell.classList.add("data-unavailable");
+    status.textContent = "USGS annual context is unavailable in this build; no value has been substituted.";
+    el("mcsProductionShareChart").setAttribute("aria-label", "USGS annual mine-production context is unavailable.");
+    tableBody.innerHTML = '<tr><td colspan="7">Not available in this build</td></tr>';
+    el("mcsImportSourceCaveat").textContent = "Recent import-source context is unavailable in this build; no value has been substituted.";
+    el("mcsSourceNotes").innerHTML = "<li>USGS source notes are unavailable in this build.</li>";
+    return;
+  }
+
+  chartShell.classList.remove("data-unavailable");
+  const coverage = Array.isArray(context.coverage) && context.coverage.length >= 2
+    ? context.coverage.map((value) => finite(value))
+    : [2018, 2025];
+  const firstYear = coverage[0] ?? 2018;
+  const lastYear = coverage[1] ?? 2025;
+  const sourceRows = new Map(context.series.map((row) => [finite(row.year), row]));
+  const rows = [];
+  for (let year = firstYear; year <= lastYear; year += 1) {
+    rows.push(sourceRows.get(year) || { year });
+  }
+
+  const populatedRows = rows.filter((row) => finite(row.world_production) !== null);
+  const seriesLatest = populatedRows.at(-1) || rows.at(-1);
+  const suppliedLatest = context.latest && typeof context.latest === "object" ? context.latest : {};
+  const latest = { ...seriesLatest, ...suppliedLatest };
+  const latestYear = finite(latest.year) ?? finite(seriesLatest.year) ?? lastYear;
+  const latestChinaShare = contextShare(latest.china_share_of_world_production ?? seriesLatest.china_share_of_world_production);
+  const latestUsShare = contextShare(latest.us_share_of_world_production ?? seriesLatest.us_share_of_world_production);
+  const latestChinaProduction = finite(latest.china_production ?? seriesLatest.china_production);
+  const latestUsProduction = finite(latest.us_production ?? seriesLatest.us_production);
+  const suppliedRatio = finite(latest.china_to_us_production_ratio ?? latest.china_to_us_ratio);
+  const productionRatio = suppliedRatio ?? (
+    latestChinaProduction !== null && latestUsProduction !== null && latestUsProduction > 0
+      ? latestChinaProduction / latestUsProduction
+      : null
+  );
+  const observationGaps = Array.isArray(context.observation_gap)
+    ? context.observation_gap.map((value) => finite(value)).filter((value) => value !== null)
+    : rows.filter((row) => finite(row.world_production) === null).map((row) => row.year);
+  const gapLabel = observationGaps.length ? observationGaps.join(", ") : "none";
+
+  status.textContent = `Loaded: ${firstYear}–${lastYear}; unavailable observation${observationGaps.length === 1 ? "" : "s"}: ${gapLabel}.`;
+  el("mcsChinaWorldShare").textContent = displayPercent(latestChinaShare);
+  el("mcsUsWorldShare").textContent = displayPercent(latestUsShare);
+  el("mcsChinaUsRatio").textContent = productionRatio === null ? "Not available" : `${oneDecimal.format(productionRatio)}×`;
+  el("mcsChinaShareLabel").textContent = `China share in ${latestYear}`;
+  el("mcsUsShareLabel").textContent = `U.S. share in ${latestYear}`;
+  el("mcsRatioLabel").textContent = `China-to-U.S. production in ${latestYear}`;
+
+  const options = baseOptions({ percentAxis: true });
+  options.plugins.tooltip.callbacks.label = (tooltipContext) => `${tooltipContext.dataset.label}: ${displayContextPercent(tooltipContext.raw)}`;
+  createChart("mcs-production-share", el("mcsProductionShareChart"), {
+    type: "line",
+    data: {
+      labels: rows.map((row) => row.year),
+      datasets: [
+        {
+          label: "China",
+          data: rows.map((row) => contextShare(row.china_share_of_world_production)),
+          borderColor: COLORS.china,
+          backgroundColor: COLORS.china,
+          borderWidth: 3,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          tension: 0.08,
+          spanGaps: false,
+        },
+        {
+          label: "United States",
+          data: rows.map((row) => contextShare(row.us_share_of_world_production)),
+          borderColor: COLORS.teal,
+          backgroundColor: COLORS.teal,
+          borderWidth: 2.6,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          tension: 0.08,
+          spanGaps: false,
+        },
+      ],
+    },
+    options,
+  });
+
+  const gapPhrase = observationGaps.length ? ` The ${gapLabel} observation is unavailable and is shown as a gap.` : "";
+  el("mcsProductionShareChart").setAttribute(
+    "aria-label",
+    `USGS estimated shares of world rare-earth mine production for China and the United States, ${firstYear} through ${lastYear}.${gapPhrase}`,
+  );
+
+  tableBody.innerHTML = rows.map((row) => `<tr>
+    <td>${row.year}</td>
+    <td>${displayNumber(row.china_production)}</td>
+    <td>${displayNumber(row.us_production)}</td>
+    <td>${displayNumber(row.world_production)}</td>
+    <td>${displayContextPercent(row.china_share_of_world_production)}</td>
+    <td>${displayContextPercent(row.us_share_of_world_production)}</td>
+    <td>${escapeHtml(row.source_vintage || "Not available")}</td>
+  </tr>`).join("");
+
+  const snapshot = context.import_source_snapshot && typeof context.import_source_snapshot === "object"
+    ? context.import_source_snapshot
+    : {};
+  const rareEarthPeriod = snapshot.rare_earth_compounds_metals_period
+    ? String(snapshot.rare_earth_compounds_metals_period)
+    : "period not available";
+  const rareEarthScope = snapshot.rare_earth_compounds_metals_scope
+    ? String(snapshot.rare_earth_compounds_metals_scope)
+    : "Direct or shipping source share from China, including Hong Kong.";
+  el("mcsRareEarthDirectShare").textContent = displayContextPercent(snapshot.rare_earth_compounds_metals_china_share);
+  el("mcsRareEarthDirectLabel").textContent = `Rare-earth compounds and metals · ${rareEarthPeriod}`;
+  el("mcsRareEarthDirectScope").textContent = rareEarthScope;
+  el("mcsHeavyReliance").textContent = displayContextPercent(snapshot.heavy_net_import_reliance_2025);
+  el("mcsYttriumDirectShare").textContent = displayContextPercent(snapshot.yttrium_china_direct_share);
+  el("mcsImportSourceCaveat").textContent = snapshot.caveat || "Direct or shipping source can differ from mine origin; these observations do not establish trade access or ownership.";
+
+  const sourceNotes = Array.isArray(context.source_notes) ? context.source_notes.filter(Boolean) : [];
+  el("mcsSourceNotes").innerHTML = sourceNotes.length
+    ? sourceNotes.map((note) => `<li>${escapeHtml(note)}</li>`).join("")
+    : "<li>No additional source notes were supplied.</li>";
+}
+
 function populateShareControls() {
   const select = el("shareMineral");
   const minerals = Object.keys(state.summary.china_share_by_mineral);
@@ -543,7 +683,7 @@ function populateExplorer() {
 
 async function explorerData(hts) {
   if (!state.explorerCache.has(hts)) {
-    state.explorerCache.set(hts, getJson(`data/processed/explorer/${hts}.json?v=3.2.0`));
+    state.explorerCache.set(hts, getJson(`data/processed/explorer/${hts}.json?v=3.3.0`));
   }
   return state.explorerCache.get(hts);
 }
@@ -706,6 +846,9 @@ function renderProvenance() {
     domestic_exports: "U.S. domestic exports",
     china_reported_imports: "China-reported imports",
     usgs_rare_earths_context: "USGS national rare-earth context",
+    usgs_mcs2026_machine_source: "USGS MCS 2026 machine source",
+    usgs_mcs2026_revision_authority: "USGS MCS 2026 current publication",
+    usgs_myb2022_world_mine_production: "USGS MYB 2022 mine-production table",
   };
   el("provenanceTable").querySelector("tbody").innerHTML = state.summary.sources.map((source) => `<tr><td>${labels[source.flow] || escapeHtml(source.flow)}</td><td><a href="${escapeHtml(source.file)}">${escapeHtml(source.file.split("/").at(-1))}</a></td><td title="${source.sha256}">${source.sha256}</td></tr>`).join("");
 }
@@ -729,6 +872,7 @@ async function init() {
     renderHero();
     renderDisparity();
     renderUsgsContext();
+    renderMcs2026Context();
     populateShareControls();
     renderShare();
     renderDiversity();

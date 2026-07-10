@@ -22,6 +22,14 @@ EXPECTED_HASHES = {
     "us_imports_for_consumption_1993-2026.xlsx": "fb453f549a3a9923b474a7b1fc4833b98319eef110e00920d79fb63b558d9b45",
     "us_domestic_exports_1993-2026.xlsx": "204dbe2f51cf3d0f5eaf554359dac50a27c45c3572b17d268b12629fea59f19c",
     "usgs_ds140_rare_earths_2020.xlsx": "0aed33ac422b49ec77b7c550d0e53e57a59b5a38ae315ea37d8e1088fc0bb85f",
+    "usgs_mcs2026_commodities_data.csv": "582a0aa231aea53d8a97dc8d1cd3dfa5f885cf3760353e3d029d7f0ae4fbaaf5",
+    "usgs_mcs2026_metadata.xml": "0588a74c5257484630cd41dbb60cbd9ef4862bd24b6660a762d1aecf3c73e15a",
+    "usgs_mcs2026_rare_earths.pdf": "0116a192336fec41c38d8e11dad553bb7703308c1fbd1f97dc14b75c7e7d9900",
+    "usgs_mcs2026_rare_earths_heavy.pdf": "c9bf719946498b8ab90aceb901f94e63f2f5858c0efcba5b0232f3105eea5cc1",
+    "usgs_mcs2026_scandium.pdf": "b68e156704a9f38a5f52cd30890901c3cdfe585bbcb7720b5e24238f0824d558",
+    "usgs_mcs2026_version_history.txt": "276d675d1d753697f611c385d0692c865f2c00b8a417c282ff2e8e1f84932e2e",
+    "usgs_mcs2026_yttrium.pdf": "047b71f4cb3faa57a2c203a98f3b1cf15530b7864e8ff9b61e5f5fa5ff356996",
+    "usgs_myb2022_rare_earths_tables.xlsx": "9f04f3418ab259e9565c154bb4833cc356203f79a20fa320b8e28041a0c4ca8e",
     "assets/vendor/chart.js/chart.umd.min.js": "48444a82d4edcb5bec0f1965faacdde18d9c17db3063d042abada2f705c9f54a",
 }
 EXPECTED_DOWNLOAD_TIMESTAMPS = {
@@ -39,6 +47,25 @@ USGS_DS140_COLUMNS = [
     "source_value_raw", "source_formula", "scope_note", "source", "source_file", "source_sheet",
     "source_cell", "source_url", "download_url", "worksheet_last_modified", "package_modified_at",
     "source_publication_date", "retrieved_at",
+]
+USGS_MCS_COLUMNS = [
+    "source_id", "source_row_number", "source_file", "mcs_chapter", "section", "commodity",
+    "country", "statistics", "statistics_detail", "unit", "year", "raw_year", "raw_value",
+    "raw_notes", "raw_is_critical_mineral_2025", "raw_other_notes", "current_value",
+    "current_notes", "value", "value_low", "value_high", "comparator",
+    "availability_status", "indicator_code", "is_estimated", "revision_action",
+    "revision_version", "revision_source_file", "revision_page", "revision_note",
+]
+USGS_MCS_REVISION_COLUMNS = [
+    "mcs_chapter", "section", "country", "statistics", "year", "raw_value", "current_value",
+    "raw_notes", "current_notes", "revision_action", "revision_version", "revision_source_file",
+    "revision_page", "revision_note",
+]
+USGS_MYB_COLUMNS = [
+    "source_id", "source_file", "source_sheet", "source_row_number", "source_cell",
+    "source_marker_cell", "source_country_label", "geography", "geography_code", "metric",
+    "unit", "year", "raw_value", "display_value", "value", "availability_status",
+    "raw_marker", "footnote_ids", "is_estimated", "is_revised", "data_status",
 ]
 
 
@@ -86,6 +113,11 @@ def main() -> int:
         PROCESSED / "usgs_rare_earths_historical.csv",
         PROCESSED / "usgs_rare_earths_metadata.json",
         PROCESSED / "usgs_rare_earths_data_dictionary.csv",
+        PROCESSED / "usgs_mcs2026_observations.csv",
+        PROCESSED / "usgs_mcs2026_revision_audit.csv",
+        PROCESSED / "usgs_mcs2026_metadata.json",
+        PROCESSED / "usgs_myb2022_world_mine_production.csv",
+        PROCESSED / "usgs_publications_data_dictionary.csv",
     ]
     for path in required_files:
         require(path.is_file(), f"missing processed artifact: {path.relative_to(ROOT)}")
@@ -99,7 +131,7 @@ def main() -> int:
             require(digest(path) == expected, f"frozen source hash changed: {relative}")
 
     manifest = load_json(PROCESSED / "query_manifest.json")
-    require(manifest.get("schema_version") == "3.2.0", "query manifest schema mismatch")
+    require(manifest.get("schema_version") == "3.3.0", "query manifest schema mismatch")
     require(manifest.get("denominator_scope") == "selected_18_partners", "manifest denominator scope is not explicit")
     require(manifest.get("annual_coverage") == [1993, 2025], "annual coverage must stop at 2025")
     require(manifest.get("ytd_coverage") == [1993, 2026], "YTD coverage must end at 2026")
@@ -342,6 +374,155 @@ def main() -> int:
         require(row["value_status"] == expected_status, f"USGS status mismatch: {key}")
         require(row["source_cell"] == expected_cell, f"USGS source-cell mismatch: {key}")
 
+    usgs_publications_metadata = load_json(PROCESSED / "usgs_mcs2026_metadata.json")
+    require(
+        manifest.get("usgs_publications_source") == usgs_publications_metadata,
+        "manifest USGS publication metadata differs from standalone metadata",
+    )
+    require(usgs_publications_metadata.get("retrieved_at") == "2026-07-10", "USGS publication retrieval date mismatch")
+    publication_datasets = usgs_publications_metadata.get("datasets", {})
+    mcs_metadata = publication_datasets.get("mcs2026", {})
+    myb_metadata = publication_datasets.get("myb2022_t8", {})
+    require(mcs_metadata.get("source_encoding") == "cp1252", "MCS source encoding is not pinned")
+    require(mcs_metadata.get("current_version") == "1.3", "MCS current publication version mismatch")
+    require(mcs_metadata.get("row_count") == 286, "MCS metadata row count mismatch")
+    require(mcs_metadata.get("revision_count") == 4, "MCS metadata revision count mismatch")
+    require(myb_metadata.get("row_count") == 65, "MYB T8 metadata row count mismatch")
+    metadata_hashes = {
+        Path(item["file"]).name: item["sha256"]
+        for item in usgs_publications_metadata.get("raw_files", [])
+    }
+    for filename in (
+        "usgs_mcs2026_commodities_data.csv",
+        "usgs_mcs2026_metadata.xml",
+        "usgs_mcs2026_rare_earths.pdf",
+        "usgs_mcs2026_rare_earths_heavy.pdf",
+        "usgs_mcs2026_scandium.pdf",
+        "usgs_mcs2026_version_history.txt",
+        "usgs_mcs2026_yttrium.pdf",
+        "usgs_myb2022_rare_earths_tables.xlsx",
+    ):
+        require(metadata_hashes.get(filename) == EXPECTED_HASHES[filename], f"USGS publication metadata hash mismatch: {filename}")
+
+    with (PROCESSED / "usgs_mcs2026_observations.csv").open(encoding="utf-8", newline="") as handle:
+        mcs_reader = csv.DictReader(handle)
+        require((mcs_reader.fieldnames or []) == USGS_MCS_COLUMNS, "MCS normalized column contract changed")
+        mcs_rows = list(mcs_reader)
+    require(len(mcs_rows) == 286, "MCS normalized row count mismatch")
+    mcs_chapter_counts = {
+        chapter: sum(row["mcs_chapter"] == chapter for row in mcs_rows)
+        for chapter in {row["mcs_chapter"] for row in mcs_rows}
+    }
+    require(
+        mcs_chapter_counts == {
+            "RARE EARTHS": 164,
+            "RARE EARTHS (Heavy)": 51,
+            "SCANDIUM": 30,
+            "YTTRIUM": 41,
+        },
+        "MCS chapter row inventory mismatch",
+    )
+    require(
+        all(row["availability_status"] == "explicit_zero" and row["value"] == "0" for row in mcs_rows if row["raw_value"] == "—"),
+        "MCS em-dash values are not explicit zeroes",
+    )
+    require(
+        all(row["availability_status"] == "not_available" and row["value"] == "" for row in mcs_rows if row["raw_value"] == "NA"),
+        "MCS NA values are not explicit missing states",
+    )
+    require(
+        all(row["indicator_code"] == "net_exporter" and row["value"] == "" for row in mcs_rows if row["raw_value"] == "E"),
+        "MCS E indicators were misread as estimates",
+    )
+
+    with (PROCESSED / "usgs_mcs2026_revision_audit.csv").open(encoding="utf-8", newline="") as handle:
+        revision_reader = csv.DictReader(handle)
+        require((revision_reader.fieldnames or []) == USGS_MCS_REVISION_COLUMNS, "MCS revision-audit column contract changed")
+        revision_rows = list(revision_reader)
+    require(len(revision_rows) == 4, "MCS revision audit must contain four explicit changes")
+    require(
+        {(row["country"], row["statistics"], row["year"], row["revision_action"]) for row in revision_rows}
+        == {
+            ("China", "Production", "2024", "remove_superseded_note"),
+            ("Brazil", "Reserves", "2025", "replace_value"),
+            ("India", "Reserves", "2025", "add_reassigned_note"),
+            ("World total", "Reserves", "2025", "replace_value"),
+        },
+        "MCS revision-audit keys changed",
+    )
+    mcs_lookup = {
+        (row["mcs_chapter"], row["country"], row["statistics"], row["year"]): row
+        for row in mcs_rows
+        if row["section"] == "World Mine Production and Reserves"
+    }
+    brazil_reserves = mcs_lookup[("RARE EARTHS", "Brazil", "Reserves", "2025")]
+    world_reserves = mcs_lookup[("RARE EARTHS", "World total", "Reserves", "2025")]
+    china_2024 = mcs_lookup[("RARE EARTHS", "China", "Production", "2024")]
+    india_reserves = mcs_lookup[("RARE EARTHS", "India", "Reserves", "2025")]
+    require(
+        brazil_reserves["raw_value"] == "21,000,000"
+        and brazil_reserves["current_value"] == "11,000,000"
+        and as_float(brazil_reserves["value"]) == 11_000_000,
+        "Brazil reserve revision mismatch",
+    )
+    require(
+        world_reserves["raw_value"] == ">85,000,000"
+        and world_reserves["current_value"] == ">75,000,000"
+        and as_float(world_reserves["value_low"]) == 75_000_000
+        and world_reserves["comparator"] == "greater_than",
+        "world reserve lower-bound revision mismatch",
+    )
+    require(
+        "Production quota" in china_2024["raw_notes"]
+        and china_2024["current_notes"] == "Estimated.",
+        "China 2024 superseded production note mismatch",
+    )
+    require(
+        india_reserves["availability_status"] == "not_available"
+        and "256,000 tons" in india_reserves["current_notes"]
+        and "rare-earth reserves were not reported" in india_reserves["current_notes"],
+        "India reserve note reassignment mismatch",
+    )
+    yttrium_exports = [
+        int(row["value"])
+        for row in mcs_rows
+        if row["mcs_chapter"] == "YTTRIUM" and row["statistics"] == "Export"
+    ]
+    require(yttrium_exports == [9, 4, 20, 3, 12], "yttrium export values or footnote parsing changed")
+    import_source_rows = [row for row in mcs_rows if row["section"] == "Import Sources"]
+    require(len(import_source_rows) == 23, "MCS import-source snapshot row count mismatch")
+    import_source_sums: dict[tuple[str, str], float] = defaultdict(float)
+    for row in import_source_rows:
+        import_source_sums[(row["mcs_chapter"], row["statistics_detail"])] += float(row["value"])
+    require(all(close(value, 100) for value in import_source_sums.values()), "MCS import-source group does not sum to 100 percent")
+
+    with (PROCESSED / "usgs_myb2022_world_mine_production.csv").open(encoding="utf-8", newline="") as handle:
+        myb_reader = csv.DictReader(handle)
+        require((myb_reader.fieldnames or []) == USGS_MYB_COLUMNS, "MYB T8 normalized column contract changed")
+        myb_rows = list(myb_reader)
+    require(len(myb_rows) == 65, "MYB T8 normalized row count mismatch")
+    require({int(row["year"]) for row in myb_rows} == set(range(2018, 2023)), "MYB T8 year coverage mismatch")
+    require(len({row["source_cell"] for row in myb_rows}) == 65, "MYB T8 source cells are not unique")
+    myb_lookup = {(row["geography_code"], int(row["year"])): row for row in myb_rows}
+    require(as_float(myb_lookup[("CHN", 2018)]["value"]) == 120_000, "MYB China 2018 production mismatch")
+    require(as_float(myb_lookup[("CHN", 2022)]["value"]) == 210_000, "MYB China 2022 production mismatch")
+    require(as_float(myb_lookup[("USA", 2022)]["value"]) == 42_500, "MYB U.S. 2022 production mismatch")
+    require(as_float(myb_lookup[("WLD", 2022)]["value"]) == 297_000, "MYB world 2022 production mismatch")
+    require(
+        myb_lookup[("BDI", 2022)]["raw_value"] == "--"
+        and myb_lookup[("BDI", 2022)]["availability_status"] == "explicit_zero"
+        and as_float(myb_lookup[("BDI", 2022)]["value"]) == 0,
+        "MYB explicit-zero marker mismatch",
+    )
+    require(
+        myb_lookup[("CHN", 2022)]["raw_marker"] == "e"
+        and myb_lookup[("CHN", 2022)]["is_estimated"] == "True",
+        "MYB China 2022 estimate marker mismatch",
+    )
+    require(manifest.get("processed", {}).get("usgs_mcs2026_rows") == 286, "manifest MCS row count mismatch")
+    require(manifest.get("processed", {}).get("usgs_mcs2026_revision_rows") == 4, "manifest MCS revision count mismatch")
+    require(manifest.get("processed", {}).get("usgs_myb2022_t8_rows") == 65, "manifest MYB T8 row count mismatch")
+
     require(all("usgs" not in row["source"].casefold() for row in rows), "USGS rows leaked into DataWeb trade_long.csv")
 
     first_rows = [row for row in rows if row["quantity_measure_slot"] == "first"]
@@ -451,7 +632,7 @@ def main() -> int:
 
     summary_path = PROCESSED / "site-summary.json"
     summary = load_json(summary_path)
-    require(summary.get("schema_version") == "3.2.0", "site summary schema mismatch")
+    require(summary.get("schema_version") == "3.3.0", "site summary schema mismatch")
     require(summary_path.stat().st_size <= 150_000, "site-summary.json exceeds 150 KB budget")
     require(summary["headline"]["year"] == 2025 and close(summary["headline"]["value"], 0.6040394784), "headline claim mismatch")
     prc = summary["prc_supply_origins"]
@@ -482,10 +663,48 @@ def main() -> int:
         "USGS 2020 site context mismatch",
     )
     require(usgs_context.get("latest") == usgs_2020, "USGS latest site context mismatch")
+    mcs_context = summary.get("usgs_mcs2026_context", {})
+    require(mcs_context.get("status") == "loaded", "MCS/MYB site context is not loaded")
+    require(mcs_context.get("coverage") == [2018, 2025], "MCS/MYB site coverage mismatch")
+    require(mcs_context.get("observation_gap") == [2023], "MCS/MYB 2023 gap is not explicit")
+    mcs_site_rows = mcs_context.get("series", [])
+    require(len(mcs_site_rows) == 8, "MCS/MYB site context must contain eight annual slots")
+    require([row["year"] for row in mcs_site_rows] == list(range(2018, 2026)), "MCS/MYB site-year sequence mismatch")
+    mcs_2023 = next((row for row in mcs_site_rows if row["year"] == 2023), {})
+    require(
+        all(mcs_2023.get(key) is None for key in ("china_production", "us_production", "world_production")),
+        "MCS/MYB 2023 gap acquired a numeric value",
+    )
+    mcs_latest = mcs_context.get("latest", {})
+    require(
+        mcs_latest.get("year") == 2025
+        and mcs_latest.get("china_production") == 270_000
+        and mcs_latest.get("us_production") == 51_000
+        and mcs_latest.get("world_production") == 390_000
+        and close(mcs_latest.get("china_share_of_world_production", -1), 69.2)
+        and close(mcs_latest.get("us_share_of_world_production", -1), 13.1)
+        and close(mcs_latest.get("china_to_us_production_ratio", -1), 5.29),
+        "MCS/MYB latest site context mismatch",
+    )
+    import_snapshot = mcs_context.get("import_source_snapshot", {})
+    require(
+        import_snapshot.get("rare_earth_compounds_metals_china_share") == 71
+        and import_snapshot.get("heavy_net_import_reliance_2025") == 100
+        and import_snapshot.get("yttrium_china_direct_share") == 70,
+        "MCS import-source site snapshot mismatch",
+    )
     require(
         {row["flow"] for row in summary["sources"]}
-        == {"imports_for_consumption", "domestic_exports", "china_reported_imports", "usgs_rare_earths_context"},
-        "site provenance does not expose all four frozen inputs",
+        == {
+            "imports_for_consumption",
+            "domestic_exports",
+            "china_reported_imports",
+            "usgs_rare_earths_context",
+            "usgs_mcs2026_machine_source",
+            "usgs_mcs2026_revision_authority",
+            "usgs_myb2022_world_mine_production",
+        },
+        "site provenance does not expose all seven statistical inputs",
     )
 
     explorer_index = load_json(PROCESSED / "explorer-index.json")
@@ -507,6 +726,9 @@ def main() -> int:
         "USGS national balance",
         "not a partner-level HTS series",
         "The published series ends in 2020",
+        "Mine production is not trade access",
+        "A comparable 2023 observation is unavailable",
+        "Direct or shipping source",
     ]
     for phrase in required_phrases:
         require(phrase in public_html, f"index.html missing trust language: {phrase!r}")
@@ -526,7 +748,8 @@ def main() -> int:
         return fail(errors)
     print(
         f"Validation passed: {len(rows):,} normalized rows, {len(unit_rows):,} unit-value rows, "
-        f"847 USGS source-cell rows, 25 explorer shards, 32 PRC reporter years, exact audited headline 60.4%."
+        f"847 USGS DS140 rows, 286 MCS rows, 65 MYB T8 rows, 25 explorer shards, "
+        f"32 PRC reporter years, exact audited headline 60.4%."
     )
     return 0
 

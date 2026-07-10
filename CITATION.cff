@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this statistical record, cite the repository and the frozen USITC DataWeb, UN Comtrade, and USGS Data Series 140 source vintages."
+message: "If you use this statistical record, cite the repository and the frozen USITC DataWeb, UN Comtrade, and USGS Data Series 140, MCS 2026, and MYB 2022 source vintages."
 title: "US-PRC Critical Minerals Record, 1993-2026"
 type: software
 authors:
@@ -9,4 +9,4 @@ year: 2026
 license: MIT
 repository-code: "https://github.com/therealjameswilson/critical-minerals-records-stage-v3"
 url: "https://therealjameswilson.github.io/critical-minerals-records-stage-v3/"
-version: 3.2.0
+version: 3.3.0

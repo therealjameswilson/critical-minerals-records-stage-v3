@@ -1,0 +1,66 @@
+source_id,source_file,source_sheet,source_row_number,source_cell,source_marker_cell,source_country_label,geography,geography_code,metric,unit,year,raw_value,display_value,value,availability_status,raw_marker,footnote_ids,is_estimated,is_revised,data_status
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,7,C7,D7,Australiae,Australia,AUS,mine_production,metric_tons_reo_equivalent,2018,21000,"21,000",21000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,7,E7,F7,Australiae,Australia,AUS,mine_production,metric_tons_reo_equivalent,2019,20000,"20,000",20000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,7,G7,H7,Australiae,Australia,AUS,mine_production,metric_tons_reo_equivalent,2020,20000,"20,000",20000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,7,I7,J7,Australiae,Australia,AUS,mine_production,metric_tons_reo_equivalent,2021,24000,"24,000",24000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,7,K7,L7,Australiae,Australia,AUS,mine_production,metric_tons_reo_equivalent,2022,18000,"18,000",18000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,8,C8,D8,Brazile,Brazil,BRA,mine_production,metric_tons_reo_equivalent,2018,1200,"1,200",1200,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,8,E8,F8,Brazile,Brazil,BRA,mine_production,metric_tons_reo_equivalent,2019,710,710,710,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,8,G8,H8,Brazile,Brazil,BRA,mine_production,metric_tons_reo_equivalent,2020,600,600,600,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,8,I8,J8,Brazile,Brazil,BRA,mine_production,metric_tons_reo_equivalent,2021,500,500,500,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,8,K8,L8,Brazile,Brazil,BRA,mine_production,metric_tons_reo_equivalent,2022,80,80,80,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,9,C9,D9,Burmae,Burma,MMR,mine_production,metric_tons_reo_equivalent,2018,23000,"23,000",23000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,9,E9,F9,Burmae,Burma,MMR,mine_production,metric_tons_reo_equivalent,2019,29000,"29,000",29000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,9,G9,H9,Burmae,Burma,MMR,mine_production,metric_tons_reo_equivalent,2020,35500,"35,500",35500,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,9,I9,J9,Burmae,Burma,MMR,mine_production,metric_tons_reo_equivalent,2021,34700,"34,700",34700,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,9,K9,L9,Burmae,Burma,MMR,mine_production,metric_tons_reo_equivalent,2022,12000,"12,000",12000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,10,C10,D10,Burundi,Burundi,BDI,mine_production,metric_tons_reo_equivalent,2018,620,620,620,available,e,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,10,E10,F10,Burundi,Burundi,BDI,mine_production,metric_tons_reo_equivalent,2019,200,200,200,available,e,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,10,G10,H10,Burundi,Burundi,BDI,mine_production,metric_tons_reo_equivalent,2020,300,300,300,available,e,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,10,I10,J10,Burundi,Burundi,BDI,mine_production,metric_tons_reo_equivalent,2021,180,180,180,available,e,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,10,K10,L10,Burundi,Burundi,BDI,mine_production,metric_tons_reo_equivalent,2022,--,--,0,explicit_zero,,,False,False,explicit_zero
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,11,C11,D11,China3,China,CHN,mine_production,metric_tons_reo_equivalent,2018,120000,"120,000",120000,available,,3,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,11,E11,F11,China3,China,CHN,mine_production,metric_tons_reo_equivalent,2019,132000,"132,000",132000,available,,3,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,11,G11,H11,China3,China,CHN,mine_production,metric_tons_reo_equivalent,2020,140000,"140,000",140000,available,,3,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,11,I11,J11,China3,China,CHN,mine_production,metric_tons_reo_equivalent,2021,168000,"168,000",168000,available,,3,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,11,K11,L11,China3,China,CHN,mine_production,metric_tons_reo_equivalent,2022,210000,"210,000",210000,available,e,3,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,12,C12,D12,"Indiae, 4",India,IND,mine_production,metric_tons_reo_equivalent,2018,2900,"2,900",2900,available,,4,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,12,E12,F12,"Indiae, 4",India,IND,mine_production,metric_tons_reo_equivalent,2019,2900,"2,900",2900,available,,4,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,12,G12,H12,"Indiae, 4",India,IND,mine_production,metric_tons_reo_equivalent,2020,2900,"2,900",2900,available,,4,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,12,I12,J12,"Indiae, 4",India,IND,mine_production,metric_tons_reo_equivalent,2021,2900,"2,900",2900,available,,4,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,12,K12,L12,"Indiae, 4",India,IND,mine_production,metric_tons_reo_equivalent,2022,2900,"2,900",2900,available,,4,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,13,C13,D13,Madagascare,Madagascar,MDG,mine_production,metric_tons_reo_equivalent,2018,2000,"2,000",2000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,13,E13,F13,Madagascare,Madagascar,MDG,mine_production,metric_tons_reo_equivalent,2019,4000,"4,000",4000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,13,G13,H13,Madagascare,Madagascar,MDG,mine_production,metric_tons_reo_equivalent,2020,5000,"5,000",5000,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,13,I13,J13,Madagascare,Madagascar,MDG,mine_production,metric_tons_reo_equivalent,2021,6000,"6,000",6000,available,r,,True,True,estimated_revised
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,13,K13,L13,Madagascare,Madagascar,MDG,mine_production,metric_tons_reo_equivalent,2022,960,960,960,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,14,C14,D14,Malaysiae,Malaysia,MYS,mine_production,metric_tons_reo_equivalent,2018,990,990,990,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,14,E14,F14,Malaysiae,Malaysia,MYS,mine_production,metric_tons_reo_equivalent,2019,66,66,66,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,14,G14,H14,Malaysiae,Malaysia,MYS,mine_production,metric_tons_reo_equivalent,2020,100,100,100,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,14,I14,J14,Malaysiae,Malaysia,MYS,mine_production,metric_tons_reo_equivalent,2021,60,60,60,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,14,K14,L14,Malaysiae,Malaysia,MYS,mine_production,metric_tons_reo_equivalent,2022,80,80,80,available,,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,15,C15,D15,Russia,Russia,RUS,mine_production,metric_tons_reo_equivalent,2018,2700,"2,700",2700,available,,,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,15,E15,F15,Russia,Russia,RUS,mine_production,metric_tons_reo_equivalent,2019,2700,"2,700",2700,available,,,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,15,G15,H15,Russia,Russia,RUS,mine_production,metric_tons_reo_equivalent,2020,2600,"2,600",2600,available,,,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,15,I15,J15,Russia,Russia,RUS,mine_production,metric_tons_reo_equivalent,2021,2500,"2,500",2500,available,r,,False,True,revised
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,15,K15,L15,Russia,Russia,RUS,mine_production,metric_tons_reo_equivalent,2022,2600,"2,600",2600,available,e,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,16,C16,D16,"Thailande, 5",Thailand,THA,mine_production,metric_tons_reo_equivalent,2018,1000,"1,000",1000,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,16,E16,F16,"Thailande, 5",Thailand,THA,mine_production,metric_tons_reo_equivalent,2019,1900,"1,900",1900,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,16,G16,H16,"Thailande, 5",Thailand,THA,mine_production,metric_tons_reo_equivalent,2020,3600,"3,600",3600,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,16,I16,J16,"Thailande, 5",Thailand,THA,mine_production,metric_tons_reo_equivalent,2021,8200,"8,200",8200,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,16,K16,L16,"Thailande, 5",Thailand,THA,mine_production,metric_tons_reo_equivalent,2022,7100,"7,100",7100,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,17,C17,D17,United States,United States,USA,mine_production,metric_tons_reo_equivalent,2018,14000,"14,000",14000,available,e,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,17,E17,F17,United States,United States,USA,mine_production,metric_tons_reo_equivalent,2019,28000,"28,000",28000,available,e,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,17,G17,H17,United States,United States,USA,mine_production,metric_tons_reo_equivalent,2020,39000,"39,000",39000,available,e,,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,17,I17,J17,United States,United States,USA,mine_production,metric_tons_reo_equivalent,2021,42400,"42,400",42400,available,6,6,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,17,K17,L17,United States,United States,USA,mine_production,metric_tons_reo_equivalent,2022,42500,"42,500",42500,available,6,6,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,18,C18,D18,"Vietname, 5",Vietnam,VNM,mine_production,metric_tons_reo_equivalent,2018,920,920,920,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,18,E18,F18,"Vietname, 5",Vietnam,VNM,mine_production,metric_tons_reo_equivalent,2019,1300,"1,300",1300,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,18,G18,H18,"Vietname, 5",Vietnam,VNM,mine_production,metric_tons_reo_equivalent,2020,690,690,690,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,18,I18,J18,"Vietname, 5",Vietnam,VNM,mine_production,metric_tons_reo_equivalent,2021,440,440,440,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,18,K18,L18,"Vietname, 5",Vietnam,VNM,mine_production,metric_tons_reo_equivalent,2022,1200,"1,200",1200,available,,5,True,False,estimated
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,19,C19,D19,Total,World total,WLD,mine_production,metric_tons_reo_equivalent,2018,190000,"190,000",190000,available,,,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,19,E19,F19,Total,World total,WLD,mine_production,metric_tons_reo_equivalent,2019,223000,"223,000",223000,available,,,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,19,G19,H19,Total,World total,WLD,mine_production,metric_tons_reo_equivalent,2020,250000,"250,000",250000,available,,,False,False,reported
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,19,I19,J19,Total,World total,WLD,mine_production,metric_tons_reo_equivalent,2021,290000,"290,000",290000,available,r,,False,True,revised
+usgs_myb2022_t8,data/raw/usgs_myb2022_rare_earths_tables.xlsx,T8,19,K19,L19,Total,World total,WLD,mine_production,metric_tons_reo_equivalent,2022,297000,"297,000",297000,available,,,False,False,reported

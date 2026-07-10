@@ -6,7 +6,7 @@
   <meta name="description" content="Methodology and provenance for the US–PRC Critical Minerals Record, 1993–2026.">
   <link rel="icon" href="data:,">
   <link rel="canonical" href="https://therealjameswilson.github.io/critical-minerals-records-stage-v3/methodology.html">
-  <link rel="stylesheet" href="assets/v3.css?v=3.2.0">
+  <link rel="stylesheet" href="assets/v3.css?v=3.3.0">
   <title>Methodology · US–PRC Critical Minerals Record</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
       <a class="brand" href="./"><span class="brand-kicker">Strategic Resources</span><span class="brand-title">US–PRC Critical Minerals Record</span></a>
       <nav aria-label="Methodology navigation"><a href="./#disparity">Disparity</a><a href="./#sources">New sources</a><a href="./#explorer">Explorer</a><a href="./#method">Provenance</a></nav>
     </div>
-    <div class="status-strip"><div class="wrap status-inner"><span><span class="status-dot" aria-hidden="true"></span> Methodology note</span><span>Revision 3.2.0</span><span>Source vintage: 10 July 2026</span></div></div>
+    <div class="status-strip"><div class="wrap status-inner"><span><span class="status-dot" aria-hidden="true"></span> Methodology note</span><span>Revision 3.3.0</span><span>Source vintage: 10 July 2026</span></div></div>
   </header>
 
   <main id="main">
@@ -32,7 +32,7 @@
       <div class="wrap" style="max-width:980px">
         <div class="section-heading"><p class="section-number">01 · Evidentiary model</p><h2>Statistics first; FRUS de-emphasized</h2></div>
         <article class="chart-card">
-          <p>V3 covers 1993–2026 and does not use FRUS as evidence. Its partner-level U.S. layer comes from frozen USITC DataWeb workbooks. Its China sourcing layer comes from frozen China-reporter UN Comtrade API responses. A frozen USGS Data Series 140 workbook supplies national rare-earth historical context.</p>
+          <p>V3 covers 1993–2026 and does not use FRUS as evidence. Its partner-level U.S. layer comes from frozen USITC DataWeb workbooks. Its China sourcing layer comes from frozen China-reporter UN Comtrade API responses. Frozen USGS Data Series 140, Mineral Commodity Summaries 2026, and Minerals Yearbook 2022 files supply national and mine-production context.</p>
           <p>Trade statistics are treated as access signals. They do not directly measure reserves, mine ownership, beneficial ownership, processing capacity, control of third-country assets, or policy intent.</p>
         </article>
       </div>
@@ -71,7 +71,21 @@
 
     <section class="record-section">
       <div class="wrap" style="max-width:980px">
-        <div class="section-heading"><p class="section-number">04 · UN Comtrade</p><h2>The China reporter view</h2><p>All reported origins for annual China imports of HS 2846, 1993–2024.</p></div>
+        <div class="section-heading"><p class="section-number">04 · USGS current publications</p><h2>MCS 2026 and MYB 2022</h2><p>Current commodity observations and country mine-production context, kept separate from reporter-specific trade.</p></div>
+        <article class="chart-card">
+          <p>The repository freezes the official MCS 2026 ScienceBase commodity CSV and XML metadata, the current Rare Earths, Heavy Rare Earths, Scandium, and Yttrium PDFs, and the MCS version history. The Windows-1252 (<code>cp1252</code>) CSV yields 286 observations for the four exact chapter labels. The observations cover 2021–2025: 2026 is the publication vintage, not an observation year.</p>
+          <p>The current MCS release is version 1.3, reposted 27 May 2026, but the frozen ScienceBase CSV predates changes in its Rare Earths PDF. Version 1.3 changes Brazil 2025 reserves from 21 million to 11 million metric tons and the 2025 world reserve lower bound from more than 85 million to more than 75 million metric tons. Version 1.1 moved footnote 14 away from China 2024 production and attached it to India 2025 reserves, where a 2015 OSCOM report gave 256,000 tons of monazite reserves but no rare-earth reserve figure. The current view marks China’s raw quota note as superseded and keeps India reserves unavailable with the new context attached. Original and current fields remain side by side, and each action is listed in the revision-audit CSV.</p>
+          <p>The MYB 2022 advance-table workbook remains frozen in full, but only table T8 is normalized: 65 source-row/year world-mine-production observations—12 countries plus the source total across 2018–2022. A combined display leaves 2023 explicitly missing before MCS observations resume in 2024; no interpolation is used.</p>
+          <p>Mine production identifies reported extraction, not ownership, refining, control, or guaranteed access. MCS import-source shares are direct or shipping sources and may differ from mine origin. No USGS publication row enters the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.</p>
+          <p>USGS identifies these U.S. Government releases as public domain. The repository retains their attribution and revision vintage; its MIT License applies to original site code and documentation.</p>
+          <p><a href="https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information">USGS Rare Earths Statistics and Information</a> · <a href="https://doi.org/10.5066/P1WKQ63T">MCS 2026 data release</a> · <a href="https://www.usgs.gov/media/files/rare-earths-2022-tables-only-release">MYB 2022 tables-only release</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="record-section">
+      <div class="wrap" style="max-width:980px">
+        <div class="section-heading"><p class="section-number">05 · UN Comtrade</p><h2>The China reporter view</h2><p>All reported origins for annual China imports of HS 2846, 1993–2024.</p></div>
         <article class="chart-card">
           <p>The downloader makes one public-preview request per year for China-reporter imports of rare-earth compounds, with the primary partner interpreted as origin. Each raw JSON response is frozen byte-for-byte with its request URL, retrieval timestamp, classification code, publication metadata, and SHA-256 digest.</p>
           <p>Acquisition fails if the API reports an error, omits the requested period, returns 500 rows, or does not reconcile the sum of non-World partner values to the World record. All 32 years reconcile exactly in this vintage.</p>
@@ -83,7 +97,7 @@
 
     <section class="record-section tint-section">
       <div class="wrap" style="max-width:980px">
-        <div class="section-heading"><p class="section-number">05 · Proxy boundaries</p><h2>Rare earths are not one clean tariff line</h2></div>
+        <div class="section-heading"><p class="section-number">06 · Proxy boundaries</p><h2>Rare earths are not one clean tariff line</h2></div>
         <div class="method-grid" style="grid-template-columns:repeat(3,1fr)">
           <article><span class="method-tag">HTS 2846</span><h3>Rare-earth compounds</h3><p>The cleanest four-digit heading used in this build; also covers yttrium and scandium compounds.</p></article>
           <article><span class="method-tag">HTS 2805</span><h3>Broad metals heading</h3><p>Includes products beyond rare-earth metals, so it is a proxy rather than a chemically pure series.</p></article>
@@ -97,7 +111,7 @@
 
     <section class="record-section">
       <div class="wrap" style="max-width:980px">
-        <div class="section-heading"><p class="section-number">06 · Reproduction</p><h2>Frozen inputs, deterministic outputs</h2></div>
+        <div class="section-heading"><p class="section-number">07 · Reproduction</p><h2>Frozen inputs, deterministic outputs</h2></div>
         <article class="chart-card">
           <pre style="overflow:auto"><code>python3 -m venv .venv
 . .venv/bin/activate
@@ -105,7 +119,7 @@ python -m pip install -r requirements.txt
 python scripts/build_trade_data.py
 python scripts/validate_data.py
 python -m pytest -q</code></pre>
-          <p>Validation independently recomputes China shares and supplier HHI, checks audited headline values, enforces annual/YTD separation, verifies quantity-slot and suppression rules, validates every Comtrade digest and World reconciliation, checks the USGS row contract and source isolation, and keeps browser payloads within their size budgets.</p>
+          <p>Validation independently recomputes China shares and supplier HHI, checks audited headline values, enforces annual/YTD separation, verifies quantity-slot and suppression rules, validates every Comtrade digest and World reconciliation, checks the USGS row contracts, revision audit, explicit 2023 gap, and source isolation, and keeps browser payloads within their size budgets.</p>
         </article>
         <div class="source-links">
           <a href="README.md">Reproduction guide</a>
@@ -116,12 +130,17 @@ python -m pytest -q</code></pre>
           <a href="data/processed/usgs_rare_earths_historical.csv">USGS normalized data</a>
           <a href="data/processed/usgs_rare_earths_metadata.json">USGS source metadata</a>
           <a href="data/processed/usgs_rare_earths_data_dictionary.csv">USGS data dictionary</a>
+          <a href="data/processed/usgs_mcs2026_observations.csv">USGS MCS 2026 observations</a>
+          <a href="data/processed/usgs_mcs2026_revision_audit.csv">USGS MCS revision audit</a>
+          <a href="data/processed/usgs_mcs2026_metadata.json">USGS MCS source metadata</a>
+          <a href="data/processed/usgs_myb2022_world_mine_production.csv">USGS MYB T8 world production</a>
+          <a href="data/processed/usgs_publications_data_dictionary.csv">USGS publications dictionary</a>
           <a href="./#method">Public provenance panel</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="wrap footer-grid"><div><p class="brand-kicker">Strategic Resources</p><p>Methodology revision 3.2.0.</p></div><p>Use the frozen source vintage and repository commit when citing a result.</p><p><a href="./">Return to the records stage</a></p></div></footer>
+  <footer class="site-footer"><div class="wrap footer-grid"><div><p class="brand-kicker">Strategic Resources</p><p>Methodology revision 3.3.0.</p></div><p>Use the frozen source vintage and repository commit when citing a result.</p><p><a href="./">Return to the records stage</a></p></div></footer>
 </body>
 </html>

@@ -31,6 +31,8 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.utils.datetime import from_excel
 
+from usgs_publications import write_usgs_publication_outputs
+
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
@@ -1281,6 +1283,8 @@ def build_site_summary(
     sources: list[dict[str, Any]],
     usgs_rows: list[dict[str, Any]],
     usgs_metadata: dict[str, Any],
+    usgs_publications_context: dict[str, Any],
+    usgs_publications_metadata: dict[str, Any],
 ) -> dict[str, Any]:
     disparity = rare_earth_disparity(rows)
     latest = next(
@@ -1321,8 +1325,25 @@ def build_site_summary(
             "coverage": usgs_metadata["coverage"],
         }
     )
+    publication_files = {
+        item["source_key"]: item for item in usgs_publications_metadata["raw_files"]
+    }
+    for flow, source_key in (
+        ("usgs_mcs2026_machine_source", "mcs_data"),
+        ("usgs_mcs2026_revision_authority", "mcs_rare_earths_pdf"),
+        ("usgs_myb2022_world_mine_production", "myb_tables"),
+    ):
+        item = publication_files[source_key]
+        public_sources.append(
+            {
+                "flow": flow,
+                "file": item["file"],
+                "sha256": item["sha256"],
+                "bytes": item["bytes"],
+            }
+        )
     return {
-        "schema_version": "3.2.0",
+        "schema_version": "3.3.0",
         "generated_at": f"{RETRIEVED_AT}T00:00:00Z",
         "title": "US-PRC Critical Minerals Record, 1993-2026",
         "coverage": {
@@ -1332,6 +1353,8 @@ def build_site_summary(
             "selected_partner_count": 18,
             "us_denominator_scope": DENOMINATOR_SCOPE,
             "usgs_ds140": [1900, 2020],
+            "usgs_myb2022_t8": [2018, 2022],
+            "usgs_mcs2026": [2021, 2025],
         },
         "headline": {
             "year": 2025,
@@ -1354,6 +1377,7 @@ def build_site_summary(
         "us_selected_supplier_series": selected_supplier_series(rows),
         "prc_supply_origins": load_prc_comtrade(),
         "usgs_rare_earths_context": build_usgs_site_context(usgs_rows, usgs_metadata),
+        "usgs_mcs2026_context": usgs_publications_context,
         "explorer_index": explorer_index,
         "sources": public_sources,
         "warnings": [
@@ -1362,6 +1386,7 @@ def build_site_summary(
             "2026 is January-April YTD; no 2026 annual value is plotted.",
             "HTS 8505 has a reported-quantity regime break in 2019.",
             "Second quantities are preserved separately because the HTS4 export provides no lossless value-bucket join.",
+            "USGS MYB 2022 and MCS 2026 mine-production observations are separate context layers; 2023 is unavailable and is not interpolated.",
         ],
     }
 
@@ -1542,6 +1567,33 @@ def main() -> int:
         json.dumps(usgs_metadata, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    usgs_publications = write_usgs_publication_outputs(PROCESSED, RAW)
+    usgs_publications_metadata = usgs_publications["metadata"]
+    full_usgs_publications_context = usgs_publications["context"]
+    usgs_publications_context = {
+        key: full_usgs_publications_context[key]
+        for key in (
+            "status",
+            "coverage",
+            "observation_gap",
+            "unit",
+            "series",
+            "latest",
+            "source_notes",
+        )
+    }
+    full_import_snapshot = full_usgs_publications_context["import_source_snapshot"]
+    usgs_publications_context["import_source_snapshot"] = {
+        key: full_import_snapshot[key]
+        for key in (
+            "rare_earth_compounds_metals_china_share",
+            "rare_earth_compounds_metals_period",
+            "rare_earth_compounds_metals_scope",
+            "heavy_net_import_reliance_2025",
+            "yttrium_china_direct_share",
+            "caveat",
+        )
+    }
 
     shares = build_china_share(rows)
     share_columns = [
@@ -1574,7 +1626,7 @@ def main() -> int:
 
     comtrade_source = comtrade_source_metadata()
     manifest = {
-        "schema_version": "3.2.0",
+        "schema_version": "3.3.0",
         "generated_at": f"{RETRIEVED_AT}T00:00:00Z",
         "source_system": "USITC DataWeb",
         "source_url": SOURCE_URL,
@@ -1592,6 +1644,7 @@ def main() -> int:
         "sources": sources,
         "optional_china_reporter_source": comtrade_source,
         "usgs_rare_earths_source": usgs_metadata,
+        "usgs_publications_source": usgs_publications_metadata,
         "official_method_links": {
             "partner_definitions": "https://www.usitc.gov/faq/question/what_meant_country_merchandise_trade_statistics.htm",
             "dataweb_api": "https://www.usitc.gov/applications/dataweb/api/dataweb_query_api.html",
@@ -1606,6 +1659,9 @@ def main() -> int:
             "unit_value_rows": len(unit_values),
             "explorer_files": len(explorer_index),
             "usgs_rare_earths_rows": len(usgs_rows),
+            "usgs_mcs2026_rows": usgs_publications_metadata["datasets"]["mcs2026"]["row_count"],
+            "usgs_mcs2026_revision_rows": usgs_publications_metadata["datasets"]["mcs2026"]["revision_count"],
+            "usgs_myb2022_t8_rows": usgs_publications_metadata["datasets"]["myb2022_t8"]["row_count"],
         },
     }
     (PROCESSED / "explorer-index.json").write_text(
@@ -1619,6 +1675,8 @@ def main() -> int:
         sources,
         usgs_rows,
         usgs_metadata,
+        usgs_publications_context,
+        usgs_publications_metadata,
     )
     prc_origin_rows = write_prc_origin_index(summary["prc_supply_origins"])
     manifest["processed"]["prc_supplier_origin_index_rows"] = prc_origin_rows
@@ -1631,6 +1689,8 @@ def main() -> int:
 
     print(
         f"Built {len(rows):,} DataWeb rows, {len(usgs_rows):,} USGS DS140 rows, "
+        f"{usgs_publications_metadata['datasets']['mcs2026']['row_count']:,} USGS MCS rows, "
+        f"{usgs_publications_metadata['datasets']['myb2022_t8']['row_count']:,} USGS MYB T8 rows, "
         f"{len(unit_values):,} unit-value rows, and {len(explorer_index)} explorer shards "
         f"in {PROCESSED.relative_to(ROOT)}."
     )

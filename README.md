@@ -4,7 +4,7 @@ A static, reproducible statistical record of U.S.–PRC critical-mineral trade s
 
 **Public site:** <https://therealjameswilson.github.io/critical-minerals-records-stage-v3/>
 
-V3 changes the evidentiary model used by the 1861–1992 predecessor. It does not use FRUS as evidence. Its public claims resolve to frozen USITC DataWeb workbooks, frozen UN Comtrade API responses for the China-reporter sourcing view, and a frozen USGS Data Series 140 workbook for national rare-earth historical context.
+V3 changes the evidentiary model used by the 1861–1992 predecessor. It does not use FRUS as evidence. Its public claims resolve to frozen USITC DataWeb workbooks, frozen UN Comtrade API responses for the China-reporter sourcing view, and frozen USGS statistical releases for national rare-earth context: Data Series 140, the 2026 Mineral Commodity Summaries (MCS), and the 2022 Minerals Yearbook (MYB) advance tables.
 
 ## What the site argues—and what it does not
 
@@ -32,6 +32,14 @@ data/
     us_imports_for_consumption_1993-2026.xlsx
     us_domestic_exports_1993-2026.xlsx
     usgs_ds140_rare_earths_2020.xlsx
+    usgs_mcs2026_commodities_data.csv
+    usgs_mcs2026_metadata.xml
+    usgs_mcs2026_rare_earths.pdf
+    usgs_mcs2026_rare_earths_heavy.pdf
+    usgs_mcs2026_scandium.pdf
+    usgs_mcs2026_yttrium.pdf
+    usgs_mcs2026_version_history.txt
+    usgs_myb2022_rare_earths_tables.xlsx
     un_comtrade_china/2846/        1993–2024 frozen responses + manifest
   processed/
     trade_long.csv
@@ -43,12 +51,18 @@ data/
     usgs_rare_earths_historical.csv
     usgs_rare_earths_metadata.json
     usgs_rare_earths_data_dictionary.csv
+    usgs_mcs2026_observations.csv
+    usgs_mcs2026_revision_audit.csv
+    usgs_mcs2026_metadata.json
+    usgs_myb2022_world_mine_production.csv
+    usgs_publications_data_dictionary.csv
     query_manifest.json
     site-summary.json
     explorer/*.json
 scripts/
   build_trade_data.py
   download_un_comtrade_china.py
+  usgs_publications.py
   validate_data.py
 tests/
 ```
@@ -75,13 +89,38 @@ The included files were retrieved from [USITC DataWeb](https://dataweb.usitc.gov
 
 The exact exported query-parameter rows, source-row counts, byte sizes, and SHA-256 digests are copied into `data/processed/query_manifest.json` at build time.
 
-## Frozen USGS historical input
+## Frozen USGS statistical inputs
+
+### Data Series 140
 
 `data/raw/usgs_ds140_rare_earths_2020.xlsx` is the rare-earth workbook published with [USGS Data Series 140](https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140). It supplies national rare-earth-oxide-equivalent production, imports, exports, apparent consumption, unit values, and world production for 1900–2020. The public site displays the 1993–2020 portion alongside the trade record.
 
 The ETL preserves source `NA` and `W` cells as `not_available` and `withheld`, respectively, and retains the workbook’s six formulas verbatim beside their cached numeric values. Method labels follow the embedded notes: estimated REO-equivalent trade, specified apparent-consumption calculation/interpolation periods, weighted-average unit values, and the CPI conversion. Production cells retain a source-series qualification because USGS does not label each one as reported or estimated. USGS identifies the source and usage as public domain.
 
 This is a national historical context layer, not partner-level HTS trade. It never enters the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.
+
+### 2026 Mineral Commodity Summaries
+
+The repository freezes the official MCS 2026 ScienceBase commodity table and metadata as `data/raw/usgs_mcs2026_commodities_data.csv` and `data/raw/usgs_mcs2026_metadata.xml`, together with the current Rare Earths, Heavy Rare Earths, Scandium, and Yttrium PDFs and the MCS version history. The CSV uses Windows-1252 (`cp1252`) encoding. Filtering its exact chapter labels—`RARE EARTHS`, `RARE EARTHS (Heavy)`, `SCANDIUM`, and `YTTRIUM`—yields **286 source observations**.
+
+`data/processed/usgs_mcs2026_observations.csv` retains every filtered source row and separates the raw ScienceBase value and note from the current-PDF view. The frozen version history identifies the current MCS release as version 1.3, reposted 2026-05-27. `data/processed/usgs_mcs2026_revision_audit.csv` makes the reconciliation explicit:
+
+- Version 1.3 changes Brazil 2025 reserves from `21,000,000` metric tons in the frozen CSV to `11,000,000` in the current Rare Earths PDF.
+- Version 1.3 changes the 2025 world-total reserve lower bound from `>85,000,000` to `>75,000,000` metric tons.
+- Version 1.1 moves footnote 14 away from China 2024 production, so the frozen production-quota note is retained but marked superseded.
+- Version 1.1 attaches footnote 14 to India 2025 reserves: a 2015 OSCOM report gave 256,000 tons of monazite reserves but did not report rare-earth reserves. The reserve value therefore remains unavailable.
+
+The raw CSV is never silently rewritten. The PDF-current value or note, original value or note, revision action, and revision source remain auditable. MCS 2026 is the **publication vintage**; its tabular observations cover 2021–2025. It is not a 2026 observation series.
+
+Official sources: [USGS Rare Earths Statistics and Information](https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information), [MCS 2026 data release and metadata](https://doi.org/10.5066/P1WKQ63T), [Rare Earths PDF](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf), [Heavy Rare Earths PDF](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths-heavy.pdf), [Scandium PDF](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-scandium.pdf), [Yttrium PDF](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-yttrium.pdf), and [MCS version history](https://pubs.usgs.gov/periodicals/mcs2026/versionHist.txt).
+
+### 2022 Minerals Yearbook advance tables
+
+`data/raw/usgs_myb2022_rare_earths_tables.xlsx` is frozen from the [USGS Rare Earths 2022 tables-only release](https://www.usgs.gov/media/files/rare-earths-2022-tables-only-release). Only table T8, *World Mine Production of Rare Earths, by Country*, is normalized: **65 source-row/year observations** (12 countries plus the source total across 2018–2022). Tables T1–T7 remain available in the unchanged workbook but do not feed processed partner-trade series.
+
+`data/processed/usgs_myb2022_world_mine_production.csv` and the MCS world-mine-production rows may be displayed as a contextual sequence for 2018–2022 and 2024–2025. The missing 2023 bridge is explicit; it is not interpolated. `data/processed/usgs_mcs2026_metadata.json` records the frozen files and row counts, while `data/processed/usgs_publications_data_dictionary.csv` defines both publication-layer tables.
+
+Mine production locates reported extraction, not ownership, processing control, or guaranteed access. MCS import-source shares identify direct or shipping sources and may differ from the mine origin of the material. Neither series is substituted for DataWeb country-of-origin trade or China-reporter Comtrade data, and no USGS publication row enters the DataWeb China-share, supplier-HHI, or HTS unit-value derivatives.
 
 ## Reproduce the processed data
 
@@ -120,7 +159,7 @@ qty2, qty2_unit, source, retrieved_at
 
 It then adds source-row, period, suppression, measurement-quality, classification-break, and denominator fields. See `data/processed/data_dictionary.csv` and `docs/data-contract.md`.
 
-The separate USGS context table is `data/processed/usgs_rare_earths_historical.csv`; its fields are documented in `data/processed/usgs_rare_earths_data_dictionary.csv`, and its source vintage, digest, status counts, and workbook notes are in `data/processed/usgs_rare_earths_metadata.json`.
+The separate USGS context tables are `data/processed/usgs_rare_earths_historical.csv`, `data/processed/usgs_mcs2026_observations.csv`, and `data/processed/usgs_myb2022_world_mine_production.csv`. Their fields and source vintages are documented in the corresponding dictionaries and metadata files listed above.
 
 Two quantity rules are essential:
 
@@ -139,6 +178,9 @@ Annual 2026 source cells are structural zeros while the YTD sheets contain Janua
 - `prc_supplier_origin_index.csv`: annual China-reporter HS 2846 World value, positive-origin count, value HHI, and leading origin.
 - `classification_breaks.csv`: general HS revision checkpoints plus the observed HTS 8505 measurement-regime break in 2019.
 - `usgs_rare_earths_historical.csv`: normalized national and world rare-earth-oxide-equivalent history, 1900–2020; kept analytically separate from partner-level derivations.
+- `usgs_mcs2026_observations.csv`: 286 normalized MCS observations for Rare Earths, Heavy Rare Earths, Scandium, and Yttrium, with raw and current-PDF revision states kept side by side.
+- `usgs_mcs2026_revision_audit.csv`: the explicit ScienceBase-CSV-to-current-PDF reconciliation log.
+- `usgs_myb2022_world_mine_production.csv`: 65 normalized T8 source-row/year observations, 2018–2022.
 
 HTS 2805 and 8505 are broad proxy headings. HTS 2805 includes products beyond rare-earth metals; HTS 8505 includes non-rare-earth and non-permanent-magnet products. HTS 2846 is the cleanest four-digit rare-earth-compounds heading in this build.
 
@@ -156,7 +198,7 @@ Then open <http://localhost:8000/>. Chart.js 4.5.1 is vendored under `assets/ven
 
 - Source workbooks: [USITC DataWeb](https://dataweb.usitc.gov/). See the [DataWeb quantity FAQ](https://www.usitc.gov/applications/dataweb/faqs), [partner definitions](https://www.usitc.gov/faq/question/what_meant_country_merchandise_trade_statistics.htm), and [HTS archive](https://www.usitc.gov/harmonized_tariff_information/hts/archive/list).
 - China-reporter source: [UN Comtrade API](https://uncomtrade.org/docs/un-comtrade-api/). Raw response snapshots retain the source’s metadata and revision vintage.
-- National historical context: [USGS Rare Earths, Data Series 140](https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140). USGS identifies the source and usage as public domain.
+- National statistical context: [USGS Rare Earths Statistics and Information](https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information), [Data Series 140](https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140), [MCS 2026 data release](https://doi.org/10.5066/P1WKQ63T), and [MYB 2022 tables-only release](https://www.usgs.gov/media/files/rare-earths-2022-tables-only-release). USGS identifies these U.S. Government materials as public domain.
 - Site code and original documentation: MIT License; see `LICENSE`.
 - Chart.js: MIT License; see `assets/vendor/chart.js/LICENSE.md`.
 - U.S. Government and UN source data retain their source-specific terms. The repository’s MIT License does not relicense third-party data or trademarks.

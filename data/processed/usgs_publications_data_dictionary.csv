@@ -1,0 +1,52 @@
+dataset,column,definition
+usgs_mcs2026_observations,source_id,Normalized MCS source field: source id.
+usgs_mcs2026_observations,source_row_number,Normalized MCS source field: source row number.
+usgs_mcs2026_observations,source_file,Normalized MCS source field: source file.
+usgs_mcs2026_observations,mcs_chapter,Normalized MCS source field: mcs chapter.
+usgs_mcs2026_observations,section,Normalized MCS source field: section.
+usgs_mcs2026_observations,commodity,Normalized MCS source field: commodity.
+usgs_mcs2026_observations,country,Normalized MCS source field: country.
+usgs_mcs2026_observations,statistics,Normalized MCS source field: statistics.
+usgs_mcs2026_observations,statistics_detail,Normalized MCS source field: statistics detail.
+usgs_mcs2026_observations,unit,Normalized MCS source field: unit.
+usgs_mcs2026_observations,year,Normalized MCS source field: year.
+usgs_mcs2026_observations,raw_year,Normalized MCS source field: raw year.
+usgs_mcs2026_observations,raw_value,Exact value string in the frozen ScienceBase CSV.
+usgs_mcs2026_observations,raw_notes,Exact Notes field in the frozen ScienceBase CSV.
+usgs_mcs2026_observations,raw_is_critical_mineral_2025,Normalized MCS source field: raw is critical mineral 2025.
+usgs_mcs2026_observations,raw_other_notes,Normalized MCS source field: raw other notes.
+usgs_mcs2026_observations,current_value,"Value string after only the audited current-PDF revision, if any."
+usgs_mcs2026_observations,current_notes,"Notes after only the audited current-PDF revision, if any."
+usgs_mcs2026_observations,value,"Parsed exact numeric value; blank for a range, bound, indicator, or missing value."
+usgs_mcs2026_observations,value_low,Published low endpoint or strict lower-bound value; no midpoint is inferred.
+usgs_mcs2026_observations,value_high,Published high endpoint for a range; no midpoint is inferred.
+usgs_mcs2026_observations,comparator,"Publication relationship: exact, greater_than, range, or blank."
+usgs_mcs2026_observations,availability_status,"available, explicit_zero, indicator, or not_available."
+usgs_mcs2026_observations,indicator_code,Semantic code for a nonnumeric publication indicator; E means net_exporter.
+usgs_mcs2026_observations,is_estimated,Normalized MCS source field: is estimated.
+usgs_mcs2026_observations,revision_action,Audited action applied to current fields; none leaves raw and current identical.
+usgs_mcs2026_observations,revision_version,Normalized MCS source field: revision version.
+usgs_mcs2026_observations,revision_source_file,Normalized MCS source field: revision source file.
+usgs_mcs2026_observations,revision_page,Normalized MCS source field: revision page.
+usgs_mcs2026_observations,revision_note,Normalized MCS source field: revision note.
+usgs_myb2022_world_mine_production,source_id,Normalized MYB T8 field: source id.
+usgs_myb2022_world_mine_production,source_file,Normalized MYB T8 field: source file.
+usgs_myb2022_world_mine_production,source_sheet,Normalized MYB T8 field: source sheet.
+usgs_myb2022_world_mine_production,source_row_number,Normalized MYB T8 field: source row number.
+usgs_myb2022_world_mine_production,source_cell,Excel coordinate of the T8 value cell.
+usgs_myb2022_world_mine_production,source_marker_cell,Excel coordinate of the adjacent annotation cell.
+usgs_myb2022_world_mine_production,source_country_label,Normalized MYB T8 field: source country label.
+usgs_myb2022_world_mine_production,geography,Normalized MYB T8 field: geography.
+usgs_myb2022_world_mine_production,geography_code,Normalized MYB T8 field: geography code.
+usgs_myb2022_world_mine_production,metric,Normalized MYB T8 field: metric.
+usgs_myb2022_world_mine_production,unit,Normalized MYB T8 field: unit.
+usgs_myb2022_world_mine_production,year,Normalized MYB T8 field: year.
+usgs_myb2022_world_mine_production,raw_value,Unformatted cell value from T8.
+usgs_myb2022_world_mine_production,display_value,T8 cell value rendered with the source number format; zero remains --.
+usgs_myb2022_world_mine_production,value,Normalized MYB T8 field: value.
+usgs_myb2022_world_mine_production,availability_status,Normalized MYB T8 field: availability status.
+usgs_myb2022_world_mine_production,raw_marker,"Adjacent source marker: e estimated, r revised, 6 footnote 6, or blank."
+usgs_myb2022_world_mine_production,footnote_ids,Normalized MYB T8 field: footnote ids.
+usgs_myb2022_world_mine_production,is_estimated,True when an e marker applies at row or cell level.
+usgs_myb2022_world_mine_production,is_revised,True when an r marker applies to the cell.
+usgs_myb2022_world_mine_production,data_status,"reported, estimated, revised, estimated_revised, or explicit_zero."

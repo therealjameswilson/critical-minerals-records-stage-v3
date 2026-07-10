@@ -1,6 +1,8 @@
 # V3 statistical data contract
 
-The canonical partner-level trade table is `data/processed/trade_long.csv`. It is source-bucket long rather than one-row-per-mineral total, because USITC quantity units are not freely additive. National USGS history is published under a separate contract and is never merged into partner-level calculations.
+Contract revision: **3.3.0**.
+
+The canonical partner-level trade table is `data/processed/trade_long.csv`. It is source-bucket long rather than one-row-per-mineral total, because USITC quantity units are not freely additive. USGS historical and publication tables are published under separate contracts and are never merged into partner-level calculations.
 
 ## Required fields
 
@@ -32,6 +34,29 @@ Each row identifies `year`, `geography`, `metric`, `value`, `unit`, `value_statu
 Source `NA` and `W` tokens become blank numeric values with `value_status=not_available` and `value_status=withheld`. The `method_status` field follows only methods stated in the embedded notes: estimated REO-equivalent imports and exports, year-specific calculated/estimated/interpolated apparent consumption, weighted-average current-dollar unit value, and the CPI-derived constant-dollar series. Production retains `source_series_reo_content_method_not_cell_specific`; the ETL does not invent a reported/estimated label for individual production cells. The analytical `geography_code` is `USA` or `WLD`; `WLD` is not represented as an ISO-3166 code.
 
 The USGS table is national context, not partner-level HTS trade. It must not feed the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.
+
+## Separate USGS MCS 2026 publication contract
+
+`data/processed/usgs_mcs2026_observations.csv` contains the **286** rows obtained by decoding `data/raw/usgs_mcs2026_commodities_data.csv` as Windows-1252 (`cp1252`) and selecting the exact chapter labels `RARE EARTHS`, `RARE EARTHS (Heavy)`, `SCANDIUM`, and `YTTRIUM`. Source fields retain `mcs_chapter`, `section`, `commodity`, `country`, `statistics`, `statistics_detail`, `unit`, `year`, `raw_year`, `raw_value`, `raw_notes`, the source critical-mineral flag, and other notes, plus row/file identifiers. Parsed fields keep `value`, `value_low`, `value_high`, `comparator`, `availability_status`, `indicator_code`, and `is_estimated` separate rather than forcing every source token into a number. Comparators are `exact`, `greater_than`, or `range`; availability is `available`, `explicit_zero`, `indicator`, or `not_available`. No midpoint is invented for a range. The source token `E` is an indicator meaning net exporter, not an estimated numeric value.
+
+The same row distinguishes `raw_value` and `raw_notes` from `current_value` and `current_notes` in the current MCS PDFs. Original raw fields remain unchanged. Current-view fields may differ only when an entry in `data/processed/usgs_mcs2026_revision_audit.csv` identifies the row, original state, current state, `revision_action`, version, revision-history source, publication page, and note. The audited reconciliation covers:
+
+- Brazil 2025 reserves, version 1.3: `21,000,000` to `11,000,000` metric tons;
+- 2025 world-total reserve lower bound, version 1.3: `>85,000,000` to `>75,000,000` metric tons;
+- China 2024 production, version 1.1: the raw quota note retained but marked superseded after footnote 14 moved;
+- India 2025 reserves, version 1.1: value still unavailable, with footnote 14 recording 256,000 tons of monazite reserves in a 2015 OSCOM report but no rare-earth reserve figure.
+
+`data/processed/usgs_mcs2026_metadata.json` records the frozen CSV, XML, four PDFs, version history, hashes, official URLs, filters, encoding, row counts, and revision policy. `data/processed/usgs_publications_data_dictionary.csv` defines fields in both USGS publication-layer CSVs.
+
+MCS 2026 is a publication vintage; these source observations cover 2021–2025. The contract must not create a 2026 observation from the release year.
+
+## Separate USGS MYB 2022 world-production contract
+
+`data/processed/usgs_myb2022_world_mine_production.csv` contains **65** source-row/year observations from table T8 of the frozen `data/raw/usgs_myb2022_rare_earths_tables.xlsx` workbook: 12 countries plus the source total by 5 years, 2018–2022. Rows preserve the source row, value cell, marker cell, country label, normalized geography, metric, unit, `raw_value`, display value, parsed value, raw marker, footnote identifiers, and estimated/revised/status fields so reported, estimated, revised, zero, and unavailable states are not conflated. Tables T1–T7 remain in the unchanged source workbook but are not normalized into the partner-trade contract.
+
+When MYB and MCS mine-production rows appear in a combined display, 2023 is an explicit gap. The ETL must not interpolate it. Mine production identifies the country of reported extraction, not ownership, refining location, control, or resource access. MCS import-source shares identify direct or shipping source and may not be mine origin.
+
+Neither USGS publication table feeds `china_share_of_us_imports.csv`, `supplier_diversification_index.csv`, `unit_value.csv`, or any other DataWeb-derived measure.
 
 ## Quantity slots
 

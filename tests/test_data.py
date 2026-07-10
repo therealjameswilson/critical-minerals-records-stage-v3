@@ -101,6 +101,57 @@ def test_usgs_site_context_is_separate_from_partner_trade() -> None:
     assert all("usgs" not in row["source"].casefold() for row in csv_rows("trade_long.csv"))
 
 
+def test_usgs_mcs_current_view_preserves_raw_revision_evidence() -> None:
+    rows = csv_rows("usgs_mcs2026_observations.csv")
+    assert len(rows) == 286
+    assert {
+        chapter: sum(row["mcs_chapter"] == chapter for row in rows)
+        for chapter in {row["mcs_chapter"] for row in rows}
+    } == {
+        "RARE EARTHS": 164,
+        "RARE EARTHS (Heavy)": 51,
+        "SCANDIUM": 30,
+        "YTTRIUM": 41,
+    }
+    revisions = [row for row in rows if row["revision_action"] != "none"]
+    assert len(revisions) == 4
+    brazil = next(row for row in revisions if row["country"] == "Brazil")
+    world = next(row for row in revisions if row["country"] == "World total")
+    china = next(row for row in revisions if row["country"] == "China")
+    india = next(row for row in revisions if row["country"] == "India")
+    assert (brazil["raw_value"], brazil["current_value"], brazil["value"]) == (
+        "21,000,000", "11,000,000", "11000000",
+    )
+    assert (world["raw_value"], world["current_value"], world["value_low"]) == (
+        ">85,000,000", ">75,000,000", "75000000",
+    )
+    assert "Production quota" in china["raw_notes"] and china["current_notes"] == "Estimated."
+    assert india["availability_status"] == "not_available" and "256,000 tons" in india["current_notes"]
+    assert [
+        int(row["value"])
+        for row in rows
+        if row["mcs_chapter"] == "YTTRIUM" and row["statistics"] == "Export"
+    ] == [9, 4, 20, 3, 12]
+
+
+def test_usgs_myb_mcs_site_bridge_keeps_2023_missing() -> None:
+    myb_rows = csv_rows("usgs_myb2022_world_mine_production.csv")
+    assert len(myb_rows) == 65
+    assert {int(row["year"]) for row in myb_rows} == set(range(2018, 2023))
+    summary = load_json("site-summary.json")
+    context = summary["usgs_mcs2026_context"]
+    assert context["status"] == "loaded"
+    assert context["coverage"] == [2018, 2025]
+    assert context["observation_gap"] == [2023]
+    missing = next(row for row in context["series"] if row["year"] == 2023)
+    assert missing["china_production"] is missing["us_production"] is missing["world_production"] is None
+    assert context["latest"]["china_production"] == 270_000
+    assert context["latest"]["us_production"] == 51_000
+    assert context["latest"]["world_production"] == 390_000
+    assert context["latest"]["china_to_us_production_ratio"] == 5.29
+    assert context["import_source_snapshot"]["rare_earth_compounds_metals_china_share"] == 71
+
+
 def test_site_summary_stays_small_and_labels_prc_coverage() -> None:
     summary = load_json("site-summary.json")
     assert (PROCESSED / "site-summary.json").stat().st_size <= 150_000

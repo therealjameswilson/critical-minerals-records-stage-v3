@@ -2,7 +2,7 @@
 
 ## Evidentiary scope
 
-V3 covers 1993–2026 and is statistics-first. FRUS is not used as evidence. The U.S. partner-level view comes from two frozen USITC DataWeb workbooks; the China sourcing view comes from frozen China-reporter UN Comtrade responses. A frozen USGS Data Series 140 workbook supplies national rare-earth historical context.
+V3 covers 1993–2026 and is statistics-first. FRUS is not used as evidence. The U.S. partner-level view comes from two frozen USITC DataWeb workbooks; the China sourcing view comes from frozen China-reporter UN Comtrade responses. Frozen USGS Data Series 140, Mineral Commodity Summaries 2026, and Minerals Yearbook 2022 files supply national and mine-production context without entering the trade derivations.
 
 ## U.S. reporter layer
 
@@ -25,6 +25,21 @@ The normalized layer retains U.S. production, imports, exports, apparent consump
 
 These national REO-equivalent estimates are context only. They do not identify partners or HTS products and never enter the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.
 
+## USGS current-publication context layer
+
+The [USGS Rare Earths Statistics and Information hub](https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information) points to two additional frozen releases used here:
+
+- the [MCS 2026 data release](https://doi.org/10.5066/P1WKQ63T): the ScienceBase commodity CSV and XML metadata, four current PDFs (Rare Earths, Heavy Rare Earths, Scandium, and Yttrium), and the [MCS version history](https://pubs.usgs.gov/periodicals/mcs2026/versionHist.txt);
+- the [MYB 2022 rare-earths tables-only release](https://www.usgs.gov/media/files/rare-earths-2022-tables-only-release): the advance-table workbook, from which only table T8, *World Mine Production of Rare Earths, by Country*, is normalized.
+
+The ScienceBase CSV is decoded as Windows-1252 (`cp1252`). Its exact four relevant chapter labels yield 286 observations covering 2021–2025. The release year 2026 is a publication vintage, not an observation year. The MYB T8 normalization yields 65 source-row/year observations—12 countries plus the source total across 2018–2022. A combined site view leaves 2023 missing rather than interpolating between MYB 2022 and MCS 2024.
+
+The current MCS release is version 1.3, reposted 2026-05-27. Its Rare Earths PDF has revisions not carried into the frozen ScienceBase CSV. Version 1.3 changes Brazil 2025 reserves from 21 million to 11 million metric tons and the 2025 world reserve lower bound from more than 85 million to more than 75 million metric tons. Version 1.1 moved footnote 14 away from China 2024 production and attached it to India 2025 reserves, where it reports 256,000 tons of monazite reserves from a 2015 OSCOM report but no rare-earth reserve figure. The current view therefore marks the frozen China quota note as superseded and leaves India reserves unavailable with the current context attached. The original CSV fields remain intact beside the PDF-current fields, and every change appears in `usgs_mcs2026_revision_audit.csv`; no value is silently overwritten.
+
+These tables answer different questions. MYB and MCS mine production locate reported extraction, not ownership, processing control, policy intent, or guaranteed access. MCS import-source shares identify direct or shipping sources and can differ from mine origin. DataWeb and Comtrade remain the reporter-specific evidence for trade access. USGS publication rows never enter the DataWeb China-share, supplier-HHI, or HTS unit-value calculations.
+
+USGS identifies the MCS data release and MYB tables as public-domain U.S. Government works. The repository preserves their source attribution and revision vintage; its MIT License applies to original site code and documentation, not as a relicense of source data.
+
 ## China reporter layer
 
 The repository snapshots UN Comtrade public-preview responses for China-reporter annual imports of HS 2846 by all primary origin partners, 1993–2024. Each year is requested separately. The acquisition fails if a response reaches the 500-row ceiling, omits the requested year, reports an API error, or fails to reconcile partner values to World.
@@ -43,6 +58,6 @@ The three-heading U.S. basket is useful as a broad dependency signal but should 
 
 ## Reproducibility
 
-Raw files are committed unchanged and identified by SHA-256. The ETL creates deterministic CSV and JSON outputs. Validation independently recomputes shares and HHI, verifies audited headline values, checks quantity-slot separation and suppression treatment, verifies Comtrade response hashes and World reconciliation, checks the USGS row contract and source isolation, and enforces browser-data size limits.
+Raw files are committed unchanged and identified by SHA-256. The ETL creates deterministic CSV and JSON outputs. Validation independently recomputes shares and HHI, verifies audited headline values, checks quantity-slot separation and suppression treatment, verifies Comtrade response hashes and World reconciliation, checks the USGS row contracts (including 286 MCS rows, 65 MYB T8 rows, the revision audit, and the explicit 2023 gap), enforces USGS/DataWeb isolation, and keeps browser payloads within their size limits.
 
 See `README.md`, `data/processed/query_manifest.json`, and `data/processed/data_dictionary.csv` for commands and field definitions.

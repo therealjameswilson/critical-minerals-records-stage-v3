@@ -8,7 +8,7 @@
   <meta name="color-scheme" content="light">
   <link rel="icon" href="data:,">
   <link rel="canonical" href="https://therealjameswilson.github.io/critical-minerals-records-stage-v3/">
-  <link rel="stylesheet" href="assets/v3.css?v=3.2.0">
+  <link rel="stylesheet" href="assets/v3.css?v=3.3.0">
   <title>US–PRC Critical Minerals Record, 1993–2026</title>
 </head>
 <body>
@@ -151,6 +151,60 @@
               <div class="table-scroll"><table id="usgsContextTable"><caption class="sr-only">USGS national rare-earth balance, 1993–2020. Mass columns are metric tons of rare-earth oxide equivalent.</caption><thead><tr><th>Year</th><th>U.S. production</th><th>Estimated imports</th><th>Estimated exports</th><th>Apparent consumption</th><th>World production</th><th>Derived U.S. share of world production</th></tr></thead><tbody></tbody></table></div>
             </details>
           </div>
+        </aside>
+
+        <aside class="usgs-context usgs-current-context" aria-labelledby="mcsContextTitle">
+          <div class="usgs-context-header">
+            <div>
+              <p class="chart-kicker">USGS annual statistics · upstream context</p>
+              <h3 id="mcsContextTitle">Mine production is not trade access—but it locates the upstream disparity</h3>
+              <p>USGS mine-production estimates show where rare-earth material entered the supply chain. They do not measure U.S. or PRC trade access, ownership, refining control, or magnet capacity, and they never enter the DataWeb partner-share calculations above.</p>
+            </div>
+            <div class="source-chip-group" aria-label="Official USGS sources">
+              <a class="source-chip" href="https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information">USGS statistics hub</a>
+              <a class="source-chip" href="https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf">2026 Commodity Summary</a>
+              <a class="source-chip" href="https://www.usgs.gov/media/files/rare-earths-2022-tables-only-release">2022 Minerals Yearbook tables</a>
+            </div>
+          </div>
+
+          <p class="context-status" id="mcsContextStatus" role="status">Loading the frozen USGS annual record…</p>
+
+          <div class="usgs-stat-grid" aria-label="Latest USGS rare-earth mine-production context">
+            <article><p class="usgs-stat-value china-stat" id="mcsChinaWorldShare">—</p><h4 id="mcsChinaShareLabel">China share in latest year</h4><p>China mine production divided by estimated world mine production.</p></article>
+            <article><p class="usgs-stat-value" id="mcsUsWorldShare">—</p><h4 id="mcsUsShareLabel">U.S. share in latest year</h4><p>U.S. mine production divided by estimated world mine production.</p></article>
+            <article><p class="usgs-stat-value ratio-stat" id="mcsChinaUsRatio">—</p><h4 id="mcsRatioLabel">China-to-U.S. production</h4><p>Ratio of the two mine-production estimates, not a measure of trade access.</p></article>
+          </div>
+
+          <div class="chart-card usgs-chart-card">
+            <div class="chart-title-row">
+              <div><p class="chart-kicker">Share of estimated world mine production</p><h3>China and the United States, 2018–2025</h3></div>
+              <div class="legend usgs-legend" aria-hidden="true">
+                <span><i class="legend-swatch mcs-china"></i>China</span>
+                <span><i class="legend-swatch mcs-us"></i>United States</span>
+              </div>
+            </div>
+            <div class="canvas-shell"><canvas id="mcsProductionShareChart" role="img" aria-describedby="mcsProductionNote"></canvas></div>
+            <p class="chart-note" id="mcsProductionNote">The 2018–2022 series comes from the 2022 Minerals Yearbook tables; 2024–2025 comes from the current 2026 Mineral Commodity Summary. A comparable 2023 observation is unavailable and remains a visible gap.</p>
+            <details class="data-disclosure">
+              <summary>View exact annual values and the 2023 gap</summary>
+              <div class="table-scroll"><table id="mcsProductionTable"><caption class="sr-only">USGS rare-earth mine production and derived shares of estimated world production, 2018–2025. Production is in metric tons of rare-earth-oxide equivalent.</caption><thead><tr><th>Year</th><th>China production</th><th>U.S. production</th><th>World production</th><th>China share</th><th>U.S. share</th><th>Source vintage</th></tr></thead><tbody><tr><td colspan="7">Loading statistical record…</td></tr></tbody></table></div>
+            </details>
+          </div>
+
+          <div class="source-context-heading">
+            <div><p class="chart-kicker">Direct or shipping source · separate evidence</p><h3>What the 2026 summary says about recent import dependence</h3></div>
+            <p>These source shares are import-origin context, not mine-origin shares. They sit beside the mine-production record; they do not convert it into a claim about access.</p>
+          </div>
+          <div class="usgs-stat-grid source-context-grid" aria-label="Recent USGS import-source context">
+            <article><p class="usgs-stat-value china-stat" id="mcsRareEarthDirectShare">—</p><h4 id="mcsRareEarthDirectLabel">Rare-earth compounds and metals</h4><p id="mcsRareEarthDirectScope">Direct or shipping source share from China, including Hong Kong.</p></article>
+            <article><p class="usgs-stat-value" id="mcsHeavyReliance">—</p><h4>Heavy rare-earth reliance</h4><p>2025 net import reliance reported by USGS.</p></article>
+            <article><p class="usgs-stat-value china-stat" id="mcsYttriumDirectShare">—</p><h4>Yttrium direct source</h4><p>China, including Hong Kong, as a share of reported 2021–2024 import sources.</p></article>
+          </div>
+          <p class="chart-note source-context-caveat" id="mcsImportSourceCaveat">Direct or shipping source can differ from mine origin; source qualifications will appear when the statistical record loads.</p>
+          <details class="data-disclosure source-notes-disclosure">
+            <summary>Read source and comparability notes</summary>
+            <ul class="source-note-list" id="mcsSourceNotes"><li>Loading source notes…</li></ul>
+          </details>
         </aside>
       </div>
     </section>
@@ -338,6 +392,6 @@
 
   <noscript><div class="noscript">JavaScript is required for interactive charts. All normalized and derived CSV files remain available in the Method &amp; provenance section.</div></noscript>
   <script defer src="assets/vendor/chart.js/chart.umd.min.js"></script>
-  <script defer src="assets/v3.js?v=3.2.0"></script>
+  <script defer src="assets/v3.js?v=3.3.0"></script>
 </body>
 </html>
