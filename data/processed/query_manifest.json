@@ -52,7 +52,7 @@
         {
           "parameter": "Download Date",
           "section": "",
-          "value": "2026-07-10"
+          "value": "2026-07-10T16:57:38"
         },
         {
           "parameter": "Trade Flow",
@@ -186,7 +186,7 @@
       }
     },
     {
-      "bytes": 551704,
+      "bytes": 551703,
       "file": "data/raw/us_domestic_exports_1993-2026.xlsx",
       "flow": "domestic_exports",
       "normalized_rows": 34476,
@@ -194,7 +194,7 @@
         {
           "parameter": "Download Date",
           "section": "",
-          "value": "2026-07-10"
+          "value": "2026-07-10T18:23:15"
         },
         {
           "parameter": "Trade Flow",
@@ -317,7 +317,7 @@
           "value": "Countries"
         }
       ],
-      "sha256": "720ef6d04586002c2d2475a85ab45e0b63ad025ce0dc1a9a0fdf7a3f4f91a2c1",
+      "sha256": "204dbe2f51cf3d0f5eaf554359dac50a27c45c3572b17d268b12629fea59f19c",
       "source_row_inventory": {
         "FAS Value": 474,
         "FAS Value YTD": 474,

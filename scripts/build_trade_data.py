@@ -227,11 +227,11 @@ def read_query_rows(workbook: Any) -> list[dict[str, str]]:
             section = key
             continue
         if isinstance(right, datetime):
-            rendered = right.date().isoformat()
+            rendered = right.isoformat(timespec="seconds")
         elif isinstance(right, date):
             rendered = right.isoformat()
         elif isinstance(right, (int, float)) and key == "Download Date":
-            rendered = from_excel(right, workbook.epoch).date().isoformat()
+            rendered = from_excel(right, workbook.epoch).isoformat(timespec="seconds")
         else:
             rendered = str(right or "").strip()
         rows.append({"section": section, "parameter": key, "value": rendered})

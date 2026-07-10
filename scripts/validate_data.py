@@ -20,8 +20,12 @@ PROCESSED = ROOT / "data" / "processed"
 YEARS = set(range(1993, 2027))
 EXPECTED_HASHES = {
     "us_imports_for_consumption_1993-2026.xlsx": "fb453f549a3a9923b474a7b1fc4833b98319eef110e00920d79fb63b558d9b45",
-    "us_domestic_exports_1993-2026.xlsx": "720ef6d04586002c2d2475a85ab45e0b63ad025ce0dc1a9a0fdf7a3f4f91a2c1",
+    "us_domestic_exports_1993-2026.xlsx": "204dbe2f51cf3d0f5eaf554359dac50a27c45c3572b17d268b12629fea59f19c",
     "assets/vendor/chart.js/chart.umd.min.js": "48444a82d4edcb5bec0f1965faacdde18d9c17db3063d042abada2f705c9f54a",
+}
+EXPECTED_DOWNLOAD_TIMESTAMPS = {
+    "us_imports_for_consumption_1993-2026.xlsx": "2026-07-10T16:57:38",
+    "us_domestic_exports_1993-2026.xlsx": "2026-07-10T18:23:15",
 }
 REQUIRED_LONG_COLUMNS = [
     "reporter", "flow", "partner", "partner_iso", "hts", "hts_desc", "mineral",
@@ -92,6 +96,19 @@ def main() -> int:
     source_hashes = {Path(row["file"]).name: row["sha256"] for row in manifest.get("sources", [])}
     for filename, expected in list(EXPECTED_HASHES.items())[:2]:
         require(source_hashes.get(filename) == expected, f"manifest hash mismatch: {filename}")
+        source = next((row for row in manifest.get("sources", []) if Path(row["file"]).name == filename), None)
+        download_timestamp = next(
+            (
+                row["value"]
+                for row in (source or {}).get("query_parameters", [])
+                if row.get("parameter") == "Download Date"
+            ),
+            None,
+        )
+        require(
+            download_timestamp == EXPECTED_DOWNLOAD_TIMESTAMPS[filename],
+            f"manifest download timestamp mismatch: {filename}",
+        )
 
     with (PROCESSED / "trade_long.csv").open(encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
