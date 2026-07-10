@@ -64,7 +64,7 @@
       ["Historical boundary", "1861–1992"],
       ["FRUS subject records", new Intl.NumberFormat("en-US").format(window.FRUS_SUBJECTS_INDEX.meta.documents)],
       ["Reviewed FRUS pilot", `${reviewed} of ${data["frus-documents"].length}`],
-      ["USGS observations", new Intl.NumberFormat("en-US").format(data.statistics.length)],
+      ["Verified trade records", new Intl.NumberFormat("en-US").format(data.trade.length)],
       ["Mineral profiles", data.minerals.length],
       ["NARA query plans", data["nara-queries"].length]
     ];

@@ -90,6 +90,16 @@
     "trust_note": "No Census values are yet transcribed into the pilot."
   },
   {
+    "id": "census-statistical-abstract-1948",
+    "label": "Statistical Abstract of the United States: 1948, Foreign Commerce tables 1013-1014",
+    "agency": "U.S. Department of Commerce, Bureau of the Census",
+    "source_type": "official-statistics",
+    "tier": 1,
+    "url": "https://www2.census.gov/library/publications/1948/compendia/statab/69ed/1948-12.pdf",
+    "scope": "Published values and percent distributions of U.S. exports and imports by broad economic class, including crude materials.",
+    "trust_note": "The 1861-1900 rows are published multi-year averages for a broad economic class. They are not mineral-specific, bilateral, or annual observations."
+  },
+  {
     "id": "gsa-stockpile",
     "label": "National Defense Stockpile historical records",
     "agency": "General Services Administration and successor agencies",

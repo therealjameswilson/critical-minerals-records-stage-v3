@@ -604,6 +604,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .atlas-number-grid span { margin-top: 4px; font-size: 10px; font-weight: 800; }
 .atlas-number-grid small { margin-top: 2px; color: var(--muted); font-size: 9px; }
 .atlas-number-grid a { margin-top: 8px; font-size: 9px; }
+.trade-scope-note { display: grid; grid-template-columns: 150px 1fr; gap: 16px; margin: 0 0 16px; padding: 12px 14px; border-left: 4px solid var(--gold-500); background: var(--paper-muted); color: var(--muted); font-size: 11px; }
+.trade-scope-note strong { color: var(--ink); text-transform: uppercase; }
+.trade-number-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 16px; }
+.trade-table table { min-width: 850px; }
+.trade-table th, .trade-table td { vertical-align: top; }
+.trade-table td strong, .trade-table td small { display: block; }
+.trade-table td small { margin-top: 2px; color: var(--muted); font-size: 9px; }
+.trade-source-note { margin: 12px 0 0; color: var(--muted); font-size: 10px; }
 .atlas-accessible-table { margin-top: 14px; }
 .atlas-accessible-table > p { padding: 0 16px; color: var(--muted); font-size: 12px; }
 .table-scroll { overflow-x: auto; }
@@ -950,6 +958,7 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .atlas-drawer { grid-column: 1 / -1; max-height: none; border-left: 0; border-top: 1px solid var(--line); }
   .atlas-drawer-empty { min-height: 180px; }
   .atlas-number-grid { grid-template-columns: repeat(3, 1fr); }
+  .trade-number-grid { grid-template-columns: repeat(2, 1fr); }
   .atlas-number-grid article:nth-child(3n) { border-right: 0; }
 }
 
@@ -979,6 +988,7 @@ th { background: var(--paper-muted); font-size: 10px; text-transform: uppercase;
   .method-toc { position: static; grid-template-columns: repeat(3, 1fr); }
   .method-toc strong { grid-column: 1 / -1; }
   .atlas-heading, .atlas-summary-grid, .atlas-panel-heading { grid-template-columns: 1fr; gap: 16px; }
+  .trade-scope-note { grid-template-columns: 1fr; gap: 4px; }
   .atlas-timebar { grid-template-columns: 42px 42px minmax(220px, 1fr) 42px; }
   .atlas-mineral-control, .atlas-mode-control { grid-column: span 2; }
   .atlas-workbench { grid-template-columns: 1fr; }

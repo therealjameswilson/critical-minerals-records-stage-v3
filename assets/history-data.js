@@ -3,7 +3,7 @@
 
   const FILES = [
     "sources", "minerals", "countries", "episodes", "agreements", "laws",
-    "administrations", "stockpile-cases", "frus-documents", "statistics",
+    "administrations", "stockpile-cases", "frus-documents", "statistics", "trade",
     "nara-queries", "country-briefs", "modern-context"
   ];
 
@@ -98,10 +98,12 @@
       "frus-subject-index": "FRUS discovery index",
       "usgs-ds140": "USGS Data Series 140",
       "usgs-statistical-compendium": "USGS / Bureau of Mines",
+      "usgs-circular-1141": "USGS Circular 1141",
       "nara-catalog-api": "NARA",
       "govinfo-statutes": "GovInfo",
       "state-treaties": "State treaty series",
       "census-historical-trade": "Census",
+      "census-statistical-abstract-1948": "Census Statistical Abstract",
       "gsa-stockpile": "Stockpile records",
       "state-country-guide-bolivia": "State country guide",
       "state-country-guide-chile": "State country guide",

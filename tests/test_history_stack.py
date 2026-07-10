@@ -41,6 +41,7 @@ def test_pilot_meets_minimum_entity_counts():
         "stockpile-cases": 2,
         "nara-queries": 30,
         "country-briefs": 4,
+        "trade": 1400,
     }
     for name, minimum in expected.items():
         assert len(load(name)) >= minimum
@@ -93,6 +94,39 @@ def test_uranium_and_rare_earth_profiles_preserve_different_evidence_depth():
     assert rare_earths["frus_document_ids"] == []
     assert any(row["mineral_id"] == "rare-earth-elements" and row["year"] == 1900 for row in statistics)
     assert any("FRUS" in gap for gap in rare_earths["data_gaps"])
+
+
+def test_trade_records_cover_every_selectable_year_without_interpolation():
+    rows = load("trade")
+    for year in range(1861, 1993):
+        assert any(row["year_start"] <= year <= row["year_end"] for row in rows), year
+    annual = [row for row in rows if row["temporal_precision"] == "annual"]
+    assert all(row["year_start"] == row["year_end"] for row in annual)
+    assert all(row["transcription_status"] == "machine-extracted-xlsx" for row in annual)
+
+
+def test_census_trade_bridge_preserves_published_scope_and_values():
+    rows = {
+        (row["direction"], row["metric"].rsplit(" ", 1)[-1]): row
+        for row in load("trade")
+        if row["year_start"] == 1861 and row["year_end"] == 1865
+    }
+    assert rows[("exports", "value")]["value"] == 33990
+    assert rows[("exports", "share")]["value"] == 19.97
+    assert rows[("imports", "value")]["value"] == 36064
+    assert rows[("imports", "share")]["value"] == 14.12
+    assert all(row["material_scope"] == "broad-economic-class" for row in rows.values())
+    assert all(row["mineral_id"] is None for row in rows.values())
+    assert all("multi-year average" in row["conversion_methodology"] for row in rows.values())
+
+
+def test_usgs_trade_rows_preserve_exact_year_units_and_provenance():
+    rows = [row for row in load("trade") if row["mineral_id"] == "tin" and row["year_start"] == 1942]
+    by_direction = {row["direction"]: row for row in rows}
+    assert by_direction["imports"]["value"] == 27200
+    assert by_direction["imports"]["unit"] == "metric tons (t) tin content"
+    assert by_direction["exports"]["table_or_page"].startswith("Tin worksheet")
+    assert all(row["source_id"] == "usgs-ds140" for row in rows)
 
 
 def test_history_stack_page_exposes_all_layers():
@@ -289,3 +323,6 @@ def test_atlas_url_state_and_accessible_contracts_are_visible():
     assert 'role="tabpanel"' in html
     assert "ArrowLeft" in atlas and "ArrowRight" in atlas
     assert "Counts are documentary coverage" in html
+    assert 'data-atlas-tab="trade"' in html
+    assert "renderTradePanel" in atlas
+    assert "No annual value is inferred" in atlas

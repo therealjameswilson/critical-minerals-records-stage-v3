@@ -128,13 +128,13 @@ LAYER_REGISTRY = [
     },
     {
         "id": "quantitative-trade-flows",
-        "title": "Quantitative trade flows",
-        "short_title": "Trade volume",
+        "title": "Partner-country quantitative trade flows",
+        "short_title": "Bilateral trade",
         "availability": "locked",
         "geometry": "relationship-lines",
         "required_data": "Origin, destination, mineral or product code, year, flow, quantity/value, unit, classification, and official citation.",
         "source_ids": ["census-historical-trade"],
-        "caveat": "Documented access lines must not be interpreted as trade volume.",
+        "caveat": "The U.S. Trade tab provides cited national totals. This map layer remains locked until official origin-destination data can support bilateral flows; documented access lines must not be interpreted as trade volume.",
     },
     {
         "id": "infrastructure",

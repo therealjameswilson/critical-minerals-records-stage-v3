@@ -46,16 +46,17 @@ and authoritative URL.
 
 The pilot demonstrates all major contracts without pretending to be complete:
 
-- 8 mineral profiles
-- 8 country or territory profiles
-- 6 historical periods
-- 14 agreements or policy instruments
+- 10 mineral profiles, including uranium and rare earth elements
+- 9 country or territory profiles
+- 8 historical periods
+- 15 agreements or policy instruments
 - 3 laws
-- 4 administrations
+- 5 administrations
 - 2 stockpile case studies
-- 20 linked FRUS documents, including 4 reviewed records
-- 25 NARA structured query plans
-- 1,114 USGS observations
+- 32 linked FRUS documents
+- 30 NARA structured query plans
+- 1,222 USGS observations
+- 1,476 official trade records spanning every selectable year
 
 ## Known Weak Areas
 
@@ -68,7 +69,7 @@ The pilot demonstrates all major contracts without pretending to be complete:
 - Mine, smelter, port, rail, and shipping-route coordinates remain unpopulated.
 - Historical boundary geometry and sourced alliance membership remain
   unpopulated; the basemap is modern orientation geometry only.
-- Atlas production, supplier-share, quantitative-flow, and risk modes are
+- Atlas production, supplier-share, bilateral-flow, and risk modes are
   deliberately locked until compatible official country-year series exist.
 - Historical outcomes are mostly research queues rather than inferred stories.
 - The pilot has four administration profiles, not complete Lincoln-through-Bush

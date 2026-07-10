@@ -23,17 +23,21 @@ appears only in a separately labeled Modern Context layer.
   archives, decision process, outcomes, provenance, and Modern Context.
 - A complete metadata-only FRUS Subjects discovery index for 1861–1992:
   16,811 document links across 545 volumes.
-- A pilot with 8 minerals, 8 countries or territories, 6 periods, 14 typed
-  agreements or policy instruments, 3 laws, 4 administrations, 2 stockpile
-  cases, 20 linked FRUS records, and 25 NARA query plans.
-- 1,114 unit-defined historical observations extracted from official USGS Data
+- A pilot with 10 minerals, including uranium and rare earth elements; 9
+  countries or territories; 8 periods; 15 typed agreements or policy
+  instruments; 3 laws; 5 administrations; 32 linked FRUS records; and 30 NARA
+  query plans.
+- 1,222 unit-defined historical observations extracted from official USGS Data
   Series 140 workbooks without project interpolation.
+- 1,476 source-defined trade records covering every selectable year: published
+  Census multi-year crude-material averages for 1861-1899 and exact-year USGS
+  commodity imports and exports for 1900-1992.
 - A Historical Geostrategic Atlas with a 1861–1992 year control, historical
   names, documentary access lines, agreements, stockpile policy, NARA query
   plans, synchronized evidence panels, and an accessible table alternative.
-- A visible atlas layer registry that locks production, supplier-share, trade
-  volume, infrastructure, alliance, boundary, and risk views until compatible
-  official data and citations exist.
+- A visible atlas layer registry that keeps bilateral trade-flow, production,
+  supplier-share, infrastructure, alliance, boundary, and risk map views locked
+  until compatible official data and citations exist.
 - A source-visible NARA discovery layer that can use a secret-bearing serverless
   proxy without exposing the API key to GitHub Pages.
 
@@ -78,6 +82,7 @@ Read the [full methodology](methodology.html) or
 - `scripts/build_history_pilot.py`: reproducible editorial pilot builder
 - `scripts/build_atlas_data.py`: reproducible atlas overlays and basemap builder
 - `scripts/ingest_usgs_ds140.py`: official XLSX extractor
+- `scripts/ingest_trade_data.py`: official Census and USGS trade extractor
 - `scripts/validate_history_data.py`: dates, references, provenance, and secret checks
 - `connectors/nara.py`: server-side, metadata-only NARA API client
 - `nara_proxy_worker.js`: deployable serverless proxy for the static site
@@ -95,6 +100,7 @@ python3 -m venv .venv
 pip install -r requirements.txt
 python scripts/build_history_pilot.py
 python scripts/ingest_usgs_ds140.py
+python scripts/ingest_trade_data.py
 python scripts/build_atlas_data.py
 python scripts/validate_history_data.py
 python -m http.server 8000
@@ -112,7 +118,7 @@ python -m http.server 8000
 
 ## Rebuild Official USGS Statistics
 
-The extractor downloads eight official Data Series 140 workbooks and writes
+The extractor downloads nine official Data Series 140 workbooks and writes
 human-readable JSON. It selects benchmark years through 1992, preserves USGS
 units, and skips missing, withheld, estimated-text, and nonnumeric cells.
 
@@ -122,6 +128,24 @@ python scripts/validate_history_data.py
 ```
 
 Use `--cache-dir <path>` to retain downloaded XLSX files outside the repository.
+
+## Rebuild Historical U.S. Trade
+
+The trade extractor writes a source-bounded record for every selected year.
+For 1861-1899 it uses published Census multi-year averages for the broad
+economic class "crude materials." For 1900-1992 it extracts exact-year imports
+and exports from the available USGS Data Series 140 commodity workbooks.
+
+```bash
+python scripts/ingest_trade_data.py --access-date YYYY-MM-DD
+python scripts/validate_history_data.py
+```
+
+The two series are not merged. The Census rows are not mineral-specific, and
+the USGS rows are national totals without partner-country attribution. Uranium
+remains available as a FRUS-led mineral profile, but the trade tab labels its
+annual series unavailable because no compatible uranium workbook is currently
+normalized. See [`docs/historical-trade-data-model.md`](docs/historical-trade-data-model.md).
 
 ## Rebuild the Historical Atlas
 
@@ -223,8 +247,8 @@ python scripts/validate_history_data.py
 ```
 
 Validation checks entity minimums, unique IDs, cross-file references, the
-1861–1992 boundary, statistical provenance, atlas layer semantics,
-`.env.example`, and tracked-file secret patterns.
+1861–1992 boundary, year-by-year trade coverage, statistical provenance, atlas
+layer semantics, `.env.example`, and tracked-file secret patterns.
 
 ## Provenance
 

@@ -24,6 +24,7 @@ EXPECTED_MINIMUMS = {
     "laws": 3,
     "stockpile-cases": 2,
     "country-briefs": 4,
+    "trade": 1400,
 }
 
 
@@ -110,6 +111,39 @@ def main() -> None:
             errors.append(f"statistics/{row.get('id')}: missing {', '.join(missing)}")
         if row.get("mineral_id") not in ids["minerals"]:
             errors.append(f"statistics/{row.get('id')}: unknown mineral {row.get('mineral_id')}")
+
+    required_trade_fields = {
+        "year_start", "year_end", "year_label", "temporal_precision", "direction",
+        "metric", "material_scope", "value", "unit", "trade_basis", "calendar_basis",
+        "agency", "publication_title", "publication_year", "table_or_page", "source_id",
+        "source_url", "access_date", "transcription_status", "original_unit",
+        "displayed_unit", "conversion_methodology", "notes", "confidence"
+    }
+    for row in datasets["trade"]:
+        owner = f"trade/{row.get('id')}"
+        missing = sorted(required_trade_fields - set(row))
+        if missing:
+            errors.append(f"{owner}: missing {', '.join(missing)}")
+        if row.get("direction") not in {"imports", "exports"}:
+            errors.append(f"{owner}: invalid direction {row.get('direction')}")
+        if row.get("source_id") not in ids["sources"]:
+            errors.append(f"{owner}: unknown source_id {row.get('source_id')}")
+        start, end = row.get("year_start"), row.get("year_end")
+        if not isinstance(start, int) or not isinstance(end, int) or not HISTORICAL_START <= start <= end <= HISTORICAL_END:
+            errors.append(f"{owner}: invalid historical range {start}-{end}")
+        if row.get("mineral_id") is not None and row.get("mineral_id") not in ids["minerals"]:
+            errors.append(f"{owner}: unknown mineral_id {row.get('mineral_id')}")
+        if row.get("temporal_precision") == "annual" and row.get("year_start") != row.get("year_end"):
+            errors.append(f"{owner}: annual row must have matching start and end years")
+        if row.get("material_scope") == "broad-economic-class" and row.get("mineral_id") is not None:
+            errors.append(f"{owner}: broad economic-class row must not claim a mineral_id")
+
+    uncovered_trade_years = [
+        year for year in range(HISTORICAL_START, HISTORICAL_END + 1)
+        if not any(row.get("year_start", 9999) <= year <= row.get("year_end", 0) for row in datasets["trade"])
+    ]
+    if uncovered_trade_years:
+        errors.append(f"trade: no verified record covers years {uncovered_trade_years}")
 
     fact_statuses = {"verified", "estimated", "unknown"}
     for brief in datasets["country-briefs"]:

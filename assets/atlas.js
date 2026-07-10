@@ -571,6 +571,50 @@
       return `<div class="atlas-panel-heading"><div><p class="eyebrow">FRUS narrative</p><h3>${H.escape(records.length)} linked pilot record${records.length === 1 ? "" : "s"} in ${H.escape(this.state.year)}</h3></div><p>Volume spans are discovery context when document-level dates have not been reviewed.</p></div><div class="atlas-card-grid">${records.slice(0, 4).map((row) => H.frusCard(row, true)).join("") || '<p class="empty-note">No linked pilot FRUS record matches this exact year, material, and country selection.</p>'}</div>`;
     }
 
+    renderBroadTradePanel(records) {
+      const valueOrder = ["exports", "imports"];
+      const cards = valueOrder.flatMap((direction) => ["value", "share"].map((measure) => records.find((row) => row.direction === direction && row.metric.endsWith(measure)))).filter(Boolean);
+      const period = records[0]?.year_label || String(this.state.year);
+      return `<div class="atlas-panel-heading"><div><p class="eyebrow">Verified U.S. trade context</p><h3>Crude materials, ${H.escape(period)}</h3></div><p>The selected year falls within a published Census multi-year average. This broad economic class includes minerals and non-mineral raw materials.</p></div>
+        <div class="trade-scope-note"><strong>Evidence boundary</strong><span>These are U.S. merchandise totals by economic class, not mineral-specific or bilateral trade. No annual value is inferred for ${H.escape(this.state.year)}.</span></div>
+        <div class="atlas-number-grid trade-number-grid">${cards.map((row) => `<article><strong>${H.formatNumber(row.value)}</strong><span>${H.escape(row.metric)}</span><small>${H.escape(row.unit)}<br>${H.escape(row.trade_basis)}</small><a href="${H.escape(row.source_url)}" target="_blank" rel="noopener">Census ${H.escape(row.table_or_page)} ↗</a></article>`).join("")}</div>
+        <div class="table-scroll trade-table"><table><caption>Published Census crude-material trade context covering ${H.escape(period)}</caption><thead><tr><th>Direction</th><th>Measure</th><th>Value</th><th>Unit</th><th>Time basis</th><th>Provenance</th></tr></thead><tbody>${cards.map((row) => `<tr><th scope="row">${H.escape(row.direction)}</th><td>${H.escape(row.metric.endsWith("share") ? "Share of total merchandise trade" : "Published yearly-average value")}</td><td>${H.formatNumber(row.value)}</td><td>${H.escape(row.unit)}</td><td>${H.escape(row.temporal_precision)} · ${H.escape(row.year_label)}</td><td><a href="${H.escape(row.source_url)}" target="_blank" rel="noopener">${H.escape(row.agency)}, ${H.escape(row.table_or_page)}</a></td></tr>`).join("")}</tbody></table></div>`;
+    }
+
+    renderCommodityTradePanel(records, allYearRecords) {
+      const mineral = this.selectedMineral();
+      const country = this.selectedCountry();
+      const grouped = new Map();
+      records.forEach((row) => {
+        const group = grouped.get(row.mineral_id) || { mineral: this.data.indexes.minerals.get(row.mineral_id), imports: null, exports: null };
+        group[row.direction] = row;
+        grouped.set(row.mineral_id, group);
+      });
+      const groups = [...grouped.values()].sort((a, b) => (a.mineral?.canonical_name || "").localeCompare(b.mineral?.canonical_name || ""));
+      const availableMaterials = new Set(allYearRecords.map((row) => row.mineral_id)).size;
+      const selectionNote = country ? `Country selection does not filter these national totals; no partner-country flow is inferred for ${this.historicalName(country, this.state.year)}.` : "Partner countries are not identified in these national totals.";
+      const emptyMessage = mineral
+        ? `No annual USGS import or export row is normalized for ${mineral.canonical_name} in ${this.state.year}. ${availableMaterials} other pilot material series have exact-year trade evidence; choose All pilot materials to inspect them.`
+        : `No annual USGS commodity trade row is normalized for ${this.state.year}. Missing values are not treated as zero.`;
+      return `<div class="atlas-panel-heading"><div><p class="eyebrow">Verified U.S. commodity trade</p><h3>${mineral ? H.escape(mineral.canonical_name) : "Pilot strategic-resource materials"}, ${H.escape(this.state.year)}</h3></div><p>Exact-year USGS national imports and exports in the original standardized commodity unit. No interpolation, dollar conversion, or partner-country attribution.</p></div>
+        <div class="trade-scope-note"><strong>National aggregate</strong><span>${H.escape(selectionNote)}</span></div>
+        ${groups.length ? `<div class="table-scroll trade-table"><table><caption>Official U.S. mineral imports and exports for ${H.escape(this.state.year)}</caption><thead><tr><th>Material</th><th>Imports</th><th>Exports</th><th>Source definition</th><th>Provenance</th></tr></thead><tbody>${groups.map((group) => {
+          const source = group.imports || group.exports;
+          const valueCell = (row) => row ? `<strong>${H.formatNumber(row.value)}</strong><small>${H.escape(row.unit)}</small>` : '<span class="unknown-value">Not published</span>';
+          return `<tr><th scope="row"><a href="${H.detailHref("minerals", group.mineral.id)}">${H.escape(group.mineral.canonical_name)}</a></th><td>${valueCell(group.imports)}</td><td>${valueCell(group.exports)}</td><td>${H.escape(source.trade_basis)}</td><td><a href="${H.escape(source.source_url)}" target="_blank" rel="noopener">USGS Data Series 140 · ${H.escape(source.table_or_page)}</a></td></tr>`;
+        }).join("")}</tbody></table></div><p class="trade-source-note"><strong>Reading rule:</strong> A missing direction means no numeric cell was published in the normalized worksheet for that year; it does not mean zero trade.</p>` : `<p class="empty-note">${H.escape(emptyMessage)}</p>`}`;
+    }
+
+    renderTradePanel() {
+      const active = this.data.trade.filter((row) => row.year_start <= this.state.year && row.year_end >= this.state.year);
+      const broad = active.filter((row) => row.material_scope === "broad-economic-class");
+      const annual = active.filter((row) => row.temporal_precision === "annual");
+      const mineral = this.selectedMineral();
+      const filteredAnnual = mineral ? annual.filter((row) => row.mineral_id === mineral.id) : annual;
+      if (this.state.year < 1900) return this.renderBroadTradePanel(broad);
+      return this.renderCommodityTradePanel(filteredAnnual, annual);
+    }
+
     renderNumbersPanel() {
       const mineral = this.selectedMineral();
       if (!mineral) return '<p class="empty-note">Select a material to inspect exact-year official statistics.</p>';
@@ -599,6 +643,7 @@
       const renderers = {
         summary: () => this.renderSummaryPanel(),
         frus: () => this.renderFrusPanel(),
+        trade: () => this.renderTradePanel(),
         numbers: () => this.renderNumbersPanel(),
         instruments: () => this.renderInstrumentPanel(),
         archives: () => this.renderArchivesPanel()
