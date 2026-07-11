@@ -1,6 +1,6 @@
 "use strict";
 
-const SUMMARY_URL = "data/processed/site-summary.json?v=3.3.0";
+const SUMMARY_URL = "data/processed/site-summary.json?v=3.4.0";
 const state = {
   summary: null,
   charts: new Map(),
@@ -94,6 +94,22 @@ function contextShare(value) {
 
 function displayContextPercent(value) {
   return displayPercent(contextShare(value));
+}
+
+function displayPublishedPercent(observation) {
+  if (!observation || typeof observation !== "object") return "Not available";
+  if (observation.indicator_code === "net_exporter") return "Net exporter";
+  const display = observation.display ?? observation.display_value;
+  if (display === null || display === undefined || display === "") return "Not available";
+  const text = String(display);
+  return text.endsWith("%") ? text : `${text}%`;
+}
+
+function displayYearSet(years) {
+  const values = Array.isArray(years) ? years.map(Number).filter(Number.isFinite) : [];
+  if (!values.length) return "No years identified";
+  const consecutive = values.every((year, index) => index === 0 || year === values[index - 1] + 1);
+  return consecutive && values.length > 1 ? `${values[0]}–${values.at(-1)}` : values.join(", ");
 }
 
 function destroyChart(key) {
@@ -521,6 +537,196 @@ function renderMcs2026Context() {
     : "<li>No additional source notes were supplied.</li>";
 }
 
+function renderUsOfficialBaseline() {
+  const context = state.summary.us_official_baseline;
+  const status = el("usBaselineStatus");
+  const tableBody = el("usRelianceTable").querySelector("tbody");
+  const chartShell = el("usRelianceChart").closest(".canvas-shell");
+  if (!context || context.status !== "loaded" || !Array.isArray(context.indicators)) {
+    destroyChart("us-reliance");
+    chartShell.classList.add("data-unavailable");
+    status.textContent = "The USGS critical-mineral reliance snapshot is unavailable; no value has been substituted.";
+    tableBody.innerHTML = '<tr><td colspan="5">Not available in this build</td></tr>';
+    el("usRelianceQualitative").innerHTML = '<p class="qualitative-pill missing-pill">Not available</p>';
+    return;
+  }
+
+  const rows = context.indicators
+    .filter((row) => row.featured && row.availability_status === "available")
+    .map((row) => ({ ...row, plottedValue: finite(row.value_pct) ?? finite(row.value_low_pct) }))
+    .filter((row) => row.plottedValue !== null)
+    .sort((a, b) => b.plottedValue - a.plottedValue || a.label.localeCompare(b.label));
+  chartShell.classList.remove("data-unavailable");
+  chartShell.style.height = `${Math.max(500, rows.length * 34 + 90)}px`;
+  status.textContent = `Loaded: ${rows.length} selected MCS indicators for ${context.observation_year}; every value is an estimate.`;
+
+  const options = baseOptions();
+  options.indexAxis = "y";
+  options.interaction = { intersect: false, mode: "nearest", axis: "y" };
+  options.scales.x = {
+    beginAtZero: true,
+    min: 0,
+    max: 100,
+    ticks: { color: COLORS.inkSoft, callback: (value) => `${value}%`, font: { size: 11 } },
+    grid: { color: "rgba(23,36,44,.12)" },
+    border: { display: false },
+  };
+  options.scales.y = {
+    ticks: { color: COLORS.inkSoft, font: { size: 10 } },
+    grid: { display: false },
+    border: { display: false },
+  };
+  options.plugins.tooltip.callbacks.title = (items) => rows[items[0].dataIndex].label;
+  options.plugins.tooltip.callbacks.label = (tooltipContext) => {
+    const row = rows[tooltipContext.dataIndex];
+    return `Published reliance: ${row.display_value}`;
+  };
+  options.plugins.tooltip.callbacks.afterLabel = (tooltipContext) => {
+    const row = rows[tooltipContext.dataIndex];
+    return [row.scope, row.notes].filter(Boolean);
+  };
+  createChart("us-reliance", el("usRelianceChart"), {
+    type: "bar",
+    data: {
+      labels: rows.map((row) => `${row.label} · ${row.display_value}`),
+      datasets: [{
+        label: "Net import reliance",
+        data: rows.map((row) => row.plottedValue),
+        backgroundColor: rows.map((row) => row.comparator === "greater_than" ? COLORS.gold : COLORS.teal),
+        borderColor: rows.map((row) => row.comparator === "greater_than" ? COLORS.gold : COLORS.teal),
+        borderWidth: 1,
+        borderRadius: 2,
+      }],
+    },
+    options,
+  });
+  el("usRelianceChart").setAttribute(
+    "aria-label",
+    `USGS estimated United States net import reliance in ${context.observation_year} for ${rows.map((row) => `${row.label} ${row.display_value}`).join(", ")}. Greater-than values are plotted at their published lower bounds.`,
+  );
+
+  const qualitative = Array.isArray(context.qualitative_indicators) ? context.qualitative_indicators : [];
+  el("usRelianceQualitative").innerHTML = qualitative.length
+    ? qualitative.map((row) => `<div class="qualitative-pill"><strong>${escapeHtml(row.display_value)}</strong><span>${escapeHtml(row.label)}</span></div>`).join("")
+    : '<p class="qualitative-pill missing-pill">No qualitative indicators supplied</p>';
+
+  tableBody.innerHTML = context.indicators.map((row) => `<tr>
+    <td>${escapeHtml(row.label)}</td>
+    <td>${escapeHtml(row.scope)}</td>
+    <td>${escapeHtml(row.display_value)}</td>
+    <td>${row.comparator === "greater_than" ? "Estimated lower bound" : "Estimated point value"}${row.notes ? `<br><span class="table-note">${escapeHtml(row.notes)}</span>` : ""}</td>
+    <td>${displayNumber(row.source_row_number)}</td>
+  </tr>`).join("");
+}
+
+function renderUsStageBaseline() {
+  const baseline = state.summary.usgs_mcs2026_context?.us_statistical_baseline;
+  const status = el("usStageStatus");
+  const tableBody = el("usStageTable").querySelector("tbody");
+  const matrixBody = el("usSpecialtyRelianceTable").querySelector("tbody");
+  const chartShell = el("usStageChart").closest(".canvas-shell");
+  if (!baseline || baseline.status !== "loaded" || !Array.isArray(baseline.series) || !baseline.series.length) {
+    destroyChart("us-stage");
+    chartShell.classList.add("data-unavailable");
+    status.textContent = "The U.S. stage record is unavailable; no value has been substituted.";
+    ["usStageConcentrates", "usStageDownstreamProduction", "usStageReliance", "usStageConcentrateStatus"]
+      .forEach((id) => { el(id).textContent = "Not available"; });
+    tableBody.innerHTML = '<tr><td colspan="7">Not available in this build</td></tr>';
+    matrixBody.innerHTML = '<tr><td colspan="6">Not available in this build</td></tr>';
+    el("usReserveList").innerHTML = '<p class="qualitative-pill missing-pill">Not available</p>';
+    el("usStageMeasureNotes").innerHTML = '<p class="qualitative-pill missing-pill">Source-row qualifications are unavailable.</p>';
+    el("usStageNotes").innerHTML = '<li>No source notes are available in this build.</li>';
+    return;
+  }
+
+  const rows = baseline.series;
+  const latest = baseline.latest || rows.at(-1);
+  chartShell.classList.remove("data-unavailable");
+  status.textContent = `Loaded: ${baseline.coverage[0]}–${baseline.coverage[1]}; mass values are metric tons of rare-earth-oxide equivalent.`;
+  el("usStageConcentrates").textContent = `${displayNumber(latest.mineral_concentrate_production)} t`;
+  el("usStageDownstreamProduction").textContent = `${displayNumber(latest.compounds_metals_production)} t`;
+  el("usStageReliance").textContent = displayPublishedPercent(latest.compounds_metals_net_import_reliance);
+  el("usStageConcentrateStatus").textContent = displayPublishedPercent(latest.mineral_concentrate_trade_status);
+
+  const options = baseOptions();
+  options.plugins.tooltip.callbacks.label = (tooltipContext) => `${tooltipContext.dataset.label}: ${displayNumber(tooltipContext.raw)} t`;
+  createChart("us-stage", el("usStageChart"), {
+    type: "line",
+    data: {
+      labels: rows.map((row) => row.year),
+      datasets: [
+        {
+          label: "Compounds/metals production",
+          data: rows.map((row) => finite(row.compounds_metals_production)),
+          borderColor: COLORS.gold,
+          backgroundColor: COLORS.gold,
+          borderWidth: 3,
+          pointRadius: 3,
+          tension: 0.08,
+        },
+        {
+          label: "Compound imports",
+          data: rows.map((row) => finite(row.compound_imports)),
+          borderColor: COLORS.teal,
+          backgroundColor: COLORS.teal,
+          borderDash: [7, 5],
+          borderWidth: 2.5,
+          pointRadius: 3,
+          tension: 0.08,
+        },
+        {
+          label: "Apparent consumption, compounds/metals",
+          data: rows.map((row) => finite(row.apparent_consumption_compounds_metals)),
+          borderColor: COLORS.navy,
+          backgroundColor: COLORS.navy,
+          borderWidth: 2.7,
+          pointRadius: 3,
+          tension: 0.08,
+        },
+      ],
+    },
+    options,
+  });
+  el("usStageChart").setAttribute(
+    "aria-label",
+    `USGS estimated U.S. rare-earth compounds and metals production, compound imports, and apparent consumption from ${rows[0].year} through ${rows.at(-1).year}, in metric tons of rare-earth-oxide equivalent.`,
+  );
+
+  const measurementProvenance = Array.isArray(baseline.measurement_provenance)
+    ? baseline.measurement_provenance
+    : [];
+  el("usStageMeasureNotes").innerHTML = measurementProvenance.length
+    ? measurementProvenance.map((measurement) => {
+      const notes = (measurement.source_notes || []).map((note) => `<p><strong>${escapeHtml(displayYearSet(note.years))}:</strong> ${escapeHtml(note.text)}</p>`).join("");
+      const rowsLabel = (measurement.source_rows || []).map((row) => `${row.year}:${row.source_row_number}`).join(" · ");
+      const estimatedLabel = measurement.estimated_years?.length
+        ? `Estimated years: ${displayYearSet(measurement.estimated_years)}`
+        : "No years marked estimated";
+      return `<article><h4>${escapeHtml(measurement.label)}</h4>${notes || "<p>No separate source note published.</p>"}<span>${escapeHtml(estimatedLabel)} · Source rows ${escapeHtml(rowsLabel)}</span></article>`;
+    }).join("")
+    : '<p class="qualitative-pill missing-pill">No source-row qualifications supplied.</p>';
+
+  tableBody.innerHTML = rows.map((row) => `<tr>
+    <td>${row.year}</td>
+    <td>${displayNumber(row.mineral_concentrate_production)}</td>
+    <td>${displayNumber(row.compounds_metals_production)}</td>
+    <td>${displayNumber(row.compound_imports)}</td>
+    <td>${displayNumber(row.apparent_consumption_compounds_metals)}</td>
+    <td>${escapeHtml(displayPublishedPercent(row.compounds_metals_net_import_reliance))}</td>
+    <td>${displayNumber(row.mine_mill_employment)}</td>
+  </tr>`).join("");
+
+  matrixBody.innerHTML = baseline.net_import_reliance.map((scope) => `<tr>
+    <td>${escapeHtml(scope.label)}</td>
+    ${scope.values.map((value) => `<td>${escapeHtml(displayPublishedPercent(value))}</td>`).join("")}
+  </tr>`).join("");
+  el("usReserveList").innerHTML = baseline.reserves_2025.map((row) => `<article>
+    <span>${escapeHtml(row.geography)}</span>
+    <strong>${escapeHtml(row.display)} t</strong>
+  </article>`).join("");
+  el("usStageNotes").innerHTML = baseline.warnings.map((note) => `<li>${escapeHtml(note)}</li>`).join("");
+}
+
 function populateShareControls() {
   const select = el("shareMineral");
   const minerals = Object.keys(state.summary.china_share_by_mineral);
@@ -683,7 +889,7 @@ function populateExplorer() {
 
 async function explorerData(hts) {
   if (!state.explorerCache.has(hts)) {
-    state.explorerCache.set(hts, getJson(`data/processed/explorer/${hts}.json?v=3.3.0`));
+    state.explorerCache.set(hts, getJson(`data/processed/explorer/${hts}.json?v=3.4.0`));
   }
   return state.explorerCache.get(hts);
 }
@@ -871,6 +1077,8 @@ async function init() {
     state.summary = await getJson(SUMMARY_URL);
     renderHero();
     renderDisparity();
+    renderUsOfficialBaseline();
+    renderUsStageBaseline();
     renderUsgsContext();
     renderMcs2026Context();
     populateShareControls();

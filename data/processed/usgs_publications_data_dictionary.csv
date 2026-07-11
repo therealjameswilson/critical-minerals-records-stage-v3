@@ -50,3 +50,23 @@ usgs_myb2022_world_mine_production,footnote_ids,Normalized MYB T8 field: footnot
 usgs_myb2022_world_mine_production,is_estimated,True when an e marker applies at row or cell level.
 usgs_myb2022_world_mine_production,is_revised,True when an r marker applies to the cell.
 usgs_myb2022_world_mine_production,data_status,"reported, estimated, revised, estimated_revised, or explicit_zero."
+usgs_mcs2026_critical_mineral_reliance,source_id,Normalized MCS critical-mineral reliance field: source id.
+usgs_mcs2026_critical_mineral_reliance,source_row_number,Normalized MCS critical-mineral reliance field: source row number.
+usgs_mcs2026_critical_mineral_reliance,source_file,Normalized MCS critical-mineral reliance field: source file.
+usgs_mcs2026_critical_mineral_reliance,v3_mineral,V3 analytical family receiving this explicitly scoped MCS chapter indicator.
+usgs_mcs2026_critical_mineral_reliance,label,Normalized MCS critical-mineral reliance field: label.
+usgs_mcs2026_critical_mineral_reliance,scope,Material or product scope that qualifies the published reliance percentage.
+usgs_mcs2026_critical_mineral_reliance,mcs_chapter,Normalized MCS critical-mineral reliance field: mcs chapter.
+usgs_mcs2026_critical_mineral_reliance,commodity,Normalized MCS critical-mineral reliance field: commodity.
+usgs_mcs2026_critical_mineral_reliance,statistics_detail,Normalized MCS critical-mineral reliance field: statistics detail.
+usgs_mcs2026_critical_mineral_reliance,year,Normalized MCS critical-mineral reliance field: year.
+usgs_mcs2026_critical_mineral_reliance,raw_value,Exact 2025 value token in the frozen MCS ScienceBase CSV.
+usgs_mcs2026_critical_mineral_reliance,display_value,Public display token with the percent sign and any source comparator preserved.
+usgs_mcs2026_critical_mineral_reliance,value_pct,Exact percentage when the source publishes a point value.
+usgs_mcs2026_critical_mineral_reliance,value_low_pct,Published lower bound for a greater-than observation; never a point estimate.
+usgs_mcs2026_critical_mineral_reliance,comparator,Normalized MCS critical-mineral reliance field: comparator.
+usgs_mcs2026_critical_mineral_reliance,availability_status,Normalized MCS critical-mineral reliance field: availability status.
+usgs_mcs2026_critical_mineral_reliance,indicator_code,Normalized MCS critical-mineral reliance field: indicator code.
+usgs_mcs2026_critical_mineral_reliance,is_estimated,Normalized MCS critical-mineral reliance field: is estimated.
+usgs_mcs2026_critical_mineral_reliance,source_notes,Normalized MCS critical-mineral reliance field: source notes.
+usgs_mcs2026_critical_mineral_reliance,mapping_note,Boundary between the MCS chapter measure and the related V3 analytical family.

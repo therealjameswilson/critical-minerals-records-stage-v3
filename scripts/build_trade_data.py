@@ -1343,7 +1343,7 @@ def build_site_summary(
             }
         )
     return {
-        "schema_version": "3.3.0",
+        "schema_version": "3.4.0",
         "generated_at": f"{RETRIEVED_AT}T00:00:00Z",
         "title": "US-PRC Critical Minerals Record, 1993-2026",
         "coverage": {
@@ -1377,7 +1377,12 @@ def build_site_summary(
         "us_selected_supplier_series": selected_supplier_series(rows),
         "prc_supply_origins": load_prc_comtrade(),
         "usgs_rare_earths_context": build_usgs_site_context(usgs_rows, usgs_metadata),
-        "usgs_mcs2026_context": usgs_publications_context,
+        "usgs_mcs2026_context": {
+            key: value
+            for key, value in usgs_publications_context.items()
+            if key != "us_official_baseline"
+        },
+        "us_official_baseline": usgs_publications_context["us_official_baseline"],
         "explorer_index": explorer_index,
         "sources": public_sources,
         "warnings": [
@@ -1580,6 +1585,7 @@ def main() -> int:
             "series",
             "latest",
             "source_notes",
+            "us_official_baseline",
         )
     }
     full_import_snapshot = full_usgs_publications_context["import_source_snapshot"]
@@ -1593,6 +1599,61 @@ def main() -> int:
             "yttrium_china_direct_share",
             "caveat",
         )
+    }
+    full_stage_baseline = full_usgs_publications_context["us_statistical_baseline"]
+    compact_stage_series = [
+        {
+            "year": row["year"],
+            "mineral_concentrate_production": row["mineral_concentrate_production"],
+            "compounds_metals_production": row["compounds_metals_production"],
+            "compound_imports": row["compound_imports"],
+            "apparent_consumption_compounds_metals": row["apparent_consumption_compounds_metals"],
+            "mine_mill_employment": row["mine_mill_employment"],
+            "compounds_metals_net_import_reliance": {
+                "display": row["compounds_metals_net_import_reliance"]["display"],
+                "comparator": row["compounds_metals_net_import_reliance"]["comparator"],
+            },
+            "mineral_concentrate_trade_status": {
+                "display": row["mineral_concentrate_trade_status"]["display"],
+                "indicator_code": row["mineral_concentrate_trade_status"]["indicator_code"],
+            },
+        }
+        for row in full_stage_baseline["series"]
+    ]
+    usgs_publications_context["us_statistical_baseline"] = {
+        "status": full_stage_baseline["status"],
+        "coverage": full_stage_baseline["coverage"],
+        "mass_unit": full_stage_baseline["mass_unit"],
+        "series": compact_stage_series,
+        "latest": compact_stage_series[-1],
+        "net_import_reliance": [
+            {
+                "scope_id": scope["scope_id"],
+                "label": scope["label"],
+                "values": [
+                    {
+                        "year": value["year"],
+                        "display": value["display"],
+                        "comparator": value["comparator"],
+                    }
+                    for value in scope["values"]
+                ],
+            }
+            for scope in full_stage_baseline["net_import_reliance"]
+        ],
+        "measurement_provenance": full_stage_baseline["measurement_provenance"],
+        "reserves_2025": [
+            {
+                "geography": row["geography"],
+                "display": row["display"],
+                "value": row["value"],
+                "value_low": row["value_low"],
+                "comparator": row["comparator"],
+            }
+            for row in full_stage_baseline["reserves_2025"]
+        ],
+        "source_vintage": full_stage_baseline["source_vintage"],
+        "warnings": full_stage_baseline["warnings"],
     }
 
     shares = build_china_share(rows)
@@ -1626,7 +1687,7 @@ def main() -> int:
 
     comtrade_source = comtrade_source_metadata()
     manifest = {
-        "schema_version": "3.3.0",
+        "schema_version": "3.4.0",
         "generated_at": f"{RETRIEVED_AT}T00:00:00Z",
         "source_system": "USITC DataWeb",
         "source_url": SOURCE_URL,
@@ -1662,6 +1723,7 @@ def main() -> int:
             "usgs_mcs2026_rows": usgs_publications_metadata["datasets"]["mcs2026"]["row_count"],
             "usgs_mcs2026_revision_rows": usgs_publications_metadata["datasets"]["mcs2026"]["revision_count"],
             "usgs_myb2022_t8_rows": usgs_publications_metadata["datasets"]["myb2022_t8"]["row_count"],
+            "usgs_mcs2026_critical_reliance_rows": usgs_publications_metadata["datasets"]["critical_mineral_reliance_2025"]["row_count"],
         },
     }
     (PROCESSED / "explorer-index.json").write_text(

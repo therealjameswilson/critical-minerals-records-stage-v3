@@ -10,6 +10,17 @@
     "MYB 2022 T8 and MCS 2026 do not provide a comparable 2023 world mine-production table in this ingest; the site must display that year as missing."
   ],
   "datasets": {
+    "critical_mineral_reliance_2025": {
+      "comparability_warning": "Scopes and apparent-consumption denominators differ; values must not be averaged, summed, or interpreted as China shares.",
+      "coverage": [
+        2025,
+        2025
+      ],
+      "row_count": 17,
+      "selection_rule": "Seventeen exact MCS chapter measures mapped to V3 mineral families only where the source flags the row as a 2025 critical mineral and the net-import-reliance percentage and material scope can be labeled directly.",
+      "source_id": "usgs_mcs2026_critical_mineral_reliance_2025",
+      "title": "Selected U.S. critical-mineral net-import-reliance indicators"
+    },
     "mcs2026": {
       "chapter_row_counts": {
         "RARE EARTHS": 164,
@@ -60,6 +71,10 @@
     }
   },
   "outputs": {
+    "critical_reliance": {
+      "file": "data/processed/usgs_mcs2026_critical_mineral_reliance.csv",
+      "rows": 17
+    },
     "data_dictionary": {
       "file": "data/processed/usgs_publications_data_dictionary.csv"
     },
@@ -135,7 +150,7 @@
     }
   ],
   "retrieved_at": "2026-07-10",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "source_hub_url": "https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information",
   "source_id": "usgs_rare_earths_publications",
   "title": "USGS rare-earth statistics and information hub ingest"

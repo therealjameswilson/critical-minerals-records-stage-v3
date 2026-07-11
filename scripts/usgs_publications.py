@@ -171,13 +171,60 @@ MYB_COLUMNS = [
 
 DATA_DICTIONARY_COLUMNS = ["dataset", "column", "definition"]
 
+CRITICAL_RELIANCE_COLUMNS = [
+    "source_id",
+    "source_row_number",
+    "source_file",
+    "v3_mineral",
+    "label",
+    "scope",
+    "mcs_chapter",
+    "commodity",
+    "statistics_detail",
+    "year",
+    "raw_value",
+    "display_value",
+    "value_pct",
+    "value_low_pct",
+    "comparator",
+    "availability_status",
+    "indicator_code",
+    "is_estimated",
+    "source_notes",
+    "mapping_note",
+]
+
 OUTPUT_FILENAMES = {
     "mcs_observations": "usgs_mcs2026_observations.csv",
     "mcs_revision_audit": "usgs_mcs2026_revision_audit.csv",
     "myb_world_production": "usgs_myb2022_world_mine_production.csv",
     "data_dictionary": "usgs_publications_data_dictionary.csv",
     "metadata": "usgs_mcs2026_metadata.json",
+    "critical_reliance": "usgs_mcs2026_critical_mineral_reliance.csv",
 }
+
+# A deliberately bounded map from MCS chapter measures to V3 analytical
+# families. Production is not mapped because MCS units, stages, and content
+# bases differ too much across commodities for one cross-mineral chart.
+_CRITICAL_RELIANCE_MAP: tuple[dict[str, Any], ...] = (
+    {"source_row_number": 2957, "v3_mineral": "natural_graphite", "label": "Natural graphite", "scope": "Natural graphite", "chapter": "GRAPHITE (NATURAL)", "commodity": "Graphite (Natural)", "detail": "Net import reliance as a percentage of apparent consumption", "expected": "100"},
+    {"source_row_number": 740, "v3_mineral": "aluminum", "label": "Bauxite", "scope": "Bauxite, not alumina or aluminum metal", "chapter": "BAUXITE AND ALUMINA", "commodity": "Bauxite", "detail": "Net import reliance as a percentage of apparent consumption", "expected": ">75"},
+    {"source_row_number": 395, "v3_mineral": "antimony", "label": "Antimony", "scope": "Oxide and unwrought metal or powder", "chapter": "ANTIMONY", "commodity": "Antimony", "detail": "Net import reliance as a percentage of apparent consumption", "expected": "91"},
+    {"source_row_number": 993, "v3_mineral": "bismuth", "label": "Bismuth", "scope": "Bismuth", "chapter": "BISMUTH", "commodity": "Bismuth", "detail": "Net import reliance as a percentage of apparent consumption", "expected": "92"},
+    {"source_row_number": 1484, "v3_mineral": "chromium", "label": "Chromium", "scope": "Chromium content", "chapter": "CHROMIUM", "commodity": "Chromium", "detail": "Net import reliance as a percentage of apparent consumption", "expected": "79"},
+    {"source_row_number": 1844, "v3_mineral": "cobalt", "label": "Cobalt", "scope": "Refined cobalt", "chapter": "COBALT", "commodity": "Cobalt", "detail": "Net import reliance as a percentage of apparent consumption", "expected": "79"},
+    {"source_row_number": 1971, "v3_mineral": "copper", "label": "Copper", "scope": "Refined copper", "chapter": "COPPER", "commodity": "Copper", "detail": "Net import reliance as a percentage of apparent consumption", "expected": "57"},
+    {"source_row_number": 4578, "v3_mineral": "manganese", "label": "Manganese", "scope": "Manganese content", "chapter": "MANGANESE", "commodity": "Manganese", "detail": "Net import reliance as a percentage of apparent consumption, manganese content", "expected": "100"},
+    {"source_row_number": 5040, "v3_mineral": "nickel", "label": "Nickel", "scope": "Total consumption including scrap", "chapter": "NICKEL", "commodity": "Nickel", "detail": "Net import reliance as a percentage of total apparent consumption", "expected": "41"},
+    {"source_row_number": 7485, "v3_mineral": "tantalum", "label": "Tantalum", "scope": "Tantalum content", "chapter": "TANTALUM", "commodity": "Tantalum", "detail": "Net import reliance as a percentage of apparent consumption", "expected": "100"},
+    {"source_row_number": 7800, "v3_mineral": "tin", "label": "Tin", "scope": "Refined tin", "chapter": "TIN", "commodity": "Tin", "detail": "Net import reliance as a percentage of apparent consumption, refined tin", "expected": "77"},
+    {"source_row_number": 8200, "v3_mineral": "tungsten", "label": "Tungsten", "scope": "Tungsten content", "chapter": "TUNGSTEN", "commodity": "Tungsten", "detail": "Net import reliance as a percentage of apparent consumption", "expected": ">50"},
+    {"source_row_number": 8676, "v3_mineral": "zinc", "label": "Zinc", "scope": "Refined zinc", "chapter": "ZINC", "commodity": "Zinc", "detail": "Net import reliance as a percentage of apparent consumption: Refined zinc", "expected": "73"},
+    {"source_row_number": 6064, "v3_mineral": "rare_earths", "label": "Rare earths", "scope": "Compounds and metals", "chapter": "RARE EARTHS", "commodity": "Rare Earths", "detail": "Net import reliance as a percentage of apparent consumption: Compounds and metals", "expected": "67"},
+    {"source_row_number": 6164, "v3_mineral": "heavy_rare_earths", "label": "Heavy rare earths", "scope": "Compounds and metals; excludes yttrium", "chapter": "RARE EARTHS (Heavy)", "commodity": "Rare Earths (Heavy)", "detail": "Net import reliance as a percentage of apparent consumption, compounds and metals", "expected": "100"},
+    {"source_row_number": 6546, "v3_mineral": "scandium", "label": "Scandium", "scope": "Scandium", "chapter": "SCANDIUM", "commodity": "Scandium", "detail": "Net import reliance as a percentage of apparent consumption", "expected": "100"},
+    {"source_row_number": 8527, "v3_mineral": "yttrium", "label": "Yttrium", "scope": "Compounds and metals", "chapter": "YTTRIUM", "commodity": "Yttrium", "detail": "Net import relianceas a percentage of apparent consumption", "expected": "100"},
+)
 
 _MCS_RAW_HEADERS = [
     "MCS chapter",
@@ -464,6 +511,80 @@ def parse_mcs_2026(raw_dir: Path = RAW_DIR) -> list[dict[str, Any]]:
     return rows
 
 
+def parse_mcs_2026_critical_reliance(raw_dir: Path = RAW_DIR) -> list[dict[str, Any]]:
+    """Extract 17 fail-loud, scope-labeled 2025 critical-mineral reliance rows."""
+
+    path = Path(raw_dir) / RAW_FILES["mcs_data"]
+    expected_by_row = {item["source_row_number"]: item for item in _CRITICAL_RELIANCE_MAP}
+    observed: dict[int, dict[str, Any]] = {}
+    with path.open("r", encoding="cp1252", newline="") as handle:
+        reader = csv.DictReader(handle)
+        if reader.fieldnames != _MCS_RAW_HEADERS:
+            raise ValueError(f"{path.name}: unexpected headers {reader.fieldnames!r}")
+        for source_row_number, raw in enumerate(reader, start=2):
+            mapping = expected_by_row.get(source_row_number)
+            if mapping is None:
+                continue
+            expected_fields = {
+                "MCS chapter": mapping["chapter"],
+                "Section": "Salient Statistics—United States",
+                "Commodity": mapping["commodity"],
+                "Country": "United States",
+                "Statistics": "Net import reliance",
+                "Statistics_detail": mapping["detail"],
+                "Unit": "percent",
+                "Year": "2025",
+                "Value": mapping["expected"],
+                "Is critical mineral 2025": "Yes",
+            }
+            changed = {
+                field: (raw[field], expected)
+                for field, expected in expected_fields.items()
+                if raw[field] != expected
+            }
+            if changed:
+                raise ValueError(
+                    f"{path.name}:{source_row_number}: mapped reliance row changed: {changed}"
+                )
+            parsed = parse_published_value(raw["Value"])
+            if parsed["availability_status"] != "available" or parsed["indicator_code"]:
+                raise ValueError(
+                    f"{path.name}:{source_row_number}: expected numeric or lower-bound reliance"
+                )
+            observed[source_row_number] = {
+                "source_id": "usgs_mcs2026_critical_mineral_reliance_2025",
+                "source_row_number": source_row_number,
+                "source_file": f"data/raw/{path.name}",
+                "v3_mineral": mapping["v3_mineral"],
+                "label": mapping["label"],
+                "scope": mapping["scope"],
+                "mcs_chapter": raw["MCS chapter"],
+                "commodity": raw["Commodity"],
+                "statistics_detail": raw["Statistics_detail"],
+                "year": 2025,
+                "raw_value": raw["Value"],
+                "display_value": f"{raw['Value']}%",
+                "value_pct": parsed["value"],
+                "value_low_pct": parsed["value_low"],
+                "comparator": parsed["comparator"],
+                "availability_status": parsed["availability_status"],
+                "indicator_code": parsed["indicator_code"],
+                "is_estimated": "Estimated." in raw["Notes"],
+                "source_notes": raw["Notes"],
+                "mapping_note": (
+                    "MCS chapter-level dependency measure mapped to a V3 analytical family; "
+                    "not derived from HTS trade rows and not a China share."
+                ),
+            }
+    if set(observed) != set(expected_by_row):
+        missing = sorted(set(expected_by_row) - set(observed))
+        raise ValueError(f"{path.name}: missing mapped critical-mineral reliance rows {missing}")
+    rows = [observed[item["source_row_number"]] for item in _CRITICAL_RELIANCE_MAP]
+    if len(rows) != 17 or not all(row["is_estimated"] for row in rows):
+        raise ValueError(f"{path.name}: expected 17 estimated critical-mineral reliance rows")
+    return rows
+
+
 def _display_myb_value(raw_value: Any) -> str:
     """Render a T8 value as displayed in the source table."""
 
@@ -592,13 +713,14 @@ def verify_frozen_inputs(raw_dir: Path = RAW_DIR) -> list[dict[str, Any]]:
 def build_usgs_publications_metadata(
     mcs_rows: list[dict[str, Any]],
     myb_rows: list[dict[str, Any]],
+    critical_reliance_rows: list[dict[str, Any]],
     raw_dir: Path = RAW_DIR,
 ) -> dict[str, Any]:
     """Build machine-readable provenance for both normalized USGS datasets."""
 
     raw_files = verify_frozen_inputs(raw_dir)
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "source_id": "usgs_rare_earths_publications",
         "title": "USGS rare-earth statistics and information hub ingest",
         "retrieved_at": RETRIEVED_AT,
@@ -642,6 +764,21 @@ def build_usgs_publications_metadata(
                 ),
                 "footnotes": _MYB_FOOTNOTES,
             },
+            "critical_mineral_reliance_2025": {
+                "source_id": "usgs_mcs2026_critical_mineral_reliance_2025",
+                "title": "Selected U.S. critical-mineral net-import-reliance indicators",
+                "coverage": [2025, 2025],
+                "row_count": len(critical_reliance_rows),
+                "selection_rule": (
+                    "Seventeen exact MCS chapter measures mapped to V3 mineral families only where "
+                    "the source flags the row as a 2025 critical mineral and the net-import-reliance "
+                    "percentage and material scope can be labeled directly."
+                ),
+                "comparability_warning": (
+                    "Scopes and apparent-consumption denominators differ; values must not be averaged, "
+                    "summed, or interpreted as China shares."
+                ),
+            },
         },
         "outputs": {
             "mcs_observations": {
@@ -659,6 +796,10 @@ def build_usgs_publications_metadata(
             "data_dictionary": {
                 "file": f"data/processed/{OUTPUT_FILENAMES['data_dictionary']}"
             },
+            "critical_reliance": {
+                "file": f"data/processed/{OUTPUT_FILENAMES['critical_reliance']}",
+                "rows": len(critical_reliance_rows),
+            },
         },
         "caveats": [
             "MCS 2026 is a 2026 publication whose tabular observations chiefly cover 2021–2025.",
@@ -674,7 +815,9 @@ def build_usgs_publications_metadata(
 
 
 def build_usgs_publications_context(
-    mcs_rows: list[dict[str, Any]], myb_rows: list[dict[str, Any]]
+    mcs_rows: list[dict[str, Any]],
+    myb_rows: list[dict[str, Any]],
+    critical_reliance_rows: list[dict[str, Any]],
 ) -> dict[str, Any]:
     """Return the compact, claim-safe subset intended for the static site."""
 
@@ -757,6 +900,286 @@ def build_usgs_publications_context(
                     "share_percent"
                 ]
         return grouped
+
+    def observation(
+        chapter: str,
+        statistic: str,
+        year: int,
+        *,
+        detail: str | None = None,
+        country: str = "United States",
+        section: str = "Salient Statistics—United States",
+    ) -> dict[str, Any]:
+        """Return one exact normalized MCS observation or fail loudly."""
+
+        matches = [
+            row
+            for row in mcs_rows
+            if row["mcs_chapter"] == chapter
+            and row["section"] == section
+            and row["country"] == country
+            and row["statistics"] == statistic
+            and row["year"] == year
+            and (detail is None or row["statistics_detail"] == detail)
+        ]
+        if len(matches) != 1:
+            raise ValueError(
+                "MCS site observation expected exactly one row: "
+                f"{chapter}/{section}/{country}/{statistic}/{detail}/{year}; found {len(matches)}"
+            )
+        return matches[0]
+
+    def compact_observation(row: Mapping[str, Any]) -> dict[str, Any]:
+        """Keep numeric state and the exact publication display token together."""
+
+        return {
+            "display": row["current_value"],
+            "value": row["value"] if row["value"] != "" else None,
+            "value_low": row["value_low"] if row["value_low"] != "" else None,
+            "value_high": row["value_high"] if row["value_high"] != "" else None,
+            "comparator": row["comparator"] or None,
+            "availability_status": row["availability_status"],
+            "indicator_code": row["indicator_code"] or None,
+            "unit": row["unit"],
+        }
+
+    us_balance_series: list[dict[str, Any]] = []
+    reliance_scopes = (
+        (
+            "rare_earths_compounds_metals",
+            "Rare-earth compounds and metals",
+            "RARE EARTHS",
+            "Net import reliance as a percentage of apparent consumption: Compounds and metals",
+        ),
+        (
+            "heavy_rare_earths_compounds_metals",
+            "Heavy rare-earth compounds and metals",
+            "RARE EARTHS (Heavy)",
+            "Net import reliance as a percentage of apparent consumption, compounds and metals",
+        ),
+        (
+            "scandium",
+            "Scandium",
+            "SCANDIUM",
+            "Net import reliance as a percentage of apparent consumption",
+        ),
+        (
+            "yttrium",
+            "Yttrium",
+            "YTTRIUM",
+            "Net import relianceas a percentage of apparent consumption",
+        ),
+    )
+    reliance_series = [
+        {"scope_id": scope_id, "label": label, "values": []}
+        for scope_id, label, _chapter, _detail in reliance_scopes
+    ]
+    stage_measurement_specs = (
+        ("mineral_concentrate_production", "Mineral-concentrate production"),
+        ("compounds_metals_production", "Compounds-and-metals production"),
+        ("compound_imports", "Compound imports"),
+        ("apparent_consumption_compounds_metals", "Apparent consumption, compounds and metals"),
+        ("mine_mill_employment", "Mine-and-mill employment"),
+    )
+    stage_measurement_rows: dict[str, list[dict[str, Any]]] = {
+        measurement_id: [] for measurement_id, _label in stage_measurement_specs
+    }
+    for year in range(2021, 2026):
+        concentrate_production = observation(
+            "RARE EARTHS", "Production", year, detail="Production: Mineral concentrates"
+        )
+        downstream_production = observation(
+            "RARE EARTHS", "Production", year, detail="Production: Compounds and metals"
+        )
+        compound_imports = observation(
+            "RARE EARTHS", "Import", year, detail="Imports: Compounds"
+        )
+        apparent_consumption = observation(
+            "RARE EARTHS",
+            "Consumption",
+            year,
+            detail="Consumption, apparent, compounds and metals",
+        )
+        employment = observation(
+            "RARE EARTHS",
+            "Employment",
+            year,
+            detail="Employment, mine and mill, annual average, number",
+        )
+        stage_measurement_rows["mineral_concentrate_production"].append(concentrate_production)
+        stage_measurement_rows["compounds_metals_production"].append(downstream_production)
+        stage_measurement_rows["compound_imports"].append(compound_imports)
+        stage_measurement_rows["apparent_consumption_compounds_metals"].append(apparent_consumption)
+        stage_measurement_rows["mine_mill_employment"].append(employment)
+        concentrate_reliance = observation(
+            "RARE EARTHS",
+            "Net import reliance",
+            year,
+            detail="Net import reliance as a percentage of apparent consumption: Mineral concentrates",
+        )
+        downstream_reliance = observation(
+            "RARE EARTHS",
+            "Net import reliance",
+            year,
+            detail="Net import reliance as a percentage of apparent consumption: Compounds and metals",
+        )
+        us_balance_series.append(
+            {
+                "year": year,
+                "mineral_concentrate_production": concentrate_production["value"],
+                "compounds_metals_production": downstream_production["value"],
+                "compound_imports": compound_imports["value"],
+                "apparent_consumption_compounds_metals": apparent_consumption["value"],
+                "mine_mill_employment": employment["value"],
+                "compounds_metals_net_import_reliance": compact_observation(downstream_reliance),
+                "mineral_concentrate_trade_status": compact_observation(concentrate_reliance),
+            }
+        )
+        for target, (_scope_id, _label, chapter, detail) in zip(reliance_series, reliance_scopes):
+            target["values"].append(
+                {
+                    "year": year,
+                    **compact_observation(
+                        observation(chapter, "Net import reliance", year, detail=detail)
+                    ),
+                }
+            )
+
+    measurement_provenance = []
+    for measurement_id, label in stage_measurement_specs:
+        measurement_rows = stage_measurement_rows[measurement_id]
+        note_groups: list[dict[str, Any]] = []
+        for row in measurement_rows:
+            note = str(row["current_notes"] or "").strip()
+            if not note:
+                continue
+            matching_group = next(
+                (group for group in note_groups if group["text"] == note),
+                None,
+            )
+            if matching_group is None:
+                note_groups.append({"years": [row["year"]], "text": note})
+            else:
+                matching_group["years"].append(row["year"])
+        units = {row["unit"] for row in measurement_rows}
+        if len(units) != 1:
+            raise ValueError(f"MCS stage measurement changed unit: {measurement_id}/{sorted(units)}")
+        measurement_provenance.append(
+            {
+                "measurement_id": measurement_id,
+                "label": label,
+                "unit": measurement_rows[0]["unit"],
+                "source_rows": [
+                    {"year": row["year"], "source_row_number": row["source_row_number"]}
+                    for row in measurement_rows
+                ],
+                "estimated_years": [
+                    row["year"] for row in measurement_rows if row["is_estimated"]
+                ],
+                "source_notes": note_groups,
+            }
+        )
+
+    reserves_2025 = []
+    for country, geography_code in (
+        ("United States", "USA"),
+        ("China", "CHN"),
+        ("World total", "WLD"),
+    ):
+        row = observation(
+            "RARE EARTHS",
+            "Reserves",
+            2025,
+            detail="Reserves" if country != "World total" else "Reserves: rounded",
+            country=country,
+            section=_WORLD_SECTION,
+        )
+        reserves_2025.append(
+            {
+                "geography": country,
+                "geography_code": geography_code,
+                "unit_basis": "metric_tons_reo_equivalent",
+                **compact_observation(row),
+            }
+        )
+
+    latest_us_balance = us_balance_series[-1]
+    us_statistical_baseline = {
+        "status": "loaded",
+        "coverage": [2021, 2025],
+        "mass_unit": "metric_tons_reo_equivalent",
+        "series": us_balance_series,
+        "latest": latest_us_balance,
+        "net_import_reliance": reliance_series,
+        "measurement_provenance": measurement_provenance,
+        "reserves_2025": reserves_2025,
+        "source_vintage": "USGS Mineral Commodity Summaries 2026, version 1.3",
+        "source_observation_year": 2025,
+        "warnings": [
+            "MCS 2026 is a publication vintage; the newest observations are estimates for 2025.",
+            "Mineral concentrates and compounds or metals are different processing stages and must not be summed.",
+            "Compound imports are a narrower product scope than apparent consumption of compounds and metals.",
+            "The E indicator means net exporter; it is not an estimated percentage.",
+            "Reserve figures describe geologic availability under USGS definitions, not ownership or assured access.",
+        ],
+    }
+    indicator_notes = {
+        "nickel": (
+            "Includes stainless-steel and alloy scrap; USGS states that reliance would be nearly "
+            "100% if scrap were excluded."
+        ),
+        "heavy_rare_earths": "Quantitative export data were unavailable.",
+        "scandium": "Quantitative export data were unavailable.",
+        "rare_earths": "Includes yttrium but excludes most scandium.",
+        "yttrium": "General rare-earth trade data already include yttrium.",
+    }
+    us_official_baseline = {
+        "status": "loaded",
+        "observation_year": 2025,
+        "publication_year": 2026,
+        "publication_version": "MCS 2026 v1.3",
+        "unit": "percent_of_apparent_consumption",
+        "indicators": [
+            {
+                "id": row["v3_mineral"],
+                "label": row["label"],
+                "mineral_id": row["v3_mineral"],
+                "scope": row["scope"],
+                "value_pct": row["value_pct"] if row["value_pct"] != "" else None,
+                "value_low_pct": row["value_low_pct"] if row["value_low_pct"] != "" else None,
+                "comparator": row["comparator"],
+                "availability_status": row["availability_status"],
+                "indicator_code": row["indicator_code"] or None,
+                "display_value": row["display_value"],
+                "is_estimated": bool(row["is_estimated"]),
+                "featured": True,
+                "source_id": row["source_id"],
+                "source_row_number": row["source_row_number"],
+                "notes": indicator_notes.get(row["v3_mineral"], ""),
+            }
+            for row in critical_reliance_rows
+        ],
+        "qualitative_indicators": [
+            {
+                "id": "rare_earth_mineral_concentrates",
+                "label": "Rare-earth mineral concentrates",
+                "scope": "Mineral concentrates",
+                "display_value": "Net exporter",
+                "availability_status": "indicator",
+                "indicator_code": "net_exporter",
+                "source_id": "usgs_mcs2026_v1_3",
+                "source_row_number": 6065,
+            }
+        ],
+        "source_notes": [
+            "Net import reliance is U.S. dependence on all foreign sources; it is not a China share or mine-origin measure.",
+            "Every displayed 2025 reliance indicator is an MCS estimate, but product scopes and denominators differ by chapter.",
+            "The >75% bauxite and >50% tungsten observations are lower bounds, not point estimates.",
+            "Rare earths, heavy rare earths, scandium, and yttrium overlap in scope and must not be summed or averaged.",
+            "Cross-mineral production is excluded because MCS units, processing stages, and content bases are not comparable.",
+        ],
+        "download": f"data/processed/{OUTPUT_FILENAMES['critical_reliance']}",
+    }
 
     heavy_reliance_2025 = next(
         row["value"]
@@ -850,6 +1273,8 @@ def build_usgs_publications_context(
             "heavy_rare_earths": heavy_snapshot,
         },
         "source_notes": source_notes,
+        "us_statistical_baseline": us_statistical_baseline,
+        "us_official_baseline": us_official_baseline,
         # Richer audit-oriented context retained for data downloads and tests.
         "source_ids": ["usgs_myb2022_t8", "usgs_mcs2026_v1_3"],
         "mine_production_share_series": share_series,
@@ -898,6 +1323,27 @@ def build_data_dictionary() -> list[dict[str, str]]:
         definitions.append(
             {"dataset": "usgs_myb2022_world_mine_production", "column": column, "definition": definition}
         )
+    reliance_specific = {
+        "v3_mineral": "V3 analytical family receiving this explicitly scoped MCS chapter indicator.",
+        "scope": "Material or product scope that qualifies the published reliance percentage.",
+        "raw_value": "Exact 2025 value token in the frozen MCS ScienceBase CSV.",
+        "display_value": "Public display token with the percent sign and any source comparator preserved.",
+        "value_pct": "Exact percentage when the source publishes a point value.",
+        "value_low_pct": "Published lower bound for a greater-than observation; never a point estimate.",
+        "mapping_note": "Boundary between the MCS chapter measure and the related V3 analytical family.",
+    }
+    for column in CRITICAL_RELIANCE_COLUMNS:
+        definition = reliance_specific.get(
+            column,
+            f"Normalized MCS critical-mineral reliance field: {column.replace('_', ' ')}.",
+        )
+        definitions.append(
+            {
+                "dataset": "usgs_mcs2026_critical_mineral_reliance",
+                "column": column,
+                "definition": definition,
+            }
+        )
     return definitions
 
 
@@ -923,8 +1369,14 @@ def write_usgs_publication_outputs(
     output_path.mkdir(parents=True, exist_ok=True)
     mcs_rows = parse_mcs_2026(Path(raw_dir))
     myb_rows = parse_myb_2022_t8(Path(raw_dir))
-    metadata = build_usgs_publications_metadata(mcs_rows, myb_rows, Path(raw_dir))
-    context = build_usgs_publications_context(mcs_rows, myb_rows)
+    critical_reliance_rows = parse_mcs_2026_critical_reliance(Path(raw_dir))
+    metadata = build_usgs_publications_metadata(
+        mcs_rows,
+        myb_rows,
+        critical_reliance_rows,
+        Path(raw_dir),
+    )
+    context = build_usgs_publications_context(mcs_rows, myb_rows, critical_reliance_rows)
     revision_rows = [row for row in mcs_rows if row["revision_action"] != "none"]
 
     _write_csv(output_path / OUTPUT_FILENAMES["mcs_observations"], MCS_COLUMNS, mcs_rows)
@@ -934,6 +1386,11 @@ def write_usgs_publication_outputs(
         ({column: row[column] for column in MCS_REVISION_COLUMNS} for row in revision_rows),
     )
     _write_csv(output_path / OUTPUT_FILENAMES["myb_world_production"], MYB_COLUMNS, myb_rows)
+    _write_csv(
+        output_path / OUTPUT_FILENAMES["critical_reliance"],
+        CRITICAL_RELIANCE_COLUMNS,
+        critical_reliance_rows,
+    )
     _write_csv(
         output_path / OUTPUT_FILENAMES["data_dictionary"],
         DATA_DICTIONARY_COLUMNS,
@@ -970,6 +1427,7 @@ def main() -> None:
                 "mcs_rows": result["metadata"]["datasets"]["mcs2026"]["row_count"],
                 "myb_rows": result["metadata"]["datasets"]["myb2022_t8"]["row_count"],
                 "revision_rows": result["metadata"]["datasets"]["mcs2026"]["revision_count"],
+                "critical_reliance_rows": result["metadata"]["datasets"]["critical_mineral_reliance_2025"]["row_count"],
                 "output_dir": str(args.output_dir),
             },
             sort_keys=True,

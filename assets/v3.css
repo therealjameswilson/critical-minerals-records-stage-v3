@@ -507,6 +507,111 @@ th:first-child, td:first-child { text-align: left; }
   border: 1px dashed var(--line-dark);
 }
 .canvas-shell.data-unavailable canvas { visibility: hidden; }
+.baseline-section {
+  background:
+    linear-gradient(180deg, rgb(195 145 56 / 5%), transparent 24%),
+    var(--paper-dark);
+}
+.baseline-reliance-card { margin-top: 2rem; }
+.baseline-overview-grid {
+  margin-top: 1.2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.32fr);
+  gap: 1.2rem;
+  align-items: stretch;
+}
+.reliance-chart-shell { min-height: 500px; }
+.baseline-sidecar {
+  padding: 1.25rem;
+  background: #eef1ed;
+  border: 1px solid var(--line);
+}
+.baseline-sidecar h4,
+.baseline-detail-card h4 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1.15;
+}
+.baseline-sidecar > p:last-child {
+  color: var(--ink-soft);
+  font-size: 0.74rem;
+}
+.qualitative-pill {
+  margin-top: 1rem;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--navy);
+  background: var(--paper-strong);
+  border-left: 4px solid var(--gold);
+}
+.qualitative-pill strong { font-family: var(--serif); font-size: 1.45rem; font-weight: 500; }
+.qualitative-pill span { color: var(--ink-soft); font-size: 0.7rem; font-weight: 750; text-transform: uppercase; }
+.missing-pill { border-left-color: var(--line-dark); }
+.usgs-stage-context {
+  background: #f1f0e8;
+  border-top-color: var(--navy);
+}
+.usgs-stage-grid { grid-template-columns: repeat(4, 1fr); }
+.usgs-stage-context .china-stat { color: var(--china); }
+.usgs-stage-context .qualitative-stat { color: var(--navy); font-size: 1.85rem; }
+.legend-swatch.stage-production { background: var(--gold); }
+.legend-swatch.stage-imports { height: 0; border-top: 3px dashed var(--teal); }
+.legend-swatch.stage-consumption { background: var(--navy); }
+.baseline-detail-grid {
+  margin-top: 1.2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  gap: 1.2rem;
+}
+.baseline-detail-card {
+  min-width: 0;
+  padding: 1.2rem;
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+}
+.baseline-detail-card .table-scroll { margin-top: 0.8rem; }
+.reserve-list {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.reserve-list article {
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+.reserve-list span { color: var(--ink-soft); font-size: 0.67rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.reserve-list strong { margin-top: 0.25rem; color: var(--teal); font-family: var(--serif); font-size: 1.45rem; font-weight: 500; }
+.table-note { color: var(--ink-soft); font-size: 0.66rem; }
+.stage-scope-notes {
+  margin: 1rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+.stage-scope-notes article {
+  min-width: 0;
+  padding: 0.9rem;
+  background: #f4f1e7;
+  border-left: 3px solid var(--gold);
+}
+.stage-scope-notes article:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.stage-scope-notes h4 {
+  margin: 0 0 0.45rem;
+  color: var(--navy);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.stage-scope-notes p { margin: 0.3rem 0; color: var(--ink-soft); font-size: 0.72rem; }
+.stage-scope-notes span { display: block; margin-top: 0.55rem; color: var(--ink-soft); font-size: 0.62rem; line-height: 1.45; }
 
 .dark-section {
   color: var(--white);
@@ -635,6 +740,8 @@ th:first-child, td:first-child { text-align: left; }
   .explorer-chart-grid { grid-template-columns: 1fr; }
   .provenance-panel { grid-template-columns: 1fr; }
   .download-grid { grid-template-columns: repeat(2, 1fr); }
+  .baseline-overview-grid, .baseline-detail-grid { grid-template-columns: minmax(0, 1fr); }
+  .usgs-stage-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 720px) {
@@ -653,6 +760,10 @@ th:first-child, td:first-child { text-align: left; }
   .canvas-shell { height: 300px; }
   .chart-tall { height: 350px; }
   .finding-grid, .usgs-stat-grid, .origin-overview, .supplier-grid, .method-grid, .download-grid, .top-origin-grid { grid-template-columns: 1fr; }
+  .baseline-overview-grid, .baseline-detail-grid, .usgs-stage-grid { grid-template-columns: minmax(0, 1fr); }
+  .stage-scope-notes { grid-template-columns: minmax(0, 1fr); }
+  .stage-scope-notes article:last-child:nth-child(odd) { grid-column: auto; }
+  .reliance-chart-shell { min-height: 560px; }
   .usgs-context { padding: 1rem; }
   .usgs-chart-card .chart-title-row { flex-direction: column; }
   .usgs-legend { max-width: none; justify-content: flex-start; }

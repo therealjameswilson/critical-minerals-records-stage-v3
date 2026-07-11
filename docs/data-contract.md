@@ -1,6 +1,6 @@
 # V3 statistical data contract
 
-Contract revision: **3.3.0**.
+Contract revision: **3.4.0**.
 
 The canonical partner-level trade table is `data/processed/trade_long.csv`. It is source-bucket long rather than one-row-per-mineral total, because USITC quantity units are not freely additive. USGS historical and publication tables are published under separate contracts and are never merged into partner-level calculations.
 
@@ -10,7 +10,7 @@ The CSV begins with the requested contract, in this order:
 
 | Field | Meaning |
 |---|---|
-| `reporter` | `US` for both DataWeb workbooks |
+| `reporter` | `US` for the import and export DataWeb workbooks |
 | `flow` | `imports_for_consumption` or `domestic_exports` |
 | `partner` / `partner_iso` | Country of origin for imports; ultimate destination for exports |
 | `hts` / `hts_desc` | Four-digit HTS heading and source description |
@@ -46,9 +46,64 @@ The same row distinguishes `raw_value` and `raw_notes` from `current_value` and 
 - China 2024 production, version 1.1: the raw quota note retained but marked superseded after footnote 14 moved;
 - India 2025 reserves, version 1.1: value still unavailable, with footnote 14 recording 256,000 tons of monazite reserves in a 2015 OSCOM report but no rare-earth reserve figure.
 
-`data/processed/usgs_mcs2026_metadata.json` records the frozen CSV, XML, four PDFs, version history, hashes, official URLs, filters, encoding, row counts, and revision policy. `data/processed/usgs_publications_data_dictionary.csv` defines fields in both USGS publication-layer CSVs.
+The frozen input inventory is `data/raw/usgs_mcs2026_commodities_data.csv`, `data/raw/usgs_mcs2026_metadata.xml`, `data/raw/usgs_mcs2026_rare_earths.pdf`, `data/raw/usgs_mcs2026_rare_earths_heavy.pdf`, `data/raw/usgs_mcs2026_scandium.pdf`, `data/raw/usgs_mcs2026_yttrium.pdf`, `data/raw/usgs_mcs2026_version_history.txt`, and the MYB workbook `data/raw/usgs_myb2022_rare_earths_tables.xlsx`. `data/processed/usgs_mcs2026_metadata.json` records their hashes, official URLs, filters, encoding, row counts, and revision policy. `data/processed/usgs_publications_data_dictionary.csv` defines fields in all three USGS publication-layer CSVs.
 
 MCS 2026 is a publication vintage; these source observations cover 2021–2025. The contract must not create a 2026 observation from the release year.
+
+The browser payload exposes `usgs_mcs2026_context.us_statistical_baseline` as a stage-separated U.S. rare-earth series for 2021–2025. It retains mineral-concentrate production, compounds-and-metals production, compound imports, compounds-and-metals apparent consumption, mine-and-mill employment, compounds-and-metals net import reliance, and the mineral-concentrate trade indicator. Its `measurement_provenance` entries preserve the exact source row for every year, each year marked estimated, and grouped current-source notes; the public page renders those qualifications beside the chart. These stages and scopes must not be added. In the 2025 row, `E` means `net_exporter`; it is a qualitative indicator, not an estimated percentage. The same baseline retains current-PDF 2025 reserves for the United States (1.9 million metric tons REO equivalent), China (44 million), and the world total (`>75,000,000`, a lower bound). Reserve figures are geologic context, not ownership or assured access.
+
+## Separate USGS critical-mineral reliance contract
+
+[`data/processed/usgs_mcs2026_critical_mineral_reliance.csv`](../data/processed/usgs_mcs2026_critical_mineral_reliance.csv) contains **17** explicitly selected 2025 MCS chapter measures mapped to related V3 mineral families. Selection is a source-row allowlist. At each addressed row the build asserts the mapped `MCS chapter`, `Commodity`, `Statistics_detail`, and expected `Value`, plus `Section=Salient Statistics—United States`, `Country=United States`, `Statistics=Net import reliance`, `Unit=percent`, `Year=2025`, and `Is critical mineral 2025=Yes`. It fails if an allowed row is absent or any asserted field changes. Only then does it assign the fixed `v3_mineral`, public `label`, and material `scope` below. Every selected row has `is_estimated=True`.
+
+| Source row | MCS chapter / commodity | V3 family | Scope | Expected token |
+|---:|---|---|---|---:|
+| 2957 | GRAPHITE (NATURAL) / Graphite (Natural) | `natural_graphite` | Natural graphite | `100` |
+| 740 | BAUXITE AND ALUMINA / Bauxite | `aluminum` | Bauxite, not alumina or aluminum metal | `>75` |
+| 395 | ANTIMONY / Antimony | `antimony` | Oxide and unwrought metal or powder | `91` |
+| 993 | BISMUTH / Bismuth | `bismuth` | Bismuth | `92` |
+| 1484 | CHROMIUM / Chromium | `chromium` | Chromium content | `79` |
+| 1844 | COBALT / Cobalt | `cobalt` | Refined cobalt | `79` |
+| 1971 | COPPER / Copper | `copper` | Refined copper | `57` |
+| 4578 | MANGANESE / Manganese | `manganese` | Manganese content | `100` |
+| 5040 | NICKEL / Nickel | `nickel` | Total consumption including scrap | `41` |
+| 7485 | TANTALUM / Tantalum | `tantalum` | Tantalum content | `100` |
+| 7800 | TIN / Tin | `tin` | Refined tin | `77` |
+| 8200 | TUNGSTEN / Tungsten | `tungsten` | Tungsten content | `>50` |
+| 8676 | ZINC / Zinc | `zinc` | Refined zinc | `73` |
+| 6064 | RARE EARTHS / Rare Earths | `rare_earths` | Compounds and metals | `67` |
+| 6164 | RARE EARTHS (Heavy) / Rare Earths (Heavy) | `heavy_rare_earths` | Compounds and metals; excludes yttrium | `100` |
+| 6546 | SCANDIUM / Scandium | `scandium` | Scandium | `100` |
+| 8527 | YTTRIUM / Yttrium | `yttrium` | Compounds and metals | `100` |
+
+The CSV has this explicit 20-column contract:
+
+| Column | Contract |
+|---|---|
+| `source_id` | Stable identifier `usgs_mcs2026_critical_mineral_reliance_2025`. |
+| `source_row_number` | Physical row address in the frozen ScienceBase CSV. |
+| `source_file` | Repository-relative frozen source path. |
+| `v3_mineral` | Fixed V3 analytical-family identifier from the allowlist. |
+| `label` | Public display label assigned by the allowlist. |
+| `scope` | Material, product, content, or processing scope qualifying the percentage. |
+| `mcs_chapter` | Exact source chapter label. |
+| `commodity` | Exact source commodity label. |
+| `statistics_detail` | Exact source measure detail used in selection. |
+| `year` | Source observation year; always `2025` in this file. |
+| `raw_value` | Exact source value token. |
+| `display_value` | Source token rendered with `%`, preserving `>` where present. |
+| `value_pct` | Numeric point percentage only; blank for a lower bound. |
+| `value_low_pct` | Published lower-bound number only; blank for a point percentage. |
+| `comparator` | `exact` or `greater_than`. |
+| `availability_status` | Parsed source availability state. |
+| `indicator_code` | Semantic code for any nonnumeric indicator; blank for these 17 percentage rows. |
+| `is_estimated` | `True` for every selected 2025 MCS row. |
+| `source_notes` | Exact MCS Notes field, including scope and calculation qualifications. |
+| `mapping_note` | Fixed warning that the MCS chapter measure is not HTS-derived and not a China share. |
+
+Net import reliance is the published U.S. dependence on all foreign sources relative to the applicable apparent-consumption denominator. It is **not** China share, mine origin, ownership, control, or a value derived from partner-level DataWeb rows. Scope and formula details differ by chapter. The bauxite `>75%` and tungsten `>50%` rows use `comparator=greater_than`, leave `value_pct` blank, and populate `value_low_pct`; no lower bound is converted to a point estimate. Nickel’s 41% scope includes stainless-steel and alloy scrap, and its source note says reliance would be nearly 100% without scrap.
+
+The 17 indicators must not be summed or averaged. Rare earths, heavy rare earths, scandium, and yttrium overlap, and other chapter denominators are not interchangeable. Cross-mineral production remains deferred because the MCS production measures use incompatible material scopes, processing stages, content bases, and units.
 
 ## Separate USGS MYB 2022 world-production contract
 
@@ -56,7 +111,7 @@ MCS 2026 is a publication vintage; these source observations cover 2021–2025. 
 
 When MYB and MCS mine-production rows appear in a combined display, 2023 is an explicit gap. The ETL must not interpolate it. Mine production identifies the country of reported extraction, not ownership, refining location, control, or resource access. MCS import-source shares identify direct or shipping source and may not be mine origin.
 
-Neither USGS publication table feeds `china_share_of_us_imports.csv`, `supplier_diversification_index.csv`, `unit_value.csv`, or any other DataWeb-derived measure.
+No USGS publication table feeds `china_share_of_us_imports.csv`, `supplier_diversification_index.csv`, `unit_value.csv`, or any other DataWeb-derived measure.
 
 ## Quantity slots
 

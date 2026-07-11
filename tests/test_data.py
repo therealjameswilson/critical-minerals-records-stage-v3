@@ -152,6 +152,53 @@ def test_usgs_myb_mcs_site_bridge_keeps_2023_missing() -> None:
     assert context["import_source_snapshot"]["rare_earth_compounds_metals_china_share"] == 71
 
 
+def test_usgs_critical_mineral_reliance_preserves_scope_and_bounds() -> None:
+    rows = csv_rows("usgs_mcs2026_critical_mineral_reliance.csv")
+    assert len(rows) == 17
+    by_mineral = {row["v3_mineral"]: row for row in rows}
+    assert by_mineral["natural_graphite"]["display_value"] == "100%"
+    assert by_mineral["rare_earths"]["display_value"] == "67%"
+    assert by_mineral["nickel"]["display_value"] == "41%"
+    assert "including scrap" in by_mineral["nickel"]["scope"].lower()
+    assert by_mineral["aluminum"]["display_value"] == ">75%"
+    assert by_mineral["aluminum"]["value_pct"] == ""
+    assert by_mineral["aluminum"]["value_low_pct"] == "75"
+    assert by_mineral["aluminum"]["comparator"] == "greater_than"
+    assert by_mineral["tungsten"]["display_value"] == ">50%"
+    assert all(row["is_estimated"] == "True" for row in rows)
+
+
+def test_usgs_us_stage_baseline_keeps_processing_stages_separate() -> None:
+    summary = load_json("site-summary.json")
+    stage = summary["usgs_mcs2026_context"]["us_statistical_baseline"]
+    assert stage["coverage"] == [2021, 2025]
+    assert stage["latest"]["mineral_concentrate_production"] == 51_000
+    assert stage["latest"]["compounds_metals_production"] == 8_900
+    assert stage["latest"]["compound_imports"] == 21_000
+    assert stage["latest"]["apparent_consumption_compounds_metals"] == 27_000
+    assert stage["latest"]["compounds_metals_net_import_reliance"]["display"] == "67"
+    assert stage["latest"]["mineral_concentrate_trade_status"]["indicator_code"] == "net_exporter"
+    provenance = {row["measurement_id"]: row for row in stage["measurement_provenance"]}
+    assert len(provenance) == 5
+    concentrate = provenance["mineral_concentrate_production"]
+    assert [row["source_row_number"] for row in concentrate["source_rows"]] == [5961, 5982, 6003, 6024, 6045]
+    assert concentrate["estimated_years"] == [2021, 2022, 2023, 2024, 2025]
+    assert "Excludes monazite concentrates" in concentrate["source_notes"][0]["text"]
+    downstream_notes = provenance["compounds_metals_production"]["source_notes"][0]["text"]
+    assert "California and Utah" in downstream_notes
+    assert "two significant digits" in downstream_notes
+    import_notes = provenance["compound_imports"]["source_notes"][0]["text"]
+    assert "REO equivalent or content" in import_notes
+    assert provenance["mine_mill_employment"]["estimated_years"] == [2025]
+    reserves = {row["geography"]: row for row in stage["reserves_2025"]}
+    assert reserves["United States"]["value"] == 1_900_000
+    assert reserves["China"]["value"] == 44_000_000
+    assert reserves["World total"]["value_low"] == 75_000_000
+    official = summary["us_official_baseline"]
+    assert len(official["indicators"]) == 17
+    assert official["qualitative_indicators"][0]["indicator_code"] == "net_exporter"
+
+
 def test_site_summary_stays_small_and_labels_prc_coverage() -> None:
     summary = load_json("site-summary.json")
     assert (PROCESSED / "site-summary.json").stat().st_size <= 150_000

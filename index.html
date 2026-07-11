@@ -8,7 +8,7 @@
   <meta name="color-scheme" content="light">
   <link rel="icon" href="data:,">
   <link rel="canonical" href="https://therealjameswilson.github.io/critical-minerals-records-stage-v3/">
-  <link rel="stylesheet" href="assets/v3.css?v=3.3.0">
+  <link rel="stylesheet" href="assets/v3.css?v=3.4.0">
   <title>US–PRC Critical Minerals Record, 1993–2026</title>
 </head>
 <body>
@@ -22,6 +22,7 @@
       </a>
       <nav aria-label="Primary navigation">
         <a href="#disparity">Disparity</a>
+        <a href="#us-baseline">U.S. baseline</a>
         <a href="#share">China share</a>
         <a href="#sources">New sources</a>
         <a href="#explorer">Explorer</a>
@@ -43,7 +44,7 @@
         <div class="hero-copy">
           <p class="eyebrow">A statistical records stage · 1993–2026</p>
           <h1>U.S. dependence remained concentrated. China’s reported supply origins changed.</h1>
-          <p class="hero-deck">A trade-data record of rare-earth proxies and other critical materials—built from frozen USITC DataWeb workbooks, with China-reporter UN Comtrade used only where the series is genuinely comparable and USGS Data Series 140 kept as national physical context.</p>
+          <p class="hero-deck">A trade-data record of rare-earth proxies and other critical materials—built from frozen USITC DataWeb workbooks, with China-reporter UN Comtrade used only where the series is genuinely comparable and USGS Data Series 140, Mineral Commodity Summaries 2026, and Minerals Yearbook tables kept as separately labeled physical context.</p>
           <div class="scope-callout" role="note">
             <strong>Read the denominator.</strong> The U.S. workbooks contain 18 selected partners, not World. Every U.S. “share” on this page says so. Trade origin is an access signal—not mine ownership, reserves, or proof of state intent.
           </div>
@@ -117,6 +118,94 @@
           <article><p class="finding-value" id="peakShare">—</p><h3 id="peakYear">Peak</h3><p>Highest full-year share in the frozen series.</p></article>
           <article><p class="finding-value" id="currentYtdShare">—</p><h3>Jan–Apr 2026</h3><p>Partial-year share, compared only with the same months in earlier years.</p></article>
         </div>
+      </div>
+    </section>
+
+    <section class="record-section baseline-section" id="us-baseline" aria-labelledby="usBaselineTitle">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="section-number">02 · U.S. statistical baseline</p>
+          <h2 id="usBaselineTitle">Production is not processing capacity—and neither is the same as trade access</h2>
+          <p>USGS statistics locate U.S. dependence by material and processing stage. These measures sit beside the DataWeb trade record; they are not substituted for partner shares, mine origin, or ownership.</p>
+        </div>
+
+        <div class="chart-card baseline-reliance-card" aria-labelledby="usRelianceTitle">
+          <div class="chart-title-row">
+            <div><p class="chart-kicker">USGS Mineral Commodity Summaries · estimated 2025 values</p><h3 id="usRelianceTitle">U.S. net import reliance across selected critical inputs</h3></div>
+            <a class="source-chip" href="data/processed/usgs_mcs2026_critical_mineral_reliance.csv">Download 17-row record</a>
+          </div>
+          <p class="context-status" id="usBaselineStatus" role="status">Loading the frozen USGS reliance record…</p>
+          <div class="baseline-overview-grid">
+            <div class="canvas-shell reliance-chart-shell"><canvas id="usRelianceChart" role="img" aria-describedby="usRelianceNote"></canvas></div>
+            <aside class="baseline-sidecar" aria-labelledby="usRelianceQualitativeTitle">
+              <p class="chart-kicker">Qualitative source indicators</p>
+              <h4 id="usRelianceQualitativeTitle">Values that are not percentages</h4>
+              <div id="usRelianceQualitative"><p>Loading source indicators…</p></div>
+              <p>The chart plots point estimates and published lower bounds. It never converts a qualitative indicator or unavailable value to zero.</p>
+            </aside>
+          </div>
+          <p class="chart-note" id="usRelianceNote">Net import reliance measures dependence on all foreign sources—not China’s share. Product scopes and apparent-consumption denominators differ by MCS chapter.</p>
+          <details class="data-disclosure">
+            <summary>View all 17 exact indicators and source scopes</summary>
+            <div class="table-scroll"><table id="usRelianceTable"><caption class="sr-only">Selected USGS estimates of United States net import reliance in 2025.</caption><thead><tr><th>Material</th><th>MCS scope</th><th>2025 reliance</th><th>Status</th><th>Source row</th></tr></thead><tbody><tr><td colspan="5">Loading statistical record…</td></tr></tbody></table></div>
+          </details>
+        </div>
+
+        <aside class="usgs-context usgs-stage-context" aria-labelledby="usStageTitle">
+          <div class="usgs-context-header">
+            <div>
+              <p class="chart-kicker">U.S. rare-earth stages · 2021–2025</p>
+              <h3 id="usStageTitle">The United States was a concentrate exporter—and still downstream import-reliant</h3>
+              <p>The source separates mineral concentrates from compounds and metals. Keeping those stages apart reveals the distinction between extracting material and supplying processed forms.</p>
+            </div>
+            <a class="source-chip" href="data/processed/usgs_mcs2026_observations.csv">Download MCS observations</a>
+          </div>
+          <p class="context-status" id="usStageStatus" role="status">Loading the U.S. stage record…</p>
+
+          <div class="usgs-stat-grid usgs-stage-grid" aria-label="Latest U.S. rare-earth stage statistics">
+            <article><p class="usgs-stat-value" id="usStageConcentrates">—</p><h4>Mineral concentrates</h4><p>Estimated U.S. production in 2025, metric tons REO equivalent.</p></article>
+            <article><p class="usgs-stat-value" id="usStageDownstreamProduction">—</p><h4>Compounds and metals</h4><p>Estimated U.S. production in 2025, a separate processing stage.</p></article>
+            <article><p class="usgs-stat-value china-stat" id="usStageReliance">—</p><h4>Downstream reliance</h4><p>Net import reliance for compounds and metals in 2025.</p></article>
+            <article><p class="usgs-stat-value qualitative-stat" id="usStageConcentrateStatus">—</p><h4>Concentrate trade status</h4><p>The source’s E indicator means net exporter, not an estimated percentage.</p></article>
+          </div>
+
+          <div class="chart-card usgs-chart-card">
+            <div class="chart-title-row">
+              <div><p class="chart-kicker">Metric tons · rare-earth oxide equivalent</p><h3>Downstream production, compound imports, and apparent consumption</h3></div>
+              <div class="legend usgs-legend" aria-hidden="true">
+                <span><i class="legend-swatch stage-production"></i>Compounds/metals production</span>
+                <span><i class="legend-swatch stage-imports"></i>Compound imports</span>
+                <span><i class="legend-swatch stage-consumption"></i>Apparent consumption</span>
+              </div>
+            </div>
+            <div class="canvas-shell"><canvas id="usStageChart" role="img" aria-describedby="usStageNote"></canvas></div>
+            <p class="chart-note" id="usStageNote">Compound imports are narrower than the compounds-and-metals production and consumption scopes. The lines are published stage indicators, not a closed material balance.</p>
+            <div class="stage-scope-notes" id="usStageMeasureNotes" aria-label="USGS measurement qualifications"><p>Loading source-row qualifications…</p></div>
+            <details class="data-disclosure">
+              <summary>View exact 2021–2025 values</summary>
+              <div class="table-scroll"><table id="usStageTable"><caption class="sr-only">USGS U.S. rare-earth stage statistics, 2021–2025.</caption><thead><tr><th>Year</th><th>Concentrate production</th><th>Compounds/metals production</th><th>Compound imports</th><th>Apparent consumption</th><th>Downstream reliance</th><th>Mine/mill employment</th></tr></thead><tbody><tr><td colspan="7">Loading statistical record…</td></tr></tbody></table></div>
+            </details>
+          </div>
+
+          <div class="baseline-detail-grid">
+            <div class="baseline-detail-card">
+              <p class="chart-kicker">Percent of apparent consumption</p>
+              <h4>Published net import reliance</h4>
+              <div class="table-scroll"><table id="usSpecialtyRelianceTable"><caption class="sr-only">USGS net import reliance for rare-earth-related material scopes, 2021–2025.</caption><thead><tr><th>Material scope</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr></thead><tbody><tr><td colspan="6">Loading statistical record…</td></tr></tbody></table></div>
+              <p class="chart-note">Greater-than signs are source comparators. The four material scopes overlap and must not be summed or averaged.</p>
+            </div>
+            <div class="baseline-detail-card">
+              <p class="chart-kicker">2025 · metric tons REO equivalent</p>
+              <h4>Published rare-earth reserves</h4>
+              <div class="reserve-list" id="usReserveList"><p>Loading reserve statistics…</p></div>
+              <p class="chart-note">The world figure is a lower bound. Reserves are not ownership, current production, or assured access.</p>
+            </div>
+          </div>
+          <details class="data-disclosure source-notes-disclosure">
+            <summary>Read U.S. baseline scope notes</summary>
+            <ul class="source-note-list" id="usStageNotes"><li>Loading source notes…</li></ul>
+          </details>
+        </aside>
 
         <aside class="usgs-context" aria-labelledby="usgsContextTitle">
           <div class="usgs-context-header">
@@ -213,7 +302,7 @@
       <div class="wrap">
         <div class="section-heading split-heading">
           <div>
-            <p class="section-number">02 · China’s share over time</p>
+            <p class="section-number">03 · China’s share over time</p>
             <h2>Move across the critical-mineral proxy set</h2>
             <p>Each line is China divided by the sum of the same 18 selected origins for one mineral family. A missing denominator appears as a gap, never as zero.</p>
           </div>
@@ -245,7 +334,7 @@
     <section class="record-section dark-section" id="sources">
       <div class="wrap">
         <div class="section-heading inverse-heading">
-          <p class="section-number">03 · Cultivating new sources</p>
+          <p class="section-number">04 · Cultivating new sources</p>
           <h2>What the statistics establish: new origins became major reported sources to China</h2>
           <p>China-reporter HS 2846 imports show source replacement and a wider set of positive origins. They do not, by themselves, prove policy intent, investment, or “cultivation.”</p>
         </div>
@@ -285,7 +374,7 @@
     <section class="record-section" id="explorer">
       <div class="wrap">
         <div class="section-heading">
-          <p class="section-number">04 · Mineral explorer</p>
+          <p class="section-number">05 · Mineral explorer</p>
           <h2>Inspect one HTS heading at a time</h2>
           <p>Choose the flow, period, measure, and comparison year. The browser loads only the selected heading’s compact record shard.</p>
         </div>
@@ -335,7 +424,7 @@
     <section class="record-section method-section" id="method">
       <div class="wrap">
         <div class="section-heading">
-          <p class="section-number">05 · Method & provenance</p>
+          <p class="section-number">06 · Method & provenance</p>
           <h2>Every claim resolves to a frozen source row</h2>
           <p>The pipeline preserves source quantity buckets, suppression counts, period type, workbook name, and row identifiers before calculating any share or concentration index.</p>
         </div>
@@ -351,7 +440,7 @@
           <div>
             <p class="chart-kicker">Frozen inputs</p>
             <h3>Frozen statistical inputs</h3>
-            <p>Two USITC DataWeb workbooks, 32 frozen China-reporter UN Comtrade responses, and one USGS Data Series 140 workbook.</p>
+            <p>Two USITC DataWeb workbooks; 32 frozen China-reporter UN Comtrade responses; one USGS Data Series 140 workbook; the MCS 2026 ScienceBase table, metadata, current chapter PDFs, and version history; and one Minerals Yearbook 2022 tables workbook.</p>
           </div>
           <div class="table-scroll"><table id="provenanceTable"><thead><tr><th>Flow</th><th>File</th><th>SHA-256</th></tr></thead><tbody></tbody></table></div>
         </div>
@@ -367,6 +456,9 @@
           <a href="data/processed/usgs_rare_earths_historical.csv"><strong>USGS rare-earth history</strong><span>847 source-cell observations, 1900–2020</span></a>
           <a href="data/processed/usgs_rare_earths_metadata.json"><strong>USGS source metadata</strong><span>Hash, scope notes, and source qualifications</span></a>
           <a href="data/processed/usgs_rare_earths_data_dictionary.csv"><strong>USGS data dictionary</strong><span>National-series field definitions</span></a>
+          <a href="data/processed/usgs_mcs2026_observations.csv"><strong>USGS MCS observations</strong><span>286 rare-earth chapter observations, 2021–2025</span></a>
+          <a href="data/processed/usgs_mcs2026_critical_mineral_reliance.csv"><strong>USGS reliance record</strong><span>17 scoped 2025 critical-mineral estimates</span></a>
+          <a href="data/processed/usgs_myb2022_world_mine_production.csv"><strong>USGS MYB mine production</strong><span>65 source-row observations, 2018–2022</span></a>
         </div>
 
         <div class="source-links">
@@ -376,6 +468,8 @@
           <a href="https://www.usitc.gov/harmonized_tariff_information/hts/archive/list">HTS archive</a>
           <a href="https://uncomtrade.org/docs/un-comtrade-api/">UN Comtrade API documentation</a>
           <a href="https://www.usgs.gov/media/files/rare-earths-historical-statistics-data-series-140">USGS Rare Earths Data Series 140</a>
+          <a href="https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information">USGS Rare Earths Statistics and Information</a>
+          <a href="https://doi.org/10.5066/P1WKQ63T">USGS MCS 2026 data release</a>
           <a href="methodology.html">Full methodology note</a>
         </div>
       </div>
@@ -392,6 +486,6 @@
 
   <noscript><div class="noscript">JavaScript is required for interactive charts. All normalized and derived CSV files remain available in the Method &amp; provenance section.</div></noscript>
   <script defer src="assets/vendor/chart.js/chart.umd.min.js"></script>
-  <script defer src="assets/v3.js?v=3.3.0"></script>
+  <script defer src="assets/v3.js?v=3.4.0"></script>
 </body>
 </html>

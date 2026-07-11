@@ -67,6 +67,12 @@ USGS_MYB_COLUMNS = [
     "unit", "year", "raw_value", "display_value", "value", "availability_status",
     "raw_marker", "footnote_ids", "is_estimated", "is_revised", "data_status",
 ]
+USGS_CRITICAL_RELIANCE_COLUMNS = [
+    "source_id", "source_row_number", "source_file", "v3_mineral", "label", "scope",
+    "mcs_chapter", "commodity", "statistics_detail", "year", "raw_value", "display_value",
+    "value_pct", "value_low_pct", "comparator", "availability_status", "indicator_code",
+    "is_estimated", "source_notes", "mapping_note",
+]
 
 
 def digest(path: Path) -> str:
@@ -118,6 +124,7 @@ def main() -> int:
         PROCESSED / "usgs_mcs2026_metadata.json",
         PROCESSED / "usgs_myb2022_world_mine_production.csv",
         PROCESSED / "usgs_publications_data_dictionary.csv",
+        PROCESSED / "usgs_mcs2026_critical_mineral_reliance.csv",
     ]
     for path in required_files:
         require(path.is_file(), f"missing processed artifact: {path.relative_to(ROOT)}")
@@ -131,7 +138,7 @@ def main() -> int:
             require(digest(path) == expected, f"frozen source hash changed: {relative}")
 
     manifest = load_json(PROCESSED / "query_manifest.json")
-    require(manifest.get("schema_version") == "3.3.0", "query manifest schema mismatch")
+    require(manifest.get("schema_version") == "3.4.0", "query manifest schema mismatch")
     require(manifest.get("denominator_scope") == "selected_18_partners", "manifest denominator scope is not explicit")
     require(manifest.get("annual_coverage") == [1993, 2025], "annual coverage must stop at 2025")
     require(manifest.get("ytd_coverage") == [1993, 2026], "YTD coverage must end at 2026")
@@ -379,15 +386,21 @@ def main() -> int:
         manifest.get("usgs_publications_source") == usgs_publications_metadata,
         "manifest USGS publication metadata differs from standalone metadata",
     )
+    require(
+        usgs_publications_metadata.get("schema_version") == "1.1.0",
+        "USGS publications metadata schema mismatch",
+    )
     require(usgs_publications_metadata.get("retrieved_at") == "2026-07-10", "USGS publication retrieval date mismatch")
     publication_datasets = usgs_publications_metadata.get("datasets", {})
     mcs_metadata = publication_datasets.get("mcs2026", {})
     myb_metadata = publication_datasets.get("myb2022_t8", {})
+    critical_reliance_metadata = publication_datasets.get("critical_mineral_reliance_2025", {})
     require(mcs_metadata.get("source_encoding") == "cp1252", "MCS source encoding is not pinned")
     require(mcs_metadata.get("current_version") == "1.3", "MCS current publication version mismatch")
     require(mcs_metadata.get("row_count") == 286, "MCS metadata row count mismatch")
     require(mcs_metadata.get("revision_count") == 4, "MCS metadata revision count mismatch")
     require(myb_metadata.get("row_count") == 65, "MYB T8 metadata row count mismatch")
+    require(critical_reliance_metadata.get("row_count") == 17, "critical-mineral reliance metadata row count mismatch")
     metadata_hashes = {
         Path(item["file"]).name: item["sha256"]
         for item in usgs_publications_metadata.get("raw_files", [])
@@ -496,6 +509,42 @@ def main() -> int:
         import_source_sums[(row["mcs_chapter"], row["statistics_detail"])] += float(row["value"])
     require(all(close(value, 100) for value in import_source_sums.values()), "MCS import-source group does not sum to 100 percent")
 
+    with (PROCESSED / "usgs_mcs2026_critical_mineral_reliance.csv").open(encoding="utf-8", newline="") as handle:
+        reliance_reader = csv.DictReader(handle)
+        require(
+            (reliance_reader.fieldnames or []) == USGS_CRITICAL_RELIANCE_COLUMNS,
+            "critical-mineral reliance column contract changed",
+        )
+        critical_reliance_rows = list(reliance_reader)
+    require(len(critical_reliance_rows) == 17, "critical-mineral reliance row count mismatch")
+    require(
+        {int(row["source_row_number"]) for row in critical_reliance_rows}
+        == {395, 740, 993, 1484, 1844, 1971, 2957, 4578, 5040, 6064, 6164, 6546, 7485, 7800, 8200, 8527, 8676},
+        "critical-mineral reliance source-row inventory mismatch",
+    )
+    require(all(row["year"] == "2025" and row["is_estimated"] == "True" for row in critical_reliance_rows), "critical-mineral reliance vintage or estimate flag mismatch")
+    reliance_by_mineral = {row["v3_mineral"]: row for row in critical_reliance_rows}
+    require(
+        reliance_by_mineral["natural_graphite"]["display_value"] == "100%"
+        and reliance_by_mineral["rare_earths"]["display_value"] == "67%"
+        and reliance_by_mineral["nickel"]["display_value"] == "41%",
+        "critical-mineral reliance point values changed",
+    )
+    require(
+        reliance_by_mineral["aluminum"]["raw_value"] == ">75"
+        and reliance_by_mineral["aluminum"]["value_pct"] == ""
+        and reliance_by_mineral["aluminum"]["value_low_pct"] == "75"
+        and reliance_by_mineral["aluminum"]["comparator"] == "greater_than"
+        and reliance_by_mineral["tungsten"]["raw_value"] == ">50"
+        and reliance_by_mineral["tungsten"]["value_low_pct"] == "50",
+        "critical-mineral reliance lower bounds changed",
+    )
+    require(
+        "nearly 100%" in reliance_by_mineral["nickel"]["source_notes"]
+        and "including scrap" in reliance_by_mineral["nickel"]["scope"].casefold(),
+        "nickel scope warning missing",
+    )
+
     with (PROCESSED / "usgs_myb2022_world_mine_production.csv").open(encoding="utf-8", newline="") as handle:
         myb_reader = csv.DictReader(handle)
         require((myb_reader.fieldnames or []) == USGS_MYB_COLUMNS, "MYB T8 normalized column contract changed")
@@ -522,6 +571,7 @@ def main() -> int:
     require(manifest.get("processed", {}).get("usgs_mcs2026_rows") == 286, "manifest MCS row count mismatch")
     require(manifest.get("processed", {}).get("usgs_mcs2026_revision_rows") == 4, "manifest MCS revision count mismatch")
     require(manifest.get("processed", {}).get("usgs_myb2022_t8_rows") == 65, "manifest MYB T8 row count mismatch")
+    require(manifest.get("processed", {}).get("usgs_mcs2026_critical_reliance_rows") == 17, "manifest critical-mineral reliance row count mismatch")
 
     require(all("usgs" not in row["source"].casefold() for row in rows), "USGS rows leaked into DataWeb trade_long.csv")
 
@@ -632,7 +682,7 @@ def main() -> int:
 
     summary_path = PROCESSED / "site-summary.json"
     summary = load_json(summary_path)
-    require(summary.get("schema_version") == "3.3.0", "site summary schema mismatch")
+    require(summary.get("schema_version") == "3.4.0", "site summary schema mismatch")
     require(summary_path.stat().st_size <= 150_000, "site-summary.json exceeds 150 KB budget")
     require(summary["headline"]["year"] == 2025 and close(summary["headline"]["value"], 0.6040394784), "headline claim mismatch")
     prc = summary["prc_supply_origins"]
@@ -693,6 +743,104 @@ def main() -> int:
         and import_snapshot.get("yttrium_china_direct_share") == 70,
         "MCS import-source site snapshot mismatch",
     )
+    stage_baseline = mcs_context.get("us_statistical_baseline", {})
+    require(stage_baseline.get("status") == "loaded", "U.S. rare-earth stage baseline is not loaded")
+    require(stage_baseline.get("coverage") == [2021, 2025], "U.S. rare-earth stage coverage mismatch")
+    stage_rows = stage_baseline.get("series", [])
+    require(len(stage_rows) == 5 and [row["year"] for row in stage_rows] == list(range(2021, 2026)), "U.S. rare-earth stage row sequence mismatch")
+    stage_latest = stage_baseline.get("latest", {})
+    require(
+        stage_latest.get("mineral_concentrate_production") == 51_000
+        and stage_latest.get("compounds_metals_production") == 8_900
+        and stage_latest.get("compound_imports") == 21_000
+        and stage_latest.get("apparent_consumption_compounds_metals") == 27_000
+        and stage_latest.get("mine_mill_employment") == 670
+        and stage_latest.get("compounds_metals_net_import_reliance", {}).get("display") == "67"
+        and stage_latest.get("mineral_concentrate_trade_status", {}).get("indicator_code") == "net_exporter",
+        "U.S. rare-earth 2025 stage baseline mismatch",
+    )
+    measurement_provenance = {
+        row["measurement_id"]: row
+        for row in stage_baseline.get("measurement_provenance", [])
+    }
+    require(len(measurement_provenance) == 5, "U.S. stage measurement provenance count mismatch")
+    concentrate_provenance = measurement_provenance.get("mineral_concentrate_production", {})
+    downstream_provenance = measurement_provenance.get("compounds_metals_production", {})
+    import_provenance = measurement_provenance.get("compound_imports", {})
+    consumption_provenance = measurement_provenance.get("apparent_consumption_compounds_metals", {})
+    employment_provenance = measurement_provenance.get("mine_mill_employment", {})
+    require(
+        [row.get("source_row_number") for row in concentrate_provenance.get("source_rows", [])]
+        == [5961, 5982, 6003, 6024, 6045]
+        and concentrate_provenance.get("estimated_years") == [2021, 2022, 2023, 2024, 2025]
+        and any(
+            "Excludes monazite concentrates" in note.get("text", "")
+            for note in concentrate_provenance.get("source_notes", [])
+        ),
+        "mineral-concentrate production provenance mismatch",
+    )
+    require(
+        any(
+            "California and Utah" in note.get("text", "")
+            and "two significant digits" in note.get("text", "")
+            for note in downstream_provenance.get("source_notes", [])
+        )
+        and any(
+            "REO equivalent or content" in note.get("text", "")
+            and "U.S. Census Bureau" in note.get("text", "")
+            for note in import_provenance.get("source_notes", [])
+        )
+        and any(
+            "production + imports" in note.get("text", "")
+            for note in consumption_provenance.get("source_notes", [])
+        )
+        and employment_provenance.get("estimated_years") == [2025],
+        "U.S. stage source qualifications mismatch",
+    )
+    stage_reliance = {
+        row["scope_id"]: [value["display"] for value in row["values"]]
+        for row in stage_baseline.get("net_import_reliance", [])
+    }
+    require(
+        stage_reliance.get("rare_earths_compounds_metals") == [">95", ">95", ">90", "53", "67"]
+        and stage_reliance.get("heavy_rare_earths_compounds_metals") == ["100"] * 5
+        and stage_reliance.get("scandium") == ["100"] * 5
+        and stage_reliance.get("yttrium") == ["100"] * 5,
+        "U.S. specialty-material reliance matrix mismatch",
+    )
+    stage_reserves = {row["geography"]: row for row in stage_baseline.get("reserves_2025", [])}
+    require(
+        stage_reserves.get("United States", {}).get("value") == 1_900_000
+        and stage_reserves.get("China", {}).get("value") == 44_000_000
+        and stage_reserves.get("World total", {}).get("value_low") == 75_000_000
+        and stage_reserves.get("World total", {}).get("comparator") == "greater_than",
+        "U.S. baseline reserve context mismatch",
+    )
+    official_baseline = summary.get("us_official_baseline", {})
+    require(
+        official_baseline.get("status") == "loaded"
+        and official_baseline.get("observation_year") == 2025
+        and official_baseline.get("publication_version") == "MCS 2026 v1.3",
+        "cross-mineral U.S. official baseline metadata mismatch",
+    )
+    official_indicators = {row["id"]: row for row in official_baseline.get("indicators", [])}
+    require(len(official_indicators) == 17, "cross-mineral U.S. official baseline row count mismatch")
+    require(
+        official_indicators.get("natural_graphite", {}).get("display_value") == "100%"
+        and official_indicators.get("rare_earths", {}).get("display_value") == "67%"
+        and official_indicators.get("nickel", {}).get("display_value") == "41%"
+        and official_indicators.get("aluminum", {}).get("display_value") == ">75%"
+        and official_indicators.get("aluminum", {}).get("comparator") == "greater_than"
+        and official_indicators.get("tungsten", {}).get("display_value") == ">50%",
+        "cross-mineral U.S. official baseline values mismatch",
+    )
+    qualitative_indicators = official_baseline.get("qualitative_indicators", [])
+    require(
+        len(qualitative_indicators) == 1
+        and qualitative_indicators[0].get("indicator_code") == "net_exporter"
+        and qualitative_indicators[0].get("display_value") == "Net exporter",
+        "U.S. official baseline qualitative indicator mismatch",
+    )
     require(
         {row["flow"] for row in summary["sources"]}
         == {
@@ -729,6 +877,9 @@ def main() -> int:
         "Mine production is not trade access",
         "A comparable 2023 observation is unavailable",
         "Direct or shipping source",
+        "Production is not processing capacity",
+        "dependence on all foreign sources—not China’s share",
+        "The source’s E indicator means net exporter",
     ]
     for phrase in required_phrases:
         require(phrase in public_html, f"index.html missing trust language: {phrase!r}")
@@ -748,7 +899,8 @@ def main() -> int:
         return fail(errors)
     print(
         f"Validation passed: {len(rows):,} normalized rows, {len(unit_rows):,} unit-value rows, "
-        f"847 USGS DS140 rows, 286 MCS rows, 65 MYB T8 rows, 25 explorer shards, "
+        f"847 USGS DS140 rows, 286 rare-earth MCS rows, 17 critical-mineral reliance rows, "
+        f"65 MYB T8 rows, 25 explorer shards, "
         f"32 PRC reporter years, exact audited headline 60.4%."
     )
     return 0

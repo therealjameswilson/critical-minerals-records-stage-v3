@@ -53,6 +53,7 @@ data/
     usgs_rare_earths_data_dictionary.csv
     usgs_mcs2026_observations.csv
     usgs_mcs2026_revision_audit.csv
+    usgs_mcs2026_critical_mineral_reliance.csv
     usgs_mcs2026_metadata.json
     usgs_myb2022_world_mine_production.csv
     usgs_publications_data_dictionary.csv
@@ -101,7 +102,7 @@ This is a national historical context layer, not partner-level HTS trade. It nev
 
 ### 2026 Mineral Commodity Summaries
 
-The repository freezes the official MCS 2026 ScienceBase commodity table and metadata as `data/raw/usgs_mcs2026_commodities_data.csv` and `data/raw/usgs_mcs2026_metadata.xml`, together with the current Rare Earths, Heavy Rare Earths, Scandium, and Yttrium PDFs and the MCS version history. The CSV uses Windows-1252 (`cp1252`) encoding. Filtering its exact chapter labels—`RARE EARTHS`, `RARE EARTHS (Heavy)`, `SCANDIUM`, and `YTTRIUM`—yields **286 source observations**.
+The complete frozen MCS input inventory is `data/raw/usgs_mcs2026_commodities_data.csv`, `data/raw/usgs_mcs2026_metadata.xml`, `data/raw/usgs_mcs2026_rare_earths.pdf`, `data/raw/usgs_mcs2026_rare_earths_heavy.pdf`, `data/raw/usgs_mcs2026_scandium.pdf`, `data/raw/usgs_mcs2026_yttrium.pdf`, and `data/raw/usgs_mcs2026_version_history.txt`. The CSV uses Windows-1252 (`cp1252`) encoding. Filtering its exact chapter labels—`RARE EARTHS`, `RARE EARTHS (Heavy)`, `SCANDIUM`, and `YTTRIUM`—yields **286 source observations**.
 
 `data/processed/usgs_mcs2026_observations.csv` retains every filtered source row and separates the raw ScienceBase value and note from the current-PDF view. The frozen version history identifies the current MCS release as version 1.3, reposted 2026-05-27. `data/processed/usgs_mcs2026_revision_audit.csv` makes the reconciliation explicit:
 
@@ -112,15 +113,19 @@ The repository freezes the official MCS 2026 ScienceBase commodity table and met
 
 The raw CSV is never silently rewritten. The PDF-current value or note, original value or note, revision action, and revision source remain auditable. MCS 2026 is the **publication vintage**; its tabular observations cover 2021–2025. It is not a 2026 observation series.
 
+The site also publishes a stage-separated U.S. rare-earth baseline for 2021–2025 from those observations. Its 2025 snapshot reports 51,000 metric tons REO equivalent of mineral-concentrate production, 8,900 tons of compounds-and-metals production, 21,000 tons of compound imports, 27,000 tons of compounds-and-metals apparent consumption, 670 mine-and-mill workers, and 67% net import reliance for compounds and metals. Mineral concentrates carry the source indicator `E`, meaning **net exporter**; `E` is not an estimated percentage. Production at the concentrate stage must not be added to compounds-and-metals production. The reserve context preserves the current-PDF figures of 1.9 million metric tons REO equivalent for the United States, 44 million for China, and a world lower bound of more than 75 million. Reserves describe geologic availability under USGS definitions, not ownership or assured access.
+
+[`data/processed/usgs_mcs2026_critical_mineral_reliance.csv`](data/processed/usgs_mcs2026_critical_mineral_reliance.csv) adds **17 explicitly selected, source-row-addressed 2025 indicators** for V3 mineral families. Its 20-column contract and complete allowlist are in [`docs/data-contract.md`](docs/data-contract.md). At each allowed row, the ETL asserts the exact MCS chapter, section, commodity, country, statistic, statistics detail, unit, year, expected value token, and 2025 critical-mineral flag; each validated row then receives one fixed V3 family and scope label. Every row is an MCS estimate and retains its chapter-specific material scope, original value token, notes, comparator, and mapping boundary. Net import reliance measures U.S. dependence on **all foreign sources** as a share of the relevant apparent-consumption denominator. It is never a China share, mine-origin measure, or partner-trade statistic. Bauxite `>75%` and tungsten `>50%` are strict lower bounds, not point estimates. Nickel’s 41% measure includes stainless-steel and alloy scrap; USGS states that reliance would be nearly 100% if scrap were excluded. Product scopes and denominators differ, and rare earths, heavy rare earths, scandium, and yttrium overlap, so the 17 values must not be summed or averaged. A cross-mineral production chart is deliberately deferred because MCS production units, processing stages, and content bases are not comparable.
+
 Official sources: [USGS Rare Earths Statistics and Information](https://www.usgs.gov/centers/national-minerals-information-center/rare-earths-statistics-and-information), [MCS 2026 data release and metadata](https://doi.org/10.5066/P1WKQ63T), [Rare Earths PDF](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths.pdf), [Heavy Rare Earths PDF](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-rare-earths-heavy.pdf), [Scandium PDF](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-scandium.pdf), [Yttrium PDF](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-yttrium.pdf), and [MCS version history](https://pubs.usgs.gov/periodicals/mcs2026/versionHist.txt).
 
 ### 2022 Minerals Yearbook advance tables
 
 `data/raw/usgs_myb2022_rare_earths_tables.xlsx` is frozen from the [USGS Rare Earths 2022 tables-only release](https://www.usgs.gov/media/files/rare-earths-2022-tables-only-release). Only table T8, *World Mine Production of Rare Earths, by Country*, is normalized: **65 source-row/year observations** (12 countries plus the source total across 2018–2022). Tables T1–T7 remain available in the unchanged workbook but do not feed processed partner-trade series.
 
-`data/processed/usgs_myb2022_world_mine_production.csv` and the MCS world-mine-production rows may be displayed as a contextual sequence for 2018–2022 and 2024–2025. The missing 2023 bridge is explicit; it is not interpolated. `data/processed/usgs_mcs2026_metadata.json` records the frozen files and row counts, while `data/processed/usgs_publications_data_dictionary.csv` defines both publication-layer tables.
+`data/processed/usgs_myb2022_world_mine_production.csv` and the MCS world-mine-production rows may be displayed as a contextual sequence for 2018–2022 and 2024–2025. The missing 2023 bridge is explicit; it is not interpolated. `data/processed/usgs_mcs2026_metadata.json` records the complete MCS/MYB frozen-input inventory, hashes, and row counts, while `data/processed/usgs_publications_data_dictionary.csv` defines all three publication-layer CSVs.
 
-Mine production locates reported extraction, not ownership, processing control, or guaranteed access. MCS import-source shares identify direct or shipping sources and may differ from the mine origin of the material. Neither series is substituted for DataWeb country-of-origin trade or China-reporter Comtrade data, and no USGS publication row enters the DataWeb China-share, supplier-HHI, or HTS unit-value derivatives.
+Mine production locates reported extraction, not ownership, processing control, or guaranteed access. MCS import-source shares identify direct or shipping sources and may differ from the mine origin of the material. No USGS context series is substituted for DataWeb country-of-origin trade or China-reporter Comtrade data, and no USGS publication row enters the DataWeb China-share, supplier-HHI, or HTS unit-value derivatives.
 
 ## Reproduce the processed data
 
@@ -159,7 +164,7 @@ qty2, qty2_unit, source, retrieved_at
 
 It then adds source-row, period, suppression, measurement-quality, classification-break, and denominator fields. See `data/processed/data_dictionary.csv` and `docs/data-contract.md`.
 
-The separate USGS context tables are `data/processed/usgs_rare_earths_historical.csv`, `data/processed/usgs_mcs2026_observations.csv`, and `data/processed/usgs_myb2022_world_mine_production.csv`. Their fields and source vintages are documented in the corresponding dictionaries and metadata files listed above.
+The separate USGS context tables are `data/processed/usgs_rare_earths_historical.csv`, `data/processed/usgs_mcs2026_observations.csv`, `data/processed/usgs_mcs2026_critical_mineral_reliance.csv`, and `data/processed/usgs_myb2022_world_mine_production.csv`. Their fields and source vintages are documented in the corresponding dictionaries and metadata files listed above.
 
 Two quantity rules are essential:
 
@@ -180,6 +185,7 @@ Annual 2026 source cells are structural zeros while the YTD sheets contain Janua
 - `usgs_rare_earths_historical.csv`: normalized national and world rare-earth-oxide-equivalent history, 1900–2020; kept analytically separate from partner-level derivations.
 - `usgs_mcs2026_observations.csv`: 286 normalized MCS observations for Rare Earths, Heavy Rare Earths, Scandium, and Yttrium, with raw and current-PDF revision states kept side by side.
 - `usgs_mcs2026_revision_audit.csv`: the explicit ScienceBase-CSV-to-current-PDF reconciliation log.
+- `usgs_mcs2026_critical_mineral_reliance.csv`: 17 source-row-addressed, estimated 2025 U.S. net-import-reliance indicators with chapter-specific scopes and comparators preserved.
 - `usgs_myb2022_world_mine_production.csv`: 65 normalized T8 source-row/year observations, 2018–2022.
 
 HTS 2805 and 8505 are broad proxy headings. HTS 2805 includes products beyond rare-earth metals; HTS 8505 includes non-rare-earth and non-permanent-magnet products. HTS 2846 is the cleanest four-digit rare-earth-compounds heading in this build.
